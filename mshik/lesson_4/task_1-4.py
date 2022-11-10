@@ -5,16 +5,15 @@ from typing import List, Dict, Hashable
 
 
 # Task 1
-def swap_key_value(dict_to_swap: Dict[Hashable, Hashable]):
+def swap_key_value(dict_to_swap: Dict[Hashable, Hashable]) -> Dict[Hashable, Hashable]:
     return {value: key for key, value in dict_to_swap.items()}
 
 
 # Task 2
-# factorial(10) == 3628800
-def factorial(n: int, acc: int=1):
+def factorial(n: int) -> int:
     if n == 0:
-        return acc
-    return factorial(n - 1, acc * n)
+        return 1
+    return n * factorial(n - 1)
 
 
 # Task 3
