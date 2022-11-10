@@ -21,7 +21,7 @@ except ValueError as err:
     print(f"{err}. Please provide argument")
 
 
-def get_top_n_words(text, *, n, k):
+def get_top_n_words(text: str, *, n: int, k: int):
     # Hashmap to count how frequently a word appears
     frequences = defaultdict(int)
     words = [word.lower() for word in text.split() if word.isalpha()]
