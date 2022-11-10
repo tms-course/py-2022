@@ -1,4 +1,3 @@
-
 import sys
 from string import ascii_lowercase
 from typing import List
@@ -19,7 +18,7 @@ CIRICIL_ALPHABET = "абвгдеёжзийклмнопрстуфхцчшщъыь
 
 sys_args = sys.argv[1:]
 try:
-    top_n = int(sys_args[sys_args.index("-n") + 1])
+    num_of_most_often_words = int(sys_args[sys_args.index("-n") + 1])
     first_k_elements = int(sys_args[sys_args.index("-k") + 1])
 except ValueError as err:
     print(f"{err}. Please provide argument")
@@ -34,12 +33,13 @@ def get_word(word: str) -> str:
     return word
 
 
-def get_top_n_words(text: str, *, top_n: int, first_k_elements: int) -> List[str]:
+def get_top_n_words(text: str, *, num_of_most_often_words: int, first_k_elements: int) -> List[str]:
     # Hashmap to count how frequently a word appears
     frequences = defaultdict(int)
-    words = [get_word(word.lower()) for word in text.split() if get_word(word)]
-    for word in words:
-        frequences[word] += 1
+    for word in text.split():
+        correct_word = get_word(word.lower())
+        if correct_word:
+            frequences[correct_word] += 1
 
     # Hashmap to store frequency as a key
     words_by_frequency = defaultdict(list)
@@ -48,12 +48,14 @@ def get_top_n_words(text: str, *, top_n: int, first_k_elements: int) -> List[str
             words_by_frequency[value].append(key)
 
     arr = []
-    for count in range(len(text), 0, -1):
+    for count in range(max(words_by_frequency) + 1, 0, -1):
         if count in words_by_frequency:
             arr.append((count, words_by_frequency[count]))
 
-    return [f"{count} {', '.join(words)}" for count, words in arr[:top_n]]
+    return [f"{count} {', '.join(words)}" for count, words in arr[:num_of_most_often_words]]
 
 
-print(f"Result for ascii text with n={top_n} and k={first_k_elements}: ", *get_top_n_words(ASCII_TEXT, top_n=top_n, first_k_elements=first_k_elements), sep="\n")
-print(f"Result for cirilic text with n={top_n} and k={first_k_elements}: ", *get_top_n_words(CIRILIC_TEXT, top_n=top_n, first_k_elements=first_k_elements), sep="\n")
+print(f"Result for ascii text with n={num_of_most_often_words} and k={first_k_elements}: ", 
+      *get_top_n_words(ASCII_TEXT, num_of_most_often_words=num_of_most_often_words, first_k_elements=first_k_elements), sep="\n")
+print(f"Result for cirilic text with n={num_of_most_often_words} and k={first_k_elements}: ", 
+      *get_top_n_words(CIRILIC_TEXT, num_of_most_often_words=num_of_most_often_words, first_k_elements=first_k_elements), sep="\n")
