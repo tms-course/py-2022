@@ -27,7 +27,7 @@ except ValueError as err:
 
 def get_word(word: str) -> str:
     valid_chars = set((*CIRICIL_ALPHABET, *ascii_lowercase))
-    invalid_chars = set(word) - set(valid_chars)
+    invalid_chars = set(word) - valid_chars
     if invalid_chars:
         for char in invalid_chars:
             return word.replace(char, "")
