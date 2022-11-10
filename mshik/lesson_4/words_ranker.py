@@ -48,7 +48,7 @@ def get_top_n_words(text: str, *, num_of_most_often_words: int, first_k_elements
             words_by_frequency[value].append(key)
 
     arr = []
-    for count in range(max(words_by_frequency) + 1, 0, -1):
+    for count in range(max(words_by_frequency), 0, -1):
         if count in words_by_frequency:
             arr.append((count, words_by_frequency[count]))
 
