@@ -15,8 +15,8 @@ ASCII_TEXT = ("Lorem Ipsum is simply dummy text of the printing and typesetting 
 
 sys_args = sys.argv[1:]
 try:
-    n = sys_args[sys_args.index("-n") + 1]
-    k = sys_args[sys_args.index("-k") + 1]
+    n = int(sys_args[sys_args.index("-n") + 1])
+    k = int(sys_args[sys_args.index("-k") + 1])
 except ValueError as err:
     print(f"{err}. Please provide argument")
 
@@ -42,5 +42,5 @@ def get_top_n_words(text: str, *, n: int, k: int):
     return [f"{count} {', '.join(words)}" for count, words in arr[:n]]
 
 
-print(f"Result for ascii text with n={n} and k={k}: ", *get_top_n_words(ASCII_TEXT, n=2, k=2), sep="\n")
-print(f"Result for cirilic text with n={n} and k={k}: ", *get_top_n_words(CIRILIC_TEXT, n=2, k=2), sep="\n")
+print(f"Result for ascii text with n={n} and k={k}: ", *get_top_n_words(ASCII_TEXT, n=n, k=k), sep="\n")
+print(f"Result for cirilic text with n={n} and k={k}: ", *get_top_n_words(CIRILIC_TEXT, n=n, k=k), sep="\n")
