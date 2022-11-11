@@ -1,6 +1,5 @@
-def exchange_vals_and_keys(dictionary: dict) -> dict:
-    new_dict = {values: keys for keys, values in dictionary.items()}
-    return new_dict
+def swap_keys_with_values(dictionary: dict) -> dict:
+    return {values: keys for keys, values in dictionary.items()}
 
 
 my_dict = {1: 'a',
@@ -8,5 +7,5 @@ my_dict = {1: 'a',
            3: 'c',
            4: 'd'}
 
-new_dict = exchange_vals_and_keys(my_dict)
+new_dict = swap_keys_with_values(my_dict)
 print(new_dict)

@@ -1,6 +1,6 @@
-def counter(lst: list) -> dict:
-    counter_dict = {i: 0 for i in lst}
-    for number in lst:
+def counter(some_lst: list) -> dict:
+    counter_dict = {i: 0 for i in some_lst}
+    for number in some_lst:
         counter_dict[number] = counter_dict.get(number) + 1
 
     return counter_dict

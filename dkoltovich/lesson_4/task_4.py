@@ -3,7 +3,6 @@ from datetime import datetime
 
 
 def time_list_generator(n: int) -> list:
-    time.sleep(1)
     tmp_list = []
     for i in range(n):
         tmp_list.append(datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S'))
