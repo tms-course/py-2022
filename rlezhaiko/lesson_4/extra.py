@@ -53,5 +53,11 @@ dict_of_count_words = transformation_text(s)
 n_tmp = 0
 for key, value in dict_of_count_words.items():
     if n_tmp < arguments.n:
-        print(f'{key} {value[:arguments.k:]}')
+        list_tmp = value[:arguments.k:]
+        str_tmp = ''
+        for element in list_tmp:
+            str_tmp += element + ', '
+        str_tmp.strip()
+        str_tmp = str_tmp[0:(len(str_tmp)-2)]
+        print(f'{key} {str_tmp}')
         n_tmp += 1
