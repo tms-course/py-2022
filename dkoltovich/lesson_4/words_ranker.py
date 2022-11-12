@@ -6,9 +6,9 @@ input_text = '''Что тебе, что мне, что ей - всем нужн�
 
 
 def get_arguments():
-    [n, k] = [sys.argv[2], sys.argv[4]] if sys.argv[1] == '-n' else [sys.argv[4], sys.argv[2]]
+    n = sys.argv[sys.argv.index('-n') + 1]
+    k = sys.argv[sys.argv.index('-k') + 1]
     return int(n), int(k)
-
 
 def swap_keys_with_values(dictionary: dict) -> dict:
     swap_dict = defaultdict(list)
