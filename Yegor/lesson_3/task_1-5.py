@@ -10,6 +10,7 @@ while True:
      age = input('Введите свой возраст: ')
      if not age.isdigit() or int(age) <= 0:
          print('Ошибка, повторите ввод')
+         continue
      age = int(age)
      if age > 0 and age < 10:
          print('Привет, шкет', name)
