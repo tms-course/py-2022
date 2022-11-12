@@ -21,6 +21,7 @@ def transformation_text(text: str) -> dict:
 
     list_of_words = text.split()
     set_of_words = set(list_of_words)
+    print(set_of_words)
     dict_of_count_words_tmp = {}.fromkeys(set_of_words, 0)
     for element in set_of_words:
         dict_of_count_words_tmp[element] = counter_words(element, list_of_words)
