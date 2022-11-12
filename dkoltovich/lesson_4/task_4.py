@@ -11,6 +11,6 @@ def time_list_generator(n: int) -> list:
     return tmp_list
 
 
-n = int(input('Введите кол-во элементов списка: '))
-lst = [i for i in time_list_generator(n)]
-print(lst)
+number_of_elements = int(input('Введите кол-во элементов списка: '))
+time_list = [i for i in time_list_generator(number_of_elements)]
+print(time_list)
