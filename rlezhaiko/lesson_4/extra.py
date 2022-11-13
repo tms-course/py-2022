@@ -1,4 +1,5 @@
 from string import punctuation
+from collections import defaultdict
 import argparse
 
 
@@ -11,53 +12,45 @@ s = '''Что тебе, что мне, что ей, - всем нужно реш
     а что потом будет, потом и увидим, а увидим мы непременно'''
 
 
-def counter_words(word: str) -> int:
-    global list_of_words
-    counter, i = 0, 0
-    while i < len(list_of_words):
-        if list_of_words[i] == word:
-            list_of_words.remove(list_of_words[i])
-            counter += 1
-        else:
-            i += 1
-    return counter
-
-
-def transformation_text(text: str) -> dict:
+def get_list_of_words(text: str) -> list:
     text = text.lower()
     for i in range(len(text)):
         if text[i] in punctuation:
             text = text.replace(text[i], ' ')
-
-    global list_of_words
     list_of_words = text.split()
-    set_of_words = set(list_of_words)
-    dict_of_count_words_tmp = {}.fromkeys(set_of_words, 0)
-    for element in set_of_words:
-        dict_of_count_words_tmp[element] = counter_words(element)
-
-    set_sorted_values = sorted(set(dict_of_count_words_tmp.values()), reverse=True)
-    dict_of_count_words = {}.fromkeys(set_sorted_values, [])
-
-    for element in set_sorted_values:
-        list_of_word_with_counter = []
-        for item in dict_of_count_words_tmp.items():
-            if item[1] == element:
-                list_of_word_with_counter.append(item[0])
-        dict_of_count_words[element] = list_of_word_with_counter
-    
-    return dict_of_count_words
+    return list_of_words
 
 
-dict_of_count_words = transformation_text(s)
-n_tmp = 0
-for key, value in dict_of_count_words.items():
-    if n_tmp < arguments.n:
-        list_tmp = value[:arguments.k:]
-        str_tmp = ''
-        for element in list_tmp:
-            str_tmp += element + ', '
-        str_tmp.strip()
-        str_tmp = str_tmp[0:(len(str_tmp)-2)]
-        print(f'{key} {str_tmp}')
-        n_tmp += 1
+def get_dict_counter_words(list_of_words: list) -> dict:
+    dict_tmp ={}
+    for element in list_of_words:
+        if element in dict_tmp:
+            dict_tmp[element] += 1
+        else:
+            dict_tmp[element] = 1
+    return dict_tmp
+
+
+def swap_dictionary(dict_tmp: dict) -> dict:
+    dict_of_count_with_words = defaultdict(list)
+    for key, value in dict_tmp.items():
+        dict_of_count_with_words[value].append(key)
+    dict_of_count_with_words = sorted(dict_of_count_with_words.items(), reverse=True)
+    return dict(dict_of_count_with_words)
+
+
+def printing_output(dict_of_count: dict):
+    n_tmp = 0
+    for key, value in dict_of_count.items():
+        if n_tmp < arguments.n:
+            str_tmp = ', '.join(dict_of_count[key][:arguments.k:])
+            print(key, str_tmp)
+            n_tmp += 1
+
+
+def main():
+    dict_of_count_with_words = swap_dictionary(get_dict_counter_words(get_list_of_words(s)))
+    printing_output(dict_of_count_with_words)
+
+
+main()
