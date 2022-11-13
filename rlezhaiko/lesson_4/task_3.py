@@ -1,24 +1,17 @@
 list_of_numbers = [1, 2, 3, 2, 3, 2, 1, 1, 1, 5, 3, 2]
 
 
-def counter_numbers(number: int) -> int:
-    global list_of_numbers
-    counter, i = 0, 0
-    while i < len(list_of_numbers):
-        if list_of_numbers[i] == number:
-            list_of_numbers.remove(list_of_numbers[i])
-            counter += 1
+def get_dict_counter_numbers(list_of_numbers: list) -> dict:
+    dict_tmp ={}
+    for element in list_of_numbers:
+        if element in dict_tmp:
+            dict_tmp[element] += 1
         else:
-            i += 1
-    return counter
+            dict_tmp[element] = 1
+    return dict_tmp
+    
 
-
-set_of_numbers = set(list_of_numbers)
-dict_of_count_numbers = {}.fromkeys(set_of_numbers, 0)
-for element in set_of_numbers:
-    dict_of_count_numbers[element] = counter_numbers(element)
-
+dict_of_count_numbers = get_dict_counter_numbers(list_of_numbers)
 print(dict_of_count_numbers)
-
 for key, value in dict_of_count_numbers.items():
     print(f'Сколько раз употребляется число {key} в массиве данных: {value}.')
