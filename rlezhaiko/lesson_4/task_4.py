@@ -3,9 +3,9 @@ from datetime import datetime
 
 
 def get_time() -> str:
-    current_time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+    timestamp = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
     sleep(1)
-    return current_time
+    return timestamp
 
 
 n = int(input('Enter n: '))
