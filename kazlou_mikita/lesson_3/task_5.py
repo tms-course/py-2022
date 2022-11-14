@@ -15,4 +15,3 @@ while user_number != guessed_number:
         print(f'{user_name}, поздравляю, вы угадали загадaнное число ! Это число - {guessed_number}')
 
         break
-3
