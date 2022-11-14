@@ -1,5 +1,7 @@
 n = int(input('Введите целое число :  '))
-a = 0 
-for i in range(1, n+1):
+i = 1
+a = 0
+while i<= n:
     a = a + i**3
-print(a)
+    i = i + 1
+print(a)    
