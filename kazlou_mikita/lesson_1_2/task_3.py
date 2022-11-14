@@ -1,4 +1,4 @@
-a = float(input('Введите первое число : '))
-b = float(input('Введите второе число : '))
+x = float(input('Введите первое число : '))
+y = float(input('Введите второе число : '))
 
-print ( (abs('x') - abs('y')) / (1 + abs('x'*'y')) )
+print ((abs(x) - abs(y)) / (1 + abs(x*y)))
