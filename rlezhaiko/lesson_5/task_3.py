@@ -7,7 +7,7 @@ def check_palindrome(string: str) -> bool:
     """
     Check palindrom function.
     
-    :param string: the ыекштп to check for a palindrom
+    :param string: the string to check for a palindrom
     :returns: return True if the word is a palindrom, False otherwise
     """
     string = string.lower()
