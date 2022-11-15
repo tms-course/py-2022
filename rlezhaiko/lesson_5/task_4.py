@@ -1,8 +1,27 @@
+"""
+4. Написать декоратор к 2-м любым функциям, который бы считал и выводил время
+их выполнения.
+"""
+
 from datetime import datetime
+from typing import Callable
 
 
-def time_decorator(function_to_decorate):
+def lead_time_decorator(function_to_decorate: Callable) -> Callable:
+    """
+    Lead time decorator function
+    
+    :param function_to_decorate: this is function to decorate
+    :returns: return function
+    """
     def wrapper(*args, **kwargs):
+        """
+        Wrapper function
+    
+        :param args: this is arguments in tuple
+        :param kwargs: this is arguments in dict
+        :returns: return None
+        """
         start_time = datetime.now()
         function_to_decorate(*args, **kwargs)
         end_time = datetime.now()
@@ -10,9 +29,9 @@ def time_decorator(function_to_decorate):
     return wrapper
 
 
-def full_name(first_name: str, last_name: str):
+def concatenate_first_and_last_name(first_name: str, last_name: str):
     """
-    Full name function
+    Concatenate first and last name function
     
     :param first_name: this is first name
     :param last_name: this is last name
@@ -23,7 +42,7 @@ def full_name(first_name: str, last_name: str):
         s_reversed = s[::-1]
     
 
-@time_decorator
+@lead_time_decorator
 def create_list(n: int):
     """
     Create list function
@@ -34,7 +53,7 @@ def create_list(n: int):
     list_tmp = [i for i in range(n)]
 
 
-full_name_decorated = time_decorator(full_name)
+full_name_decorated = lead_time_decorator(concatenate_first_and_last_name)
 full_name_decorated('John', last_name='Smith')
 
 create_list(1000000)
