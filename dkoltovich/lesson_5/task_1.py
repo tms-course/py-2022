@@ -1,2 +1,6 @@
+"""
+To implement lambda function that returns 'четное' if argument is even, otherwise 'нечетное'
+"""
 input_number = int(input())
-(lambda x: print('четное') if x % 2 == 0 else print('нечетное'))(input_number)
+output = (lambda x: 'четное' if x % 2 == 0 else 'нечетное')(input_number)
+print(output)

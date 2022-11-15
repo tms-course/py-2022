@@ -1,3 +1,6 @@
+"""
+Implementation of decorator that counts and prints executing time of some function
+"""
 import datetime
 import random
 
@@ -25,7 +28,7 @@ def random_list_sum(n: int) -> int:
 
 def print_executing_time(func):
     """
-    Decorator that counts and prints time of executing of any function
+    Decorator that counts and prints executing time of some function
     :param func: function whose executing time we want to count
     :return:
     """
