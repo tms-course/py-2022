@@ -10,7 +10,7 @@
 
 def check_string_for_valid_number(string: str):
     """
-    Check string function
+    Check string for valid number function
     
     :param string: string for check
     :returns: return None
