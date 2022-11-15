@@ -1,8 +1,13 @@
-def check_palindrome(string:str) -> bool:
+"""
+3. При помощи функции filter() из кортежа слов отфильтровать только те, которые
+являются полиндромами (которые читаются одинаково в обе стороны)
+"""
+
+def check_palindrome(string: str) -> bool:
     """
     Check palindrom function.
     
-    :param word: the word to check for a palindrom
+    :param string: the ыекштп to check for a palindrom
     :returns: return True if the word is a palindrom, False otherwise
     """
     string = string.lower()
