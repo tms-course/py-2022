@@ -1,6 +1,6 @@
 # 4th task
-x = input("Введите произвольную строку: ")
-odd = x[0:len(x):2]
-even = x[1:len(x):2]
-print('Введена строка:', x.strip(), end='  ')
+n = input("Введите произвольную строку: ")
+odd = n[0:len(n):2]
+even = n[1:len(n):2]
+print('Введена строка:', n.strip(), end='  ')
 print(odd, even, sep='     ', end='\n!!!!!')
