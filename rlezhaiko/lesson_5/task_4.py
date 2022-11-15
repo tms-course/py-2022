@@ -15,13 +15,6 @@ def lead_time_decorator(function_to_decorate: Callable) -> Callable:
     :returns: return function
     """
     def wrapper(*args, **kwargs):
-        """
-        Wrapper function
-    
-        :param args: this is arguments in tuple
-        :param kwargs: this is arguments in dict
-        :returns: return None
-        """
         start_time = datetime.now()
         function_to_decorate(*args, **kwargs)
         end_time = datetime.now()
