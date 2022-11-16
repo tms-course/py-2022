@@ -13,9 +13,6 @@ print(encoded_string_Latin1)
 decoded_string = encoded_string_Latin1.decode('Latin1')
 print(decoded_string)
 
-
-
-
 # résumé
 # b'r\xe9sum\xe9'
-#
+# résumé
