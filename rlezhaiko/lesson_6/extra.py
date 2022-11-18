@@ -17,21 +17,21 @@ collection = {'x': {'c': 10}, 'z': 1}
 print('Введите !help для просмотра функций.')
 
 
-def find_dict_keys_with_recursion(dictionary: dict, list_of_paths: list = [], path: tuple = ()) -> list:
+def find_dict_keys_with_recursion(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
     """
     Find dict key with recursion function.
     
     :param dictionary: the dictionary
-    :param list_of_paths: the list of paths
+    :param list_of_path: the list of paths
     :param path: path in tuple
     :returns: return list of paths
     """        
     for key, value in dictionary.items():
         key_path = path + (key,)
-        list_of_paths.append(key_path)
+        list_of_path.append(key_path)
         if hasattr(value, 'items'):
-            find_dict_keys_with_recursion(value, list_of_paths, key_path)
-    return list_of_paths
+            find_dict_keys_with_recursion(value, list_of_path, key_path)
+    return list_of_path
 
 
 def printing_element(path: list, data: dict) -> None:
@@ -80,11 +80,13 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
+            print(list_of_paths)
             path = list(filter(lambda x: argument in x, list_of_paths))
-            if len(path) == 1:
-                printing_element(list(path[0]), collection)
-            else:
+            list_of_paths.clear()
+            if len(path) == 0:
                 print(f'Ключа "{argument}" нет в коллекции')
+            else:
+                printing_element(list(path[0]), collection)
     elif command == 'save':
         with open(f'{argument}', 'w') as f:
             json.dump(collection, f)
