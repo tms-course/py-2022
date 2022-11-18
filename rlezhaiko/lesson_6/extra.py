@@ -42,16 +42,9 @@ def printing_element(path: list, data: dict) -> None:
     :param data: collection in dict format
     :returns: return None
     """
-
-
-    while len(path) != 0:
-        print(len(path))
-        element = path.pop(0)
+    for element in path: 
         data = data[element]
-        printing_element(path, data)
-    else:
-        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-        print(json.dumps(data, indent=4))
+    print(json.dumps(data, indent=4))
 
 
 def parsing_command(line: str) -> list:
@@ -87,9 +80,7 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
-            #print(list_of_paths)
             path = list(filter(lambda x: argument in x, list_of_paths))
-            #print(path)
             if len(path) == 1:
                 printing_element(list(path[0]), collection)
             else:
