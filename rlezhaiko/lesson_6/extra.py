@@ -9,27 +9,49 @@ from sys import stdin
 from string import punctuation
 import json
 
-
 help_str = '''
+!show - отображает коллекцию (!show * - отображет всю коллекцию, !show element - отображает element)
 !help - Выводит описание функций
 !exit - Выход из программы'''
 collection = {'x': {'c': 10}, 'z': 1}
 print('Введите !help для просмотра функций.')
 
 
-def find_dict_key_with_recursion(dictionary: dict, path: tuple = ()) -> list:
+def find_dict_keys_with_recursion(dictionary: dict, list_of_paths: list = [], path: tuple = ()) -> list:
     """
     Find dict key with recursion function.
     
     :param dictionary: the dictionary
+    :param list_of_paths: the list of paths
     :param path: path in tuple
     :returns: return list of paths
     """        
     for key, value in dictionary.items():
         key_path = path + (key,)
-        yield key_path
+        list_of_paths.append(key_path)
         if hasattr(value, 'items'):
-            yield from find_dict_key_with_recursion(value, key_path)
+            find_dict_keys_with_recursion(value, list_of_paths, key_path)
+    return list_of_paths
+
+
+def printing_element(path: list, data: dict) -> None:
+    """
+    Printing element function.
+    
+    :param path: path
+    :param data: collection in dict format
+    :returns: return None
+    """
+
+
+    while len(path) != 0:
+        print(len(path))
+        element = path.pop(0)
+        data = data[element]
+        printing_element(path, data)
+    else:
+        print('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+        print(json.dumps(data, indent=4))
 
 
 def parsing_command(line: str) -> list:
@@ -63,14 +85,15 @@ def run_command(command: str, argument: str) -> bool:
     if command == 'show':
         if argument == '*':
             print(json.dumps(collection, indent=4))
-        
-        
-        list_of_paths = list(find_dict_key_with_recursion(collection))
-        print(list_of_paths)
-        if  argument in collection:
-            pass
-        else:
-            print(f'Ключа "{argument}" нет в коллекции')
+        else:    
+            list_of_paths = find_dict_keys_with_recursion(collection)
+            #print(list_of_paths)
+            path = list(filter(lambda x: argument in x, list_of_paths))
+            #print(path)
+            if len(path) == 1:
+                printing_element(list(path[0]), collection)
+            else:
+                print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'save':
         with open(f'{argument}', 'w') as f:
             json.dump(collection, f)
