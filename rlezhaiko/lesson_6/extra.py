@@ -13,8 +13,9 @@ help_str = '''
 !show - отображает коллекцию (!show * - отображет всю коллекцию, !show element - отображает element)
 !help - Выводит описание функций
 !exit - Выход из программы'''
-collection = {'x': {'c': 10}, 'z': 1}
+collection = {'x': {'c': 10}, 'z': {}}
 print('Введите !help для просмотра функций.')
+collection.update()
 
 
 def find_dict_keys_with_recursion(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
@@ -45,6 +46,30 @@ def printing_element(path: list, data: dict) -> None:
     for element in path: 
         data = data[element]
     print(json.dumps(data, indent=4))
+
+
+def updating_dict(data: dict, paths: list, value: str) -> None:
+    """
+    Updating dict function.
+    
+    :param data: data in dict format
+    :param paths: the list of path
+    :param value: the value to add
+    :returns: return None
+    """
+    if len(paths) == 1:
+        if value.isdigit():
+            data.update({paths[0]: int(value)})
+        else:
+            data.update({paths[0]: value})
+    else:
+        if paths[0] in list(data.keys()) and hasattr(data[paths[0]], 'values'):
+            data = data[paths[0]]
+        else:
+            data.update({paths[0]: {paths[1]: 0}})
+            data = data[paths[0]]  
+        paths.pop(0)
+        updating_dict(data, paths, value)
 
 
 def parsing_command(line: str) -> list:
@@ -80,16 +105,33 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
-            print(list_of_paths)
-            path = list(filter(lambda x: argument in x, list_of_paths))
+            # print(list_of_paths)
+            path_tuple, flaf_valid_argument = (), False
+            for path in list_of_paths:
+                if argument in path:
+                    path_tuple = path
+                    flaf_valid_argument = True
+                    break
             list_of_paths.clear()
-            if len(path) == 0:
-                print(f'Ключа "{argument}" нет в коллекции')
+            if flaf_valid_argument:
+                printing_element(list(path_tuple), collection)
             else:
-                printing_element(list(path[0]), collection)
+                print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'save':
         with open(f'{argument}', 'w') as f:
             json.dump(collection, f)
+    elif command == 'del':
+        list_of_paths = find_dict_keys_with_recursion(collection)
+        path_tuple, flaf_valid_argument = (), False
+        for path in list_of_paths:
+            if argument in path:
+                path_tuple = path
+                flaf_valid_argument = True
+                break
+        if flaf_valid_argument:
+            pass
+        else:
+            print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'help':
         print(help_str)
     elif command == 'exit':
@@ -112,4 +154,8 @@ for line in stdin:
     elif line[0] in punctuation.replace('!', ''):
         print('Такой комманды не существует. Введите !help для просмотра функций.')
     else:
-        pass
+        tree_elements, value = line.split('=')
+        tree_elements.strip()
+        value.strip()
+        path = tree_elements.split('.')
+        updating_dict(collection, path, value)
