@@ -107,6 +107,23 @@ def parsing_command(line: str) -> list:
     return list_for_return
 
 
+def check_argument_for_valid(list_of_paths: list) -> list:
+    """
+    Check argument for valid function.
+    
+    :param list_of_paths: the list of paths
+    :returns: return list
+    """
+    path_tuple, flaf_valid_argument, list_for_return = (), False, []
+    for path in list_of_paths:
+        if argument in path:
+            path_tuple = path
+            flaf_valid_argument = True
+            break
+    list_for_return.append(path_tuple, flaf_valid_argument)
+    return list_for_return
+
+
 def run_command(command: str, argument: str) -> bool:
     """
     Run command function.
@@ -121,13 +138,7 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
-            # print(list_of_paths)
-            path_tuple, flaf_valid_argument = (), False
-            for path in list_of_paths:
-                if argument in path:
-                    path_tuple = path
-                    flaf_valid_argument = True
-                    break
+            path_tuple, flaf_valid_argument = check_argument_for_valid(list_of_paths)
             list_of_paths.clear()
             if flaf_valid_argument:
                 printing_element(list(path_tuple), collection)
@@ -138,12 +149,8 @@ def run_command(command: str, argument: str) -> bool:
             json.dump(collection, f)
     elif command == 'del':
         list_of_paths = find_dict_keys_with_recursion(collection)
-        path_tuple, flaf_valid_argument = (), False
-        for path in list_of_paths:
-            if argument in path:
-                path_tuple = path
-                flaf_valid_argument = True
-                break
+        path_tuple, flaf_valid_argument = check_argument_for_valid(list_of_paths)
+        list_of_paths.clear()
         if flaf_valid_argument:
             delete_element(collection, list(path_tuple))
         else:
