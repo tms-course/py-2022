@@ -61,7 +61,7 @@ def updating_dict(data: dict, paths: list, value: str) -> None:
         if value.isdigit():
             data.update({paths[0]: int(value)})
         else:
-            data.update({paths[0]: value})
+            data.update({paths[0]: value.strip()})
     else:
         if paths[0] in list(data.keys()) and hasattr(data[paths[0]], 'values'):
             data = data[paths[0]]
@@ -107,20 +107,22 @@ def parsing_command(line: str) -> list:
     return list_for_return
 
 
-def check_argument_for_valid(list_of_paths: list) -> list:
+def check_argument_for_valid(list_of_paths: list, argument: str) -> list:
     """
     Check argument for valid function.
     
     :param list_of_paths: the list of paths
+    :param argument: the argument
     :returns: return list
     """
-    path_tuple, flaf_valid_argument, list_for_return = (), False, []
+    path_tuple, flag_valid_argument, list_for_return = (), False, []
     for path in list_of_paths:
         if argument in path:
             path_tuple = path
-            flaf_valid_argument = True
+            flag_valid_argument = True
             break
-    list_for_return.append(path_tuple, flaf_valid_argument)
+    list_for_return.append(path_tuple)
+    list_for_return.append(flag_valid_argument)
     return list_for_return
 
 
@@ -138,9 +140,9 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
-            path_tuple, flaf_valid_argument = check_argument_for_valid(list_of_paths)
+            path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths)
             list_of_paths.clear()
-            if flaf_valid_argument:
+            if flag_valid_argument:
                 printing_element(list(path_tuple), collection)
             else:
                 print(f'Ключа "{argument}" нет в коллекции')
@@ -149,9 +151,11 @@ def run_command(command: str, argument: str) -> bool:
             json.dump(collection, f)
     elif command == 'del':
         list_of_paths = find_dict_keys_with_recursion(collection)
-        path_tuple, flaf_valid_argument = check_argument_for_valid(list_of_paths)
+        print(list_of_paths)
+        path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
+        print(path_tuple)
         list_of_paths.clear()
-        if flaf_valid_argument:
+        if flag_valid_argument:
             delete_element(collection, list(path_tuple))
         else:
             print(f'Ключа "{argument}" нет в коллекции')
@@ -178,7 +182,6 @@ for line in stdin:
         print('Такой комманды не существует. Введите !help для просмотра функций.')
     else:
         tree_elements, value = line.split('=')
-        tree_elements.strip()
-        value.strip()
+        tree_elements, value = tree_elements.strip(), value.strip()
         path = tree_elements.split('.')
         updating_dict(collection, path, value)
