@@ -6,16 +6,29 @@
 """
 
 from sys import stdin
+import os
 from string import punctuation
 import json
+import argparse
+
+parser = argparse.ArgumentParser(description='Save state collection editor')
+parser.add_argument('-f', type=str, default='', help='Provide an str (default: "")')
+arguments = parser.parse_args()
+
+collection = {}
+if arguments.f != '':
+    if arguments.f in os.listdir():
+        with open(f'{arguments.f}', 'r') as f:
+            collection.update(json.load(f))
+
 
 help_str = '''
 !show - отображает коллекцию (!show * - отображет всю коллекцию, !show element - отображает element)
+!del - удаляет элемент из коллекции (!del x    or     !del x.v.z)
+x = 20 - создает либо обновляет элемент, поддерживает обращение по дереву объектов x.v.z
 !help - Выводит описание функций
 !exit - Выход из программы'''
-collection = {'x': {'c': 10}, 'z': {}}
 print('Введите !help для просмотра функций.')
-collection.update()
 
 
 def find_dict_keys_with_recursion(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
@@ -140,7 +153,7 @@ def run_command(command: str, argument: str) -> bool:
             print(json.dumps(collection, indent=4))
         else:    
             list_of_paths = find_dict_keys_with_recursion(collection)
-            path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths)
+            path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
             list_of_paths.clear()
             if flag_valid_argument:
                 printing_element(list(path_tuple), collection)
@@ -151,9 +164,7 @@ def run_command(command: str, argument: str) -> bool:
             json.dump(collection, f)
     elif command == 'del':
         list_of_paths = find_dict_keys_with_recursion(collection)
-        print(list_of_paths)
         path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
-        print(path_tuple)
         list_of_paths.clear()
         if flag_valid_argument:
             delete_element(collection, list(path_tuple))
@@ -181,7 +192,10 @@ for line in stdin:
     elif line[0] in punctuation.replace('!', ''):
         print('Такой комманды не существует. Введите !help для просмотра функций.')
     else:
-        tree_elements, value = line.split('=')
-        tree_elements, value = tree_elements.strip(), value.strip()
-        path = tree_elements.split('.')
-        updating_dict(collection, path, value)
+        if '=' in line:
+            tree_elements, value = line.split('=')
+            tree_elements, value = tree_elements.strip(), value.strip()
+            path = tree_elements.split('.')
+            updating_dict(collection, path, value)
+        else:
+            print('Такой комманды не существует. Введите !help для просмотра функций.')
