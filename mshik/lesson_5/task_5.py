@@ -13,11 +13,11 @@ def get_number_from_string(str_to_check: str) -> str:
         str_to_check (str): String which need to be validated and coverted into a number.
     Returns:
         str: String which contains a description of the number.
-    Exampels:
+    Examples:
         >>> print(get_number_from_string("-6.7"))
         Вы ввели отрицательное дробное число: -6.7
         >>> print(get_number_from_string("5.4r"))
-        Вы ввели не коректное число: 5.4r
+        Вы ввели не корректное число: 5.4r
     """
     is_valid_unary_minus = str_to_check[0] == "-" and str_to_check.count("-") == 1
     if is_valid_unary_minus or "-" not in str_to_check:
@@ -29,7 +29,7 @@ def get_number_from_string(str_to_check: str) -> str:
         if len(filtered_chars) == len(str_to_check):
             return f"Вы ввели {number_sign} {number_type} число: {str_to_check}"
     
-    return f"Вы ввели не коректное число: {str_to_check}"
+    return f"Вы ввели не корректное число: {str_to_check}"
 
 print(get_number_from_string("-6.7"))
 print(get_number_from_string("5"))
