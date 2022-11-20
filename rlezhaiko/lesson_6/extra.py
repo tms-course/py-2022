@@ -72,6 +72,22 @@ def updating_dict(data: dict, paths: list, value: str) -> None:
         updating_dict(data, paths, value)
 
 
+def delete_element(data: dict, paths: list) -> None:
+    """
+    Delete element function.
+    
+    :param data: data in dict format
+    :param paths: the list of path
+    :returns: return None
+    """
+    if len(paths) == 1:
+        del data[paths[0]]
+    else:
+        data = data[paths[0]]  
+        paths.pop(0)
+        delete_element(data, paths)
+
+
 def parsing_command(line: str) -> list:
     """
     Parsing command and check line for valid value function.
@@ -129,7 +145,7 @@ def run_command(command: str, argument: str) -> bool:
                 flaf_valid_argument = True
                 break
         if flaf_valid_argument:
-            pass
+            delete_element(collection, list(path_tuple))
         else:
             print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'help':
