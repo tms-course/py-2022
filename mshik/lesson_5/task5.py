@@ -19,7 +19,7 @@ def get_number_from_string(str_to_check: str) -> str:
         >>> print(get_number_from_string("5.4r"))
         Вы ввели не коректное число: 5.4r
     """
-    is_valid_unary_minus = "-" in str_to_check[0] and str_to_check.count("-") == 1
+    is_valid_unary_minus = str_to_check[0] == "-" and str_to_check.count("-") == 1
     if is_valid_unary_minus or "-" not in str_to_check:
         filtered_chars = [char for char in str_to_check 
                           if char in {"-", "."} or char.isdigit()]
@@ -33,5 +33,6 @@ def get_number_from_string(str_to_check: str) -> str:
 
 print(get_number_from_string("-6.7"))
 print(get_number_from_string("5"))
+print(get_number_from_string("-.5-5"))
 print(get_number_from_string("5.4r"))
 print(get_number_from_string("-.777"))
