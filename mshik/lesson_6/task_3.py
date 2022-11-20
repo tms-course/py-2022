@@ -17,6 +17,7 @@ USERS = {
          "456789": ("Yura", 23)
         }
 
-
+list_of_users = [{"id": user_id, "name": user_name, "age": user_age} 
+                 for user_id, (user_name, user_age) in USERS.items()]
 with open(f"{abspath(dirname(__file__))}/data/users.json", "w") as output_file:
-        json.dump(USERS, output_file)
+        json.dump(list_of_users, output_file)
