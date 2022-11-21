@@ -11,13 +11,12 @@ import random
 
 with open('./data.json', 'r') as f:
     data = json.load(f)
-
+# generate random phone number
 gen_phone_number = lambda: str(random.randint(100, 999)) + '-' + str(random.randint(0, 99)) \
                            + '-' + str(random.randint(0, 99))
 
-updated_data = {ID: (*data[ID], gen_phone_number()) for ID in data.keys()}
 with open('./data.csv', 'w') as f:
     writer = csv.writer(f)
     writer.writerow(['id', 'name', 'age', 'phone'])
-    for key, value in updated_data.items():
-        writer.writerow([key, *value])
+    for person in data:
+        writer.writerow([*person.values(), gen_phone_number()])

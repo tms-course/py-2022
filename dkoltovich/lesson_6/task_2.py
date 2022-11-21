@@ -6,15 +6,11 @@ task 2:
 каждая из которых должна начинаться с новой строки.
 """
 
-first_string = input('Enter first string: ')
-second_string = input('Enter second string: ')
-third_string = input('Enter third string: ')
-fourth_string = input('Enter fourth string: ')
-
+lines = [input("Enter {} string: ".format(i + 1)) + '\n' for i in range(4)]
 with open('./file.txt', 'w') as f:
-    f.writelines([first_string + '\n', second_string + '\n'])
+    f.writelines(lines[:2])
 
 with open('./file.txt', 'a') as f:
-    f.writelines([third_string + '\n', fourth_string + '\n'])
+    f.writelines(lines[2:])
 
 

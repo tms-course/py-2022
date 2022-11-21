@@ -14,8 +14,12 @@ data = {
     '000005': ('Mike', 15),
     '000006': ('Anna', 22)
 }
-
+list_of_people = [{'id': personal_id,
+                   'name': name,
+                   'age': age
+                   } for personal_id, (name, age) in data.items()
+                  ]
 with open('./data.json', 'w') as f:
-    json.dump(data, f, indent=4)
+    json.dump(list_of_people, f, indent=4)
 
 

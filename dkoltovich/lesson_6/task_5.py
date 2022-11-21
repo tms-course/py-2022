@@ -12,15 +12,16 @@ with open('data.csv', 'r') as f:
     rows = list(csv.reader(f))
 
 wb = openpyxl.Workbook()
-wb.active.append([''] + ['Person {}'.format(i) for i in range(1, len(rows))])
+active_sheet = wb.active
+active_sheet.append([''] + ['Person {}'.format(i) for i in range(1, len(rows))])
 id_row, name_row, phone_row = [], [], []
 for row in rows:
     id_row.append(row[0])
     name_row.append(row[1])
     phone_row.append(row[3])
 
-wb.active.append(id_row)
-wb.active.append(name_row)
-wb.active.append(phone_row)
+active_sheet.append(id_row)
+active_sheet.append(name_row)
+active_sheet.append(phone_row)
 wb.save('data.xlsx')
 wb.close()
