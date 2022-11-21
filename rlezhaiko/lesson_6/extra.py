@@ -17,9 +17,11 @@ arguments = parser.parse_args()
 
 collection = {}
 if arguments.f != '':
-    if arguments.f in os.listdir():
+    if os.path.exists(arguments.f):
         with open(f'{arguments.f}', 'r') as f:
             collection.update(json.load(f))
+    else:
+        print('Данного файла не существует! Создана пустая коллекция.')
 
 
 help_str = '''
@@ -31,9 +33,9 @@ x = 20 - создает либо обновляет элемент, поддер
 print('Введите !help для просмотра функций.')
 
 
-def find_dict_keys_with_recursion(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
+def find_all_keys_in_dict(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
     """
-    Find dict key with recursion function.
+    Find all keys in dict function.
     
     :param dictionary: the dictionary
     :param list_of_path: the list of paths
@@ -44,7 +46,7 @@ def find_dict_keys_with_recursion(dictionary: dict, list_of_path: list = [], pat
         key_path = path + (key,)
         list_of_path.append(key_path)
         if hasattr(value, 'items'):
-            find_dict_keys_with_recursion(value, list_of_path, key_path)
+            find_all_keys_in_dict(value, list_of_path, key_path)
     return list_of_path
 
 
@@ -70,19 +72,13 @@ def updating_dict(data: dict, paths: list, value: str) -> None:
     :param value: the value to add
     :returns: return None
     """
-    if len(paths) == 1:
-        if value.isdigit():
-            data.update({paths[0]: int(value)})
+    for path in paths:
+        if paths.index(path) == len(paths) - 1:
+            data.update({path: int(value) if value.isdigit() else value.strip()})
         else:
-            data.update({paths[0]: value.strip()})
-    else:
-        if paths[0] in list(data.keys()) and hasattr(data[paths[0]], 'values'):
-            data = data[paths[0]]
-        else:
-            data.update({paths[0]: {paths[1]: 0}})
-            data = data[paths[0]]  
-        paths.pop(0)
-        updating_dict(data, paths, value)
+            if not (path in data and hasattr(data[path], 'values')):
+                data.update({path: {paths[paths.index(path) + 1]: 0}})
+            data = data[path]
 
 
 def delete_element(data: dict, paths: list) -> None:
@@ -106,18 +102,36 @@ def parsing_command(line: str) -> list:
     Parsing command and check line for valid value function.
     
     :param line: the line for parsing
-    :returns: return list
+    :returns: return list with True if right line, False otherwise, type_of_command, command, argument
     """
-    list_for_return = []
-    if ' ' in line:
-        list_for_return.extend(line.split())
-    else:
-        command, argument = line, ''
-        list_for_return.append(command)
-        list_for_return.append(argument)
-    flag_valid = bool('False' if (list_for_return[0] == 'exit' and len(list_for_return[1]) > 0) or (len(list_for_return[1]) >= 2) else 'True')
-    list_for_return.insert(0, flag_valid)
-    return list_for_return
+    list_tmp = []
+    type_of_command, flag_valid = 0, False
+    if line[0] == '!':
+        type_of_command = 1
+        line = line.replace('!', '', 1)
+        if ' ' in line:
+            list_tmp.extend(line.split())
+        else:
+            list_tmp.append(line)
+            list_tmp.append('')
+    elif line[0] not in punctuation.replace('!', '', 1):
+        type_of_command = 2
+        if line.count('=') == 1:
+            command, argument = line.split('=')
+            command, argument = command.strip(), argument.strip()
+            list_tmp.append(command)
+            list_tmp.append(argument)
+        else:
+            type_of_command = 0 
+            list_tmp.append('')
+            list_tmp.append('')   
+    
+    
+    if type_of_command:
+        flag_valid = not (list_tmp[0] == 'exit' and len(list_tmp[1]) > 0) or (len(list_tmp[1]) >= 2)
+    list_tmp.insert(0, flag_valid)
+    list_tmp.insert(1, type_of_command)
+    return list_tmp
 
 
 def check_argument_for_valid(list_of_paths: list, argument: str) -> list:
@@ -126,17 +140,17 @@ def check_argument_for_valid(list_of_paths: list, argument: str) -> list:
     
     :param list_of_paths: the list of paths
     :param argument: the argument
-    :returns: return list
+    :returns: return list with path in tuple and True if argument in collection, False otherwise 
     """
-    path_tuple, flag_valid_argument, list_for_return = (), False, []
+    path_tuple, flag_valid_argument, list_tmp = (), False, []
     for path in list_of_paths:
         if argument in path:
             path_tuple = path
             flag_valid_argument = True
             break
-    list_for_return.append(path_tuple)
-    list_for_return.append(flag_valid_argument)
-    return list_for_return
+    list_tmp.append(path_tuple)
+    list_tmp.append(flag_valid_argument)
+    return list_tmp
 
 
 def run_command(command: str, argument: str) -> bool:
@@ -152,7 +166,7 @@ def run_command(command: str, argument: str) -> bool:
         if argument == '*':
             print(json.dumps(collection, indent=4))
         else:    
-            list_of_paths = find_dict_keys_with_recursion(collection)
+            list_of_paths = find_all_keys_in_dict(collection)
             path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
             list_of_paths.clear()
             if flag_valid_argument:
@@ -160,10 +174,16 @@ def run_command(command: str, argument: str) -> bool:
             else:
                 print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'save':
-        with open(f'{argument}', 'w') as f:
-            json.dump(collection, f)
+        dirpath, filename = os.path.split(argument)
+        if dirpath == '':
+            with open(filename, 'w') as f:
+                json.dump(collection, f)
+        else:
+            os.makedirs(dirpath, exist_ok=True)
+            with open(dirpath + '/' + filename, 'w') as f:
+                json.dump(collection, f)
     elif command == 'del':
-        list_of_paths = find_dict_keys_with_recursion(collection)
+        list_of_paths = find_all_keys_in_dict(collection)
         path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
         list_of_paths.clear()
         if flag_valid_argument:
@@ -182,20 +202,15 @@ def run_command(command: str, argument: str) -> bool:
 
 for line in stdin:
     line = line.strip()
-    if line[0] == '!':
-        valid, command, argument = parsing_command(line.replace('!', '', 1))
+    valid, type_of_command, command, argument = parsing_command(line)
+    if type_of_command == 1:
         if valid:
             if run_command(command, argument):
                 break
         else:
             print('Такой комманды не существует. Введите !help для просмотра функций.')
-    elif line[0] in punctuation.replace('!', ''):
-        print('Такой комманды не существует. Введите !help для просмотра функций.')
+    elif type_of_command == 2:
+        path = command.split('.')
+        updating_dict(collection, path, argument)
     else:
-        if '=' in line:
-            tree_elements, value = line.split('=')
-            tree_elements, value = tree_elements.strip(), value.strip()
-            path = tree_elements.split('.')
-            updating_dict(collection, path, value)
-        else:
-            print('Такой комманды не существует. Введите !help для просмотра функций.')
+        print('Такой комманды не существует. Введите !help для просмотра функций.')
