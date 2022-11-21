@@ -5,10 +5,10 @@
 каждая из которых должна начинаться с новой строки.
 """
 
-str_1, str_2, str_3, str_4 = list(map(lambda x: x+'\n', [input('Enter string: ') for _ in range(4)]))
+lines = list(map(lambda x: x+'\n', [input('Enter string: ') for _ in range(4)]))
 
 with open('task_2.txt', 'w') as f:
-    f.write(str_1+str_2)
+    f.writelines(lines[:2])
 
 with open('task_2.txt', 'a') as f:
-    f.write(str_3+str_4)
+    f.writelines(lines[2:])
