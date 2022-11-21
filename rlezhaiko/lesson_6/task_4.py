@@ -7,20 +7,17 @@ from random import randint
 import json
 import csv
 
-dict_of_users = {}
+list_of_users = []
 with open('task_3_data.json', 'r') as f:
-    dict_of_users = json.load(f)
+    list_of_users = json.load(f)
+
+rows = [['id', 'name', 'age', 'phone']]
+phone_numbers = [str(randint(100, 999)) + '-' + str(randint(0, 99)) + '-' + str(randint(0, 99)) for _ in range(len(list_of_users))]
+for user in list_of_users:
+    list_tmp = list(user.values())
+    list_tmp.append(phone_numbers[list_of_users.index(user)])
+    rows.append(list_tmp)
 
 with open('task_4_data.csv', 'w', newline='') as f:
     csv_writer = csv.writer(f, delimiter=',')
-    rows, headers = [], ['id', 'name', 'age', 'phone']
-    rows.append(headers) 
-    keys, values = list(dict_of_users.keys()), list(dict_of_users.values()) 
-    phone_numbers = [str(randint(100, 999)) + '-' + str(randint(0, 99)) + '-' + str(randint(0, 99)) for _ in range(len(keys))]
-    
-    for element in values:
-        element.insert(0, keys[values.index(element)])
-        element.append(phone_numbers[values.index(element)])
-    
-    rows += values
     csv_writer.writerows(rows)
