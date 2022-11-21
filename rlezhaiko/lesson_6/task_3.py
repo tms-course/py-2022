@@ -7,12 +7,8 @@
 from random import randint
 import json
 
-tuples_of_users = [(i, randint(10, 100)) for i in ['John', 'Silva', 'Kate', 'Sam', 'Adam', 'Julia']]
-dict_of_users = {}.fromkeys([randint(100000, 999999) for _ in range(6)], None)
-i = 0
-for key, _ in dict_of_users.items():
-    dict_of_users[key] = tuples_of_users[i]
-    i += 1
+dict_of_users = {randint(100000, 999999): (i, randint(10, 100)) for i in ['John', 'Silva', 'Kate', 'Sam', 'Adam', 'Julia']}
+list_of_users = [{'id': identificator, 'name': name, 'age': age} for identificator, (name, age) in dict_of_users.items()]
 
 with open('task_3_data.json', 'w') as f:
-    json.dump(dict_of_users, f)
+    json.dump(list_of_users, f)
