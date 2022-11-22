@@ -17,12 +17,6 @@ class Point:
     def __eq__(self, other):
         return other.x == self.x and other.y == self.y
 
-    def __repr__(self):
-        return repr(f'Point object. x = {self.x}, y = {self.y}, distance from origin = {self.distance_from_origin()}')
-
-    def __str__(self):
-        return f'x = {self.x} y = {self.y}, distance from origin = {self.distance_from_origin()}'
-
 
 class Circle(Point):
     def __init__(self, radius: int):
@@ -55,11 +49,4 @@ class Circle(Point):
 
     def __eq__(self, other):
         return self.radius == other.radius
-
-    def __repr__(self):
-        return repr(f'Circle object. Radius = {self.radius}')
-
-    def __str__(self):
-        return f'Radius = {self.radius}'
-
 
