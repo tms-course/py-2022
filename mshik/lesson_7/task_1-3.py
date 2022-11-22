@@ -98,7 +98,7 @@ class Point:
         """
         Args:
             x (float): Point x
-            y (flaot): Point y
+            y (float): Point y
         """
         self.x = x
         self.y = y
@@ -122,7 +122,7 @@ class Circle(Point):
         Args:
             other (Circle): Circle to substract
         Returns:
-            obj (Circle | Point): Returns point, if radius of both circle are the same, otherwise Circle
+            obj (Circle | Point): Returns Point, if radius of both circle are the same, otherwise Circle
         """
         x = self.x - other.x
         y = self.y - other.y
