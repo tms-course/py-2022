@@ -92,7 +92,6 @@ tesla_plaid.birthday()
 print(tesla_plaid.brand, tesla_plaid.age, tesla_plaid.mark, tesla_plaid.max_speed, tesla_plaid.color, tesla_plaid.weight)
 
 
-
 class Point:
     def __init__(self, x: float, y: float) -> None:
         """
@@ -106,6 +105,7 @@ class Point:
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({self.x}, {self.y})"
 
+    
 class Circle(Point):
     def __init__(self, center_x: float, center_y: float, radius: float) -> None:
         """
