@@ -63,22 +63,26 @@ def printing_element(path: list, data: dict) -> None:
     print(json.dumps(data, indent=4))
 
 
-def updating_dict(data: dict, paths: list, value: str) -> None:
+def updating_dict(data: dict, path: list, value: str) -> None:
     """
     Updating dict function.
     
     :param data: data in dict format
-    :param paths: the list of path
+    :param path: the list of path
     :param value: the value to add
     :returns: return None
     """
-    for path in paths:
-        if paths.index(path) == len(paths) - 1:
-            data.update({path: int(value) if value.isdigit() else value.strip()})
+    while len(path):
+        key = path.pop(0)
+
+        if key not in data:
+            data[key] = data.get(key, {})
         else:
-            if not (path in data and hasattr(data[path], 'values')):
-                data.update({path: {paths[paths.index(path) + 1]: 0}})
-            data = data[path]
+            data[key] = {} if len(path) else data.get(key)
+    
+        if len(path) == 0:
+            data.update({key: int(value) if value.isdigit() else value.strip()})
+        data = data[key]
 
 
 def delete_element(data: dict, paths: list) -> None:
@@ -112,20 +116,16 @@ def parsing_command(line: str) -> list:
         if ' ' in line:
             list_tmp.extend(line.split())
         else:
-            list_tmp.append(line)
-            list_tmp.append('')
+            list_tmp.extend([line, ''])
     elif line[0] not in punctuation.replace('!', '', 1):
         type_of_command = 2
         if line.count('=') == 1:
             command, argument = line.split('=')
             command, argument = command.strip(), argument.strip()
-            list_tmp.append(command)
-            list_tmp.append(argument)
+            list_tmp.extend([command, argument])
         else:
             type_of_command = 0 
-            list_tmp.append('')
-            list_tmp.append('')   
-    
+            list_tmp.extend(['', ''])  
     
     if type_of_command:
         flag_valid = not (list_tmp[0] == 'exit' and len(list_tmp[1]) > 0) or (len(list_tmp[1]) >= 2)
