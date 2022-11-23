@@ -33,23 +33,6 @@ x = 20 - создает либо обновляет элемент, поддер
 print('Введите !help для просмотра функций.')
 
 
-def find_all_keys_in_dict(dictionary: dict, list_of_path: list = [], path: tuple = ()) -> list:
-    """
-    Find all keys in dict function.
-    
-    :param dictionary: the dictionary
-    :param list_of_path: the list of paths
-    :param path: path in tuple
-    :returns: return list of paths
-    """        
-    for key, value in dictionary.items():
-        key_path = path + (key,)
-        list_of_path.append(key_path)
-        if hasattr(value, 'items'):
-            find_all_keys_in_dict(value, list_of_path, key_path)
-    return list_of_path
-
-
 def printing_element(path: list, data: dict) -> None:
     """
     Printing element function.
@@ -101,6 +84,29 @@ def delete_element(data: dict, paths: list) -> None:
         delete_element(data, paths)
 
 
+def check_valid_path(data: dict, key_to_find: list) -> bool:
+    """
+    Delete element function.
+    
+    :param data: data in dict format
+    :param paths: the list of path
+    :returns: return True if valid path, False otherwise
+    """
+    flag_valid = True
+    while len(key_to_find):
+        current_key = key_to_find.pop(0)
+        if type(data) == dict:
+            if current_key in data:
+                data = data[current_key]
+            else:
+                flag_valid = False
+                break
+        else:
+            flag_valid = False
+            break
+    return flag_valid
+
+
 def parsing_command(line: str) -> list:
     """
     Parsing command and check line for valid value function.
@@ -134,24 +140,6 @@ def parsing_command(line: str) -> list:
     return list_tmp
 
 
-def check_argument_for_valid(list_of_paths: list, argument: str) -> list:
-    """
-    Check argument for valid function.
-    
-    :param list_of_paths: the list of paths
-    :param argument: the argument
-    :returns: return list with path in tuple and True if argument in collection, False otherwise 
-    """
-    path_tuple, flag_valid_argument, list_tmp = (), False, []
-    for path in list_of_paths:
-        if argument in path:
-            path_tuple = path
-            flag_valid_argument = True
-            break
-    list_tmp.append(path_tuple)
-    list_tmp.append(flag_valid_argument)
-    return list_tmp
-
 
 def run_command(command: str, argument: str) -> bool:
     """
@@ -166,11 +154,9 @@ def run_command(command: str, argument: str) -> bool:
         if argument == '*':
             print(json.dumps(collection, indent=4))
         else:    
-            list_of_paths = find_all_keys_in_dict(collection)
-            path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
-            list_of_paths.clear()
+            flag_valid_argument = check_valid_path(collection, argument.split('.'))
             if flag_valid_argument:
-                printing_element(list(path_tuple), collection)
+                printing_element(argument.split('.'), collection)
             else:
                 print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'save':
@@ -183,11 +169,9 @@ def run_command(command: str, argument: str) -> bool:
             with open(dirpath + '/' + filename, 'w') as f:
                 json.dump(collection, f)
     elif command == 'del':
-        list_of_paths = find_all_keys_in_dict(collection)
-        path_tuple, flag_valid_argument = check_argument_for_valid(list_of_paths, argument)
-        list_of_paths.clear()
+        flag_valid_argument = check_valid_path(collection, argument.split('.'))
         if flag_valid_argument:
-            delete_element(collection, list(path_tuple))
+            delete_element(collection, argument.split('.'))
         else:
             print(f'Ключа "{argument}" нет в коллекции')
     elif command == 'help':
