@@ -7,11 +7,11 @@ def dublicate(lst: list) -> dict:
     """
     Функция считает сколько каких цифр в списке
     """
-    dict_1 = {}
+    dict_count_num = {}
     for i in lst:
-        dict_1[i] = dict_1.get(i, 0) + 1
+        dict_count_num[i] = dict_count_num.get(i, 0) + 1
 
-    return dict_1
+    return dict_count_num
 
 
 print(dublicate(list_1))

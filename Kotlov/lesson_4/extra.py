@@ -1,11 +1,7 @@
 from sys import argv
 
-if argv[1] == '-n':
-    n = int(argv[2])
-    k = int(argv[4])
-else:
-    k = int(argv[2])
-    n = int(argv[4])
+n = argv[argv.index('-n') + 1]
+k = argv[argv.index('-k') + 1]  # так argv хранит все в списке мы можем достать любой элемент
 
 our_text = input().lower()  # Вводим наш текст и приводим его к одинаковому регистру
 
@@ -19,21 +15,21 @@ word_count = {}  # Создаём словарь элементами котор
 for i in our_text:
     word_count[i] = word_count.get(i, 0) + 1
 
-word_count_2 = {}
+number_of_different_words = {}
 
 for key, value in word_count.items():
-    if value in word_count_2:
-        word_count_2[value] = word_count_2.get(value) + [key]
+    if value in number_of_different_words:
+        number_of_different_words[value] = number_of_different_words.get(value) + [key]
     else:
-        word_count_2[value] = [key]
+        number_of_different_words[value] = [key]
 
 count_n = 0
 
 while count_n < n:
-    max_key = max(word_count_2)
+    max_key = max(number_of_different_words)
     print(max_key, end=' ')
-    print(*word_count_2[max_key][:k], sep=', ')
+    print(*number_of_different_words[max_key][:k], sep=', ')
     count_n += 1
-    del word_count_2[max_key]
-    if word_count_2 == {}:
+    del number_of_different_words[max_key]
+    if number_of_different_words == {}:
         break
