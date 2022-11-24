@@ -131,7 +131,7 @@ class Circle(Point):
         y = self.y - other.y
         if abs(self.radius - other.radius) == 0:
             return Point(x, y)
-        return Circle(x, y, abs(self.radius) - abs(other.radius))
+        return Circle(x, y, abs(self.radius - other.radius))
     
     
     def edge_distance_from_origin(self) -> float:
