@@ -114,8 +114,9 @@ def parsing_command(line: str) -> list:
     :param line: the line for parsing
     :returns: return list with True if right line, False otherwise, type_of_command, command, argument
     """
+    line = line.strip()
     list_tmp = []
-    type_of_command, flag_valid = 0, False
+    type_of_command = 0
     if line[0] == '!':
         type_of_command = 1
         line = line.replace('!', '', 1)
@@ -133,10 +134,7 @@ def parsing_command(line: str) -> list:
             type_of_command = 0 
             list_tmp.extend(['', ''])  
     
-    if type_of_command:
-        flag_valid = not (list_tmp[0] == 'exit' and len(list_tmp[1]) > 0) or (len(list_tmp[1]) >= 2)
-    list_tmp.insert(0, flag_valid)
-    list_tmp.insert(1, type_of_command)
+    list_tmp.insert(0, type_of_command)
     return list_tmp
 
 
@@ -185,14 +183,10 @@ def run_command(command: str, argument: str) -> bool:
 
 
 for line in stdin:
-    line = line.strip()
-    valid, type_of_command, command, argument = parsing_command(line)
+    type_of_command, command, argument = parsing_command(line)
     if type_of_command == 1:
-        if valid:
-            if run_command(command, argument):
-                break
-        else:
-            print('Такой комманды не существует. Введите !help для просмотра функций.')
+        if run_command(command, argument):
+            break
     elif type_of_command == 2:
         path = command.split('.')
         updating_dict(collection, path, argument)
