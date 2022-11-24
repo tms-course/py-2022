@@ -55,7 +55,7 @@ class Point(object):
         :param other: other object of class 
         :returns: return True if equals, False otherwise
         """
-        return self is other
+        return (self.x == other.x) and (self.y == other.y)
     
     
     def distance_from_origin(self) -> float:
@@ -129,7 +129,7 @@ class Circle(Point):
         """
         x = self.x - other.x
         y = self.y - other.y
-        if abs(self.radius) - abs(other.radius) == 0:
+        if abs(self.radius - other.radius) == 0:
             return Point(x, y)
         return Circle(x, y, abs(self.radius) - abs(other.radius))
     
