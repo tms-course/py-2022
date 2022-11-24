@@ -65,7 +65,7 @@ class Point(object):
         :param self: self object of class 
         :returns: return float value from point to origin
         """
-        return sqrt(abs(self.x) ** 2 + abs(self.y) ** 2)
+        return sqrt(self.x ** 2 + self.y ** 2)
 
 
 class Circle(Point):
@@ -116,7 +116,7 @@ class Circle(Point):
         :param other: other object of class 
         :returns: return True if equals, False otherwise
         """
-        return self is other
+        return (self.x == other.x) and (self.y == other.y) and (self.radius == other.radius)
     
     
     def __sub__(self, other: Circle) -> Circle | Point:
@@ -129,9 +129,10 @@ class Circle(Point):
         """
         x = self.x - other.x
         y = self.y - other.y
-        if abs(self.radius - other.radius) == 0:
+        difference = abs(self.radius - other.radius)
+        if difference == 0:
             return Point(x, y)
-        return Circle(x, y, abs(self.radius - other.radius))
+        return Circle(x, y, difference)
     
     
     def edge_distance_from_origin(self) -> float:
