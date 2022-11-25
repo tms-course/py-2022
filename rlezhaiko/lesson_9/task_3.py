@@ -10,8 +10,7 @@ class Registry(type):
     
     Metaclass fixed all new instances
     """
-    instances = 0
-    def __new__(cls, name, bases, attr):
+    def __new__(cls, name, bases, attr) -> None:
         """ 
         __new__ function
         
@@ -21,26 +20,25 @@ class Registry(type):
         :param attr: attr of class
         :returns: return None
         """
+        attr['instances'] = attr.get('i', 0)
         return type.__new__(cls, name, bases, attr)
-
-
-class Entry(metaclass=Registry):
-    """
-    Class Entry
     
-    Creates an instance of a Entry class
-    """
-    def __init__(self) -> None:
+    
+    def __call__(self) -> None:
         """ 
-        __init__ function
+        __call__ function
         
-        :param self: self object of class
+        :param self: self
         :returns: return None
         """
-        Registry.instances += 1
+        self.instances += 1
+    
+
+class Entry(metaclass=Registry):
+    pass
 
 
 for _ in range(100):
     _ = Entry()
 
-print(Registry.instances)
+print(Entry.__dict__)
