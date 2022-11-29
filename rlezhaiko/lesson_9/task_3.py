@@ -8,30 +8,22 @@ class Registry(type):
     """
     Class Registry
     
-    Metaclass fixed all new instances
+    Metaclass counting all new instances
     """
+    instances = 0
     def __new__(cls, name, bases, attr) -> None:
         """ 
-        __new__ function
-        
         :param cls: cls
         :param name: name of class
         :param bases: parent of class
         :param attr: attr of class
-        :returns: return None
         """
-        attr['instances'] = attr.get('i', 0)
         return type.__new__(cls, name, bases, attr)
     
     
     def __call__(self) -> None:
-        """ 
-        __call__ function
-        
-        :param self: self
-        :returns: return None
-        """
-        self.instances += 1
+        if self.__name__ == 'Entry':
+            Registry.instances += 1
     
 
 class Entry(metaclass=Registry):
@@ -41,4 +33,4 @@ class Entry(metaclass=Registry):
 for _ in range(100):
     _ = Entry()
 
-print(Entry.__dict__)
+print(Registry.__dict__)

@@ -8,12 +8,8 @@
 class User(object):
     def __init__(self, email: str = '', password: str = '') -> None:
         """ 
-        __init__ function
-        
-        :param self: self object of class
         :param email: email
         :param password: password
-        :returns: return None
         """
         self.__email = email
         self.__password = password
@@ -23,20 +19,17 @@ class User(object):
         """ 
         Get email function
         
-        :param self: self object of class
         :returns: return str
         """
         print('Getter email work...')
-        return f'{self.__email}'
+        return self.__email
     
     
     def set_email(self, email) -> None:
         """ 
         Set email function
         
-        :param self: self object of class
         :param email: email of object
-        :returns: return None
         """
         print('Setter email work...')
         self.__email = email
@@ -46,20 +39,17 @@ class User(object):
         """ 
         Get password function
         
-        :param self: self object of class
         :returns: return str
         """
         print('Getter password work...')
-        return f'{self.__password}'
+        return self.__password
     
     
     def set_password(self, password) -> None:
         """ 
         Set password function
         
-        :param self: self object of class
         :param password: password of object
-        :returns: return None
         """
         print('Setter password work...')
         self.__password = password
