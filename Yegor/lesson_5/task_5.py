@@ -8,23 +8,25 @@ Task_5, Lesson_5
 5.4r     ->   Вы ввели не корректное число: 5.4r
 -.777    ->   Вы ввели отрицательно дробное число: -0.777
 """
-def add_str(x) -> str:
+def func(numbers) -> str:
     f = ''
-    if len(x) != len(list(filter(lambda f:  f.isdigit() or f == '.' or f == '-', x))):
-        return f'Вы ввели некорректное число: {x}'
-    if x[0] == '-':
+    if len(numbers) != len(list(filter(lambda f:  f.isdigit() or f == '.' or f == '-', numbers))):
+        return f'Вы ввели некорректное число: {numbers}'
+    if numbers[0] == '-':
         f = 'отрицательное'
     else:
         f = 'положительное'
 
-    if x[1::].find('-') != -1:
-        return f'Вы ввели некорректное число: {x}'
-    if x.find('.') != -1:
-        return f'Вы ввели {f} дробное число: {x}'
-    return f'Вы ввели {f} целое число:  {x}'
+    if numbers[1::].find('-') != -1:
+        return f'Вы ввели некорректное число: {numbers}'
+    if numbers.find('.') != -1:
+        return f'Вы ввели {f} дробное число: {numbers}'
+    return f'Вы ввели {f} целое число:  {numbers}'
+
+
 while True:
-    x = input('введите число:')
-    print(add_str(x))
+    numbers = input('введите число:')
+    print(func(numbers))
 
 
 
