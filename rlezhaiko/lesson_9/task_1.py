@@ -15,43 +15,47 @@ class ContentAnalyzer(object):
     """
     def __init__(self, filepath: str) -> None:
         """ 
-        __init__ function
-        
-        :param self: self object of class
         :param filepath: filepath
-        :returns: return None 
         """
         self.filepath = filepath
     
     
-    @staticmethod
-    def analyze(filepath: str) -> list:
+    def analyze(self):
         """ 
-        Analyze function (staticmethod)
+        Analyze function
         
-        :param self: self object of class
+        Read file by filepath and send text to staticmethod data_analyze
+        """
+        with open(self.filepath, 'r') as f:
+            data = f.read()
+            returns = self.data_analyze(data)
+            print(returns)
+    
+    
+    @staticmethod
+    def data_analyze(data: str) -> list:
+        """ 
+        Data analyze function (staticmethod)
+        
         :returns: return list of tuples 
         """
-        flag_valid, filepath, sub_str, list_tmp = False, filepath.strip(), '', []
-        if len(filepath) > 7:
-            sub_str = filepath[:7]
+        flag_valid, data, sub_str, list_tmp = False, data.strip(), '', []
+        if len(data) > 7:
+            sub_str = data[:7]
         
-        words = filepath.split()
+        words = data.split()
         words_with_more_one_d = list(filter(lambda x: x.count('d') == 2, words))
         if len(words) > 10:
-            if filepath.count('{') == filepath.count('}'):
+            if data.count('{') == data.count('}'):
                 if len(words_with_more_one_d) >= 2:
                     flag_valid = True
-       
-        list_tmp.insert(0, flag_valid)
-        list_tmp.append(sub_str)
+        
+        tuple_tmp_1 = (flag_valid,)
+        tuple_tmp_2 = (sub_str,)
+        list_tmp.extend([tuple_tmp_1, tuple_tmp_2])
         return list_tmp
 
 
-path = 'aa bb cc dd ff ee gg hh jj {} dd'
-lst = ContentAnalyzer.analyze(path)
-if lst[0]:
-    print(f'Path valid: {lst[0]}')
-    c = ContentAnalyzer(path) 
-else:
-    print(f'Path valid: {lst[0]}')
+path = 'data/text.txt'
+ca = ContentAnalyzer(path)
+ca.analyze()
