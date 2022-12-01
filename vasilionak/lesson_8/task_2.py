@@ -10,7 +10,32 @@ import time
 
 
 class Auto:
+"""
+Base class Auto
+    Attributes:
+    brand: str 
+    age: int 
+    mark: int 
+    color: str = None 
+    weight: float = None
+    
+    Methods:
+        move(): Print move
+        stop(): Print stop
+        birthday(): Increases an age by one
+        """
+
+
     def __init__(self, brand: str, age: int, mark: str, color: str = None, weight: float = None) -> None:
+        """
+        Initialisation of Auto object
+        :param brand: Auto's brand
+        :param age: Auto's age
+        :param mark: Auto's mark
+        :param color: Auto's color, None by default
+        :param weight: Auto's weight, None by default
+        """
+        
         self.brand = brand
         self.age = age
         self.mark = mark
@@ -18,36 +43,91 @@ class Auto:
         self.weight = weight
 
     def move(self):
+    """Print move"""
         print("move")
 
     def stop(self):
+    """Print stop"""
         print("stop")
 
     def birthday(self):
-        print(self.age + 1)
+    """Increases an age by one"""
+        self.age += 1
+        print(self.age)
 
 
 class Truck(Auto):
+"""
+Inherited class Truck
+    Attributes:
+    brand: str 
+    age: int 
+    mark: int
+    max_load: float
+    color: str = None 
+    weight: float = None
+    
+    Methods:
+        move(): Prints attention, then move
+        load(): Sleeps for a second, then print load, after sleeps 1 more second
+        """
+
     def __init__(self, brand: str, age: int, mark: str, max_load: float, color: str = None, weight: float = None) -> None:
+        """
+        Init Truck object
+        :param brand:
+        :param age:
+        :param mark:
+        :param max_load:
+        :param color:
+        :param weigth:
+        """
         super().__init__(brand, age, mark, color, weight)
         self.max_load = max_load
 
     def move(self):
+    """Prints attention, then move"""
         print('Atention')
         super().move()
 
     def load(self):
+    """Sleeps for a second, then print load, after sleeps 1 more second"""
         time.sleep(1)
         print('load')
         time.sleep(1)
 
 
 class Car(Auto):
+"""
+Inherited class Car
+    Attributes:
+    brand: str 
+    age: int 
+    mark: int
+    max_speed: int
+    color: str = None 
+    weight: float = None
+    
+    Methods:
+        move(): Print max_speed
+        """
+       
     def __init__(self, brand: str, age: int, mark: str, max_speed: int, color: str = None, weight: float = None) -> None:
+        """
+        Init Truck object
+        :param brand:
+        :param age:
+        :param mark:
+        :param max_speed:
+        :param color:
+        :param weigth:
+        """
+        
         super().__init__(brand, age, mark, color, weight)
         self.max_speed = max_speed
 
     def move(self):
+    """Print max_speed"""
         super().move()
         print(f'Max speed {self.max_speed}')
 
