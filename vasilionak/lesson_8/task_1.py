@@ -44,10 +44,11 @@ class Auto:
 
     def birthday(self):
     """Increases an age by one"""
-        print(self.age + 1)
+        self.age += 1
+        print(self.age)
 
-jacket = Auto('Audi', 5, 5)
-jacket.birthday()
-print(jacket.__dict__)
+Audi = Auto('Audi', 5, 5)
+Audi.birthday()
+print(Audi.__dict__)
 
 
