@@ -10,6 +10,6 @@ third_line = input('Введите третью строку ')
 fourth_line = input('Введите четвёртую строку ')
 with open('task_2.txt', 'w') as f:
     f.write(f"{first_line}\n{second_line}\n")
-    f.close()
+
 with open('task_2.txt', 'a') as f:
     f.write(f"{third_line}\n{fourth_line}\n")
