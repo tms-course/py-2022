@@ -8,92 +8,25 @@ Task_5, Lesson_5
 5.4r     ->   Вы ввели не корректное число: 5.4r
 -.777    ->   Вы ввели отрицательно дробное число: -0.777
 """
-def func(numbers) -> str:
-    f = ''
-    if len(numbers) != len(list(filter(lambda f:  f.isdigit() or f == '.' or f == '-', numbers))):
+def analyze_number(numbers: str) -> str:
+    numbers_sign = 0
+    numbers_sign2 = 0
+    if len(numbers) != len(list(filter(lambda f: f.isdigit() or f == '.' or f == '-', numbers))) or (
+            numbers[1::].find('-') != -1):
         return f'Вы ввели некорректное число: {numbers}'
-    if numbers[0] == '-':
-        f = 'отрицательное'
+    for char in numbers:
+        if char == '.':
+            numbers_sign = 1
+        if char == '-':
+            numbers_sign2 = 1
+    if numbers_sign == 1 and numbers_sign2 == 1:
+        return("Вы ввели отрицательное дробное число")
+    if numbers_sign == 1 and numbers_sign2 != 1:
+        return ("Вы ввели положительное дробное число")
+    if numbers_sign2 == 1:
+        return("Вы ввели отрицательное целое число")
     else:
-        f = 'положительное'
-
-    if numbers[1::].find('-') != -1:
-        return f'Вы ввели некорректное число: {numbers}'
-    if numbers.find('.') != -1:
-        return f'Вы ввели {f} дробное число: {numbers}'
-    return f'Вы ввели {f} целое число:  {numbers}'
-
-
+        return ("Вы ввели положительное целое число")
 while True:
     numbers = input('введите число:')
-    print(func(numbers))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def analyze_string_number(string_number: str) -> str:
-    is_minus_on_correct_place = (
-            (string_number[0] == '-' and string_number.count('-') == 1) or
-            (string_number[0] != '-' and string_number.count('-') == 0)
-    )
-
-    valid_chars = list(filter(lambda x: (x.isdigit() or x == '.' or x == '-'), string_number))
-    if len(valid_chars) < len(string_number) or not is_minus_on_correct_place:
-        return f'Вы ввели не корректное число {string_number}'
-
-    sign = 'положительное' if string_number[0] != '-' else 'отрицательное'
-    if string_number.find('.') != -1:
-        return f'Вы ввели {sign} дробное число {float(string_number)}'
-
-    return f'Вы ввели {sign} целое число {int(string_number)}'
-
-
-while True:
-    n = str(input())
-    print(analyze_string_number(n))
+    print(analyze_number(numbers))
