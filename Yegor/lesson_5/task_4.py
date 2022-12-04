@@ -3,22 +3,22 @@ Task_4, Lesson_5
 Написать декоратор к 2-м любым функциям, которые бы считали и выводили время их выполнения.
 """
 from datetime import datetime
-def func_1(x):
-    print(x)
+def print_str(string):
+    print(string)
     print('hello world')
 
-def fact(x):
-    if x == 0:
+def fact(number):
+    if number == 0:
         return 1
-    return x*fact(x-1)
+    return number * fact(number - 1)
 
-def decorate(x):
-    def func_2(*args):
+def decorator(func):
+    def wrapper(*args):
         time = datetime.now()
-        x(*args)
+        func(*args)
         end_time = datetime.now()
         return end_time-time
-    return func_2
-print(decorate(func_1)(5))
-print(decorate(fact)(5))
+    return wrapper
+print(decorator(print_str)(5))
+print(decorator(fact)(5))
 

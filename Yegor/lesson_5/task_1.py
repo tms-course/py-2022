@@ -4,5 +4,4 @@ Task_1, Lesson_5
 то выдает слово "чётное", если нет — то "нечётное".
 """
 random_number = int(input('введите число:'))
-x = (lambda x: 'четное' if x % 2 == 0 else 'нечетное')
-print(x(random_number))
+print((lambda x: 'четное' if x % 2 == 0 else 'нечетное')(random_number))
