@@ -1,6 +1,6 @@
 """ Check even or odd number is entered
 
-:param num: inputing the number needed to check
+:param num: the number needed to check
 :param num_to_check: calling the number to check even it's odd or even
 :returns: even or odd
 """

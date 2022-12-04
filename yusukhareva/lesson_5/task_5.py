@@ -1,20 +1,19 @@
-#ДОДЕЛАТЬ!
 """
-Перевод строки в число
-:param:
-:param:
-returns number or error
+Перевод строки в число и проверка, дробное оно или целое (отрицательные целые числа будут относиться к дробным отрицательным)
+:param num_to_check: число, которое нужно проверить 
+returns Число целое, либо дробное положительно, либо дробное отрицательное, либо ошибка
 """
-inp_str = str(input())
-def numb(inp_str):
-    numb = inp_str.isdigit()
-    if numb == True:
-        if type (inp_str) == int:
-            print ( "Вы ввели целое число: ", inp_str)
-        elif type(inp_str) == float and inp_str < 0:
-            print ("Вы ввели отрицательное дробное число: ", inp_str)
-        elif type(inp_str) == float and inp_str > 0:
-            print ("Вы ввели положительное дробное число: ",inp_str)
-    else:
-        print ("Вы ввели некорректное число: ", inp_str)
-print(numb(inp_str))
+def str_check(num_to_check: str):
+    if num_to_check.isdigit():
+        print ( "Вы ввели целое число: ", num_to_check)
+    else:   
+        try:
+            num_to_check = float(num_to_check) 
+            if num_to_check < 0:
+                print ("Вы ввели отрицательное дробное число: ", num_to_check)
+            elif num_to_check > 0:
+                print ("Вы ввели положительное дробное число: ", num_to_check)
+        except:
+            print ("Вы ввели некорректное число: ", num_to_check)
+    
+str_check(input())
