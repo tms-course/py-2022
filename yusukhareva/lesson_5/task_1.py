@@ -6,4 +6,4 @@
 """
 
 num = int(input("Enter number to check: "))
-print ('odd') if (lambda num_to_check : num_to_check%2==0)(num) == False else print ('even')
+print((lambda num: 'even' if num % 2 == 0 else 'odd')(num))
