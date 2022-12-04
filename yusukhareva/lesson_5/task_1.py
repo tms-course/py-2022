@@ -1,10 +1,9 @@
 """ Check even or odd number is entered
 
-:param num_to_check: the number needed to check
-:param rem_of devision: teh remainder of the devision 
+:param num: inputing the number needed to check
+:param num_to_check: calling the number to check even it's odd or even
 :returns: even or odd
 """
 
-num_to_check = int(input("Enter number to check: "))
-print (lambda rem_of_devision: rem_of_devision%2==0)(num_to_check)
-
+num = int(input("Enter number to check: "))
+print ('odd') if (lambda num_to_check : num_to_check%2==0)(num) == False else print ('even')
