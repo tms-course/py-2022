@@ -5,7 +5,7 @@ number = int(input('Введите число: ')) # чтобы в будуще�
 
 def check_time(func):
     """Декоратор отвечает за время выполнения"""
-    def wrapper(*args: int):
+    def wrapper(*args):
         start = datetime.now()
         res = func(*args)
         print(datetime.now() - start)
