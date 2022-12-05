@@ -1,6 +1,4 @@
 
+number = int(input('Введите число: '))
 
-result = (lambda x=int(input('Введите число: ')): print('чётное') if x % 2 == 0 else print('нечётное'))
-
-
-result()
+print((lambda x: 'чётное' if x % 2 == 0 else 'нечётное')(number))
