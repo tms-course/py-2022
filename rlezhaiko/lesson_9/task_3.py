@@ -6,8 +6,6 @@
 
 class Registry(type):
     """
-    Class Registry
-    
     Metaclass counting all new instances
     """
     instances = 0

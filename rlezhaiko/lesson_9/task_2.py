@@ -5,7 +5,11 @@
 этих полей должны логироваться (выфводит в терминал, что произошло)
 """
 
+
 class User(object):
+    """
+    Creates an instance of User class, where instance have email and password attribute
+    """
     def __init__(self, email: str = '', password: str = '') -> None:
         """ 
         :param email: email
@@ -16,9 +20,7 @@ class User(object):
     
 
     def get_email(self) -> str:
-        """ 
-        Get email function
-        
+        """
         :returns: return str
         """
         print('Getter email work...')
@@ -26,9 +28,7 @@ class User(object):
     
     
     def set_email(self, email) -> None:
-        """ 
-        Set email function
-        
+        """
         :param email: email of object
         """
         print('Setter email work...')
@@ -36,9 +36,7 @@ class User(object):
     
     
     def get_password(self) -> str:
-        """ 
-        Get password function
-        
+        """
         :returns: return str
         """
         print('Getter password work...')
@@ -47,8 +45,6 @@ class User(object):
     
     def set_password(self, password) -> None:
         """ 
-        Set password function
-        
         :param password: password of object
         """
         print('Setter password work...')
