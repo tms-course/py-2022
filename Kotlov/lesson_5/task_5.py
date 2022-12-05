@@ -10,17 +10,15 @@ def number(value: str) -> bool:
     for i in value:  # Считаем кол-во - и .
         if i == '.':
             count_odd += 1
-        if i == '-':
+            if count_odd > 1:
+                return False
+        elif i == '-':
             count_minus += 1
-    if count_odd > 1 or ('-' in value and ('-' != value[0] or count_minus > 1)):
-        """Проверка на правильное расположение и правильное кол-во знаков - и . в числе"""
-        return False
-    else:
-        """Проверка на цифры,-,."""
-        results = list(filter(lambda x: x.isdigit() or x in ['-', '.'], value))
-        if False in results:
+            if '-' != value[0] or count_minus > 1:
+                return False
+        elif not i.isdigit():
             return False
-        return True
+    return True
 
 
 def is_digit(value: str) -> str:
