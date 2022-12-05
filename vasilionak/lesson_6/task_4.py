@@ -16,10 +16,10 @@ with open('file_3.csv', 'w') as f:
     writer = csv.writer(f)
     writer.writerow(['id', 'Name', 'Age', 'Phone'])
 
-    i = 0
-    for phone in data:
-        number_phone = [f'375(44){randint(100, 999)}-{randint(10,99)}-{randint(10,99)}' for _ in range(5)]
+    
+
     for key, value in data.items():
-        writer.writerow((key, value[0], value[1], number_phone[i]))
-        i += 1
+        
+        writer.writerow(key, value[0], value[1], value[2])
+        value[2].items = [f'375(44){randint(100, 999)}-{randint(10,99)}-{randint(10,99)}']
 
