@@ -10,20 +10,20 @@ Task_5, Lesson_5
 """
 def analyze_number(numbers: str) -> str:
     if numbers[0] == '-':
-        numbers_sign = 'отрицательное'
+        sign_of_number = 'отрицательное'
     else:
-        numbers_sign = 'положительное'
+        sign_of_number = 'положительное'
     if numbers[0] == '.' or numbers[0].isdigit() == False and numbers[0] != '-':
         return f'Вы ввели неккоректное число: {numbers}'
-    temp_answer = ''
+    prediction = ''
     for char in numbers[1:]:
         if char == '.':
-            temp_answer = f'Вы ввели {numbers_sign} дробное число: {numbers}'
+            prediction = f'Вы ввели {sign_of_number} дробное число: {numbers}'
         if char.isdigit() == False and char != '.':
             return f'Вы ввели неккоректное число: {numbers}'
-    if temp_answer != '':
-        return temp_answer
-    return f'Вы ввели {numbers_sign} целое число: {numbers}'
+    if prediction != '':
+        return prediction
+    return f'Вы ввели {sign_of_number} целое число: {numbers}'
 while True:
     numbers = input('введите число:')
     print(analyze_number(numbers))
