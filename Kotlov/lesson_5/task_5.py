@@ -17,7 +17,7 @@ def number(value: str) -> bool:
         return False
     else:
         """Проверка на цифры,-,."""
-        results = list(map(lambda x: x.isdigit() or x in ['-', '.'], value))
+        results = list(filter(lambda x: x.isdigit() or x in ['-', '.'], value))
         if False in results:
             return False
         return True
