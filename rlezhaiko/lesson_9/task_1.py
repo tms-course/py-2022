@@ -44,21 +44,24 @@ class ContentAnalyzer(object):
         :returns: return tuple of boolean valid data and substring of data
         """
         data = data.rstrip('\n')
-        flag_valid = False
+        # flag_valid = False
         sub_str = data[:7]
-        valid_brackets = ContentAnalyzer.check_brackets(data)
+        if not ContentAnalyzer.check_brackets(data):
+            return (False, sub_str)
 
         for i in range(len(data)):
             if data[i] in punctuation:
                 data = data.replace(data[i], ' ')
 
         words = data.split()
+        if len(words) < 10:
+            return (False, sub_str)
+
         words_with_more_one_d = list(filter(lambda x: x.count('d') == 2, words))
+        if len(words_with_more_one_d) < 2:
+            return (False, sub_str)
         
-        if (len(words) > 10) and (len(words_with_more_one_d) >= 2) and valid_brackets:                
-                flag_valid = True
-        
-        return (flag_valid, sub_str)
+        return (True, sub_str)
     
 
     @staticmethod
@@ -79,7 +82,7 @@ class ContentAnalyzer(object):
             if counter == -1:
                 break
         
-        return True if counter == 0 else False
+        return counter == 0
 
 
 path = 'data/text.txt'
