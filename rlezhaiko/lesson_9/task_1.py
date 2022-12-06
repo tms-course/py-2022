@@ -51,7 +51,7 @@ class ContentAnalyzer(object):
         for i in range(len(data)):
             if data[i] in punctuation:
                 data = data.replace(data[i], ' ')
-                
+
         words = data.split()
         words_with_more_one_d = list(filter(lambda x: x.count('d') == 2, words))
         
@@ -70,7 +70,6 @@ class ContentAnalyzer(object):
         :returns: return True if string is valid for brackets, False otherwise
         """
         counter = 0
-        flag_valid = True
         for i in data:
             if i == '{':
                 counter += 1
@@ -78,13 +77,9 @@ class ContentAnalyzer(object):
                 counter -= 1
 
             if counter == -1:
-                flag_valid = False
                 break
         
-        if counter != 0:
-            flag_valid = False
-
-        return flag_valid
+        return True if counter == 0 else False
 
 
 path = 'data/text.txt'
