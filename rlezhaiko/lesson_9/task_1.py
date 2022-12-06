@@ -15,7 +15,7 @@ class ContentAnalyzer(object):
     """
     def __init__(self, filepath: str) -> None:
         """ 
-        :param filepath: filepath
+        :param filepath: relative path to file
         """
         self.filepath = filepath
     
@@ -29,7 +29,7 @@ class ContentAnalyzer(object):
         list_of_returns = []
         with open(self.filepath, 'r') as f:
             for line in f:
-                returns = self.data_analyze(line.rstrip('\n'))
+                returns = self.data_analyze(line)
                 list_of_returns.append(returns)
         return list_of_returns
     
@@ -37,39 +37,54 @@ class ContentAnalyzer(object):
     @staticmethod
     def data_analyze(data: str) -> tuple:
         """ 
-        Data analyze function. If the total number of words
-        greater than 10, the number of words with 2 or more "d" letters 
-        does not exceed 2, and each "{" has "}", then the string is valid
+        If the total number of words greater than 10, the number of words with 2 
+        or more "d" letters does not exceed 2, and each "{" has "}", then the string is valid
         
+        :param data: string for analyze
         :returns: return tuple of boolean valid data and substring of data
         """
+        data = data.rstrip('\n')
         flag_valid = False
-        sub_str = data[:7]        
-        list_index_opening_brackets, list_index_closing_brackets = [], []
+        sub_str = data[:7]
+        valid_brackets = ContentAnalyzer.check_brackets(data)
+
         for i in range(len(data)):
-            if data[i] == '{':
-                list_index_opening_brackets.append(i)
-            elif data[i] == '}':
-                list_index_closing_brackets.append(i)
-            
             if data[i] in punctuation:
                 data = data.replace(data[i], ' ')
-        
+                
         words = data.split()
         words_with_more_one_d = list(filter(lambda x: x.count('d') == 2, words))
         
-        if (len(words) > 10) and (len(words_with_more_one_d) >= 2):                
-            if (len(list_index_opening_brackets) == len(list_index_closing_brackets)) and (len(list_index_closing_brackets) == 0):
+        if (len(words) > 10) and (len(words_with_more_one_d) >= 2) and valid_brackets:                
                 flag_valid = True
-            elif (len(list_index_opening_brackets) == len(list_index_closing_brackets)):
-                summ = 1
-                for i in range(len(list_index_opening_brackets)):
-                    if list_index_opening_brackets[i] > list_index_closing_brackets[i]:
-                        summ *= 0
-                        break
-                flag_valid = bool(summ)
         
         return (flag_valid, sub_str)
+    
+
+    @staticmethod
+    def check_brackets(data: str) -> bool:
+        """ 
+        Check data for valid brackets where each "{" has "}", then the string is valid
+
+        :param data: string for analyze
+        :returns: return True if string is valid for brackets, False otherwise
+        """
+        counter = 0
+        flag_valid = True
+        for i in data:
+            if i == '{':
+                counter += 1
+            elif i == '}':
+                counter -= 1
+
+            if counter == -1:
+                flag_valid = False
+                break
+        
+        if counter != 0:
+            flag_valid = False
+
+        return flag_valid
 
 
 path = 'data/text.txt'
