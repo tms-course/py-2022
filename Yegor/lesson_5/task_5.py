@@ -9,21 +9,26 @@ Task_5, Lesson_5
 -.777    ->   Вы ввели отрицательно дробное число: -0.777
 """
 def analyze_number(numbers: str) -> str:
-    if numbers[0] == '-':
-        sign_of_number = 'отрицательное'
+    if len(numbers) == 0:
+        return f'Вы ввели пустую строку, повторите ввод.'
+    first_char = numbers[0]
+    if first_char == '-':
+        numbers_sign = 'отрицательное'
     else:
-        sign_of_number = 'положительное'
-    if numbers[0] == '.' or numbers[0].isdigit() == False and numbers[0] != '-':
+        numbers_sign = 'положительное'
+    if (first_char != '.' and not first_char.isdigit() and first_char != '-') or (first_char == '.' and len(numbers) == 1):
         return f'Вы ввели неккоректное число: {numbers}'
-    prediction = ''
+    temp_answer = ''
     for char in numbers[1:]:
         if char == '.':
-            prediction = f'Вы ввели {sign_of_number} дробное число: {numbers}'
-        if char.isdigit() == False and char != '.':
+            temp_answer = f'Вы ввели {numbers_sign} дробное число: {numbers}'
+        if not char.isdigit()  and char != '.':
             return f'Вы ввели неккоректное число: {numbers}'
-    if prediction != '':
-        return prediction
-    return f'Вы ввели {sign_of_number} целое число: {numbers}'
+    if first_char == '.':
+        temp_answer = f'Вы ввели {numbers_sign} дробное число: {numbers}'
+    if temp_answer != '':
+        return temp_answer
+    return f'Вы ввели {numbers_sign} целое число: {numbers}'
 while True:
     numbers = input('введите число:')
     print(analyze_number(numbers))
