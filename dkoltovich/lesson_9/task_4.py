@@ -31,18 +31,14 @@ class Matrix:
         :param other: other matrix
         :return: matrix
         """
-        try:
-            if (self.number_of_columns != other.number_of_columns or
-                self.number_of_rows != other.number_of_rows
-               ):
+        if (self.number_of_columns != other.number_of_columns or
+            self.number_of_rows != other.number_of_rows):
                 raise ValueError
-            for i in range(self.number_of_rows):
-                for j in range(self.number_of_columns):
-                    self.matrix[i][j] += other.matrix[i][j]
-        except ValueError:
-            return 'invalid matrix sizes'
+        for i in range(self.number_of_rows):
+            for j in range(self.number_of_columns):
+                self.matrix[i][j] += other.matrix[i][j]
 
-        return self.matrix
+        return Matrix(self.matrix)
 
     def __mul__(self, other):
         """
@@ -50,11 +46,11 @@ class Matrix:
         :param other: a constant or another matrix
         :return: new Matrix instance or original matrix if param is a constant
         """
-        if type(other) == int:
+        if type(other) == int or type(other) == float:
             for i in range(self.number_of_rows):
                 for j in range(self.number_of_columns):
                     self.matrix[i][j] *= other
-            return self.matrix
+            return Matrix(self.matrix)
 
         new_matrix = [[None for _ in range(other.number_of_columns)] for _ in range(self.number_of_rows)]
         for i in range(self.number_of_rows):
@@ -86,7 +82,7 @@ print(matrix_1 + matrix_2)  #[[2, 4, 6],
                             # [7, 7, 7],
                             # [10, 13, 16]]
 
-print(matrix_1 + matrix_3)  # invalid matrix sizes
+print(matrix_1 + matrix_3)  # error
 
 print(matrix_1 * 3)   # [[6, 12, 18],
                       # [21, 21, 21],

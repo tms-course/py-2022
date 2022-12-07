@@ -12,7 +12,7 @@ class Registry(type):
     Attributes:
         dictionary_for_instances_amount (defaultdict): defaultdict to count new instances of classes
     """
-    dictionary_for_instances_amount = dict()
+    _dictionary_for_instances_amount = {}
 
     def __call__(cls, *args, **kwargs):
         """
@@ -22,13 +22,22 @@ class Registry(type):
         :return:
         """
         class_name = cls.__name__
-        cls.dictionary_for_instances_amount[class_name] = cls.dictionary_for_instances_amount.get(class_name, 0) + 1
-        return cls.dictionary_for_instances_amount[class_name]
+        cls._dictionary_for_instances_amount[class_name] = cls._dictionary_for_instances_amount.get(class_name, 0) + 1
+        return cls.__new__(cls, *args, **kwargs)
+
+
 
 
 class Instance(metaclass=Registry):
     pass
 
+
+class Instance_2(metaclass=Registry):
+    pass
+
+
 first = Instance()
 second = Instance()
-print(second)
+inst_1 = Instance_2()
+print(Registry._dictionary_for_instances_amount[Instance.__name__])
+print(Registry._dictionary_for_instances_amount[Instance_2.__name__])
