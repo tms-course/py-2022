@@ -57,20 +57,19 @@ class ContentAnalyzer:
         return len(stack) == 0
     
     @staticmethod
-    def get_validated_line(line: str) -> Tuple[bool, str]:
+    def is_line_valid(line: str) -> bool:
         """
-        Returns a tuple of is_valid string and first 7 chars.
+        Returns a bool if string is valid.
 
         Args:
             line(str): line which need to be analyzed
         
         Returns:
-            Tuple[bool, str]: is_valid line, first 7 chars  
+            bool: True if string is valid otherwise False  
         """
         splited_line = line.split()
         words_with_double_d = [word for word in splited_line if word.count("d") >= 2]
-        is_valid_line = len(splited_line) > 10 and len(words_with_double_d) <= 2 and ContentAnalyzer.is_valid_brackets(line)
-        return is_valid_line, line[:7]
+        return len(splited_line) > 10 and len(words_with_double_d) <= 2 and ContentAnalyzer.is_valid_brackets(line)
     
     def analyze(self) -> List[Tuple[bool, str]]:
         """
@@ -79,7 +78,12 @@ class ContentAnalyzer:
         Returns:
             List[Tuple[bool, str]]: List of tuples, where tuples are validated lines"""
         with open(self.filepath, "r") as file:
-            return [self.get_validated_line(line.strip()) for line in file.readlines()]
+            validated_lines = []
+            for line in file.readlines():
+                line = line.strip()
+                validated_line = self.is_line_valid(line)
+                validated_lines.append((validated_line, line[:7]))
+            return validated_lines
 
 
 content_analyzer = ContentAnalyzer("./data/lorem_ipsum.txt")
