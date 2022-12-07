@@ -17,22 +17,22 @@ class Matrix:
 
     Attributes:
         real_numbers (List[List]): An email of a user
-        number_of_rows (int): Number of rows in matrix
-        number_of_columns (int): Number of columns in matrix
+        nrows (int): Number of rows in matrix
+        ncol (int): Number of columns in matrix
     """
-    def __init__(self, real_numbers: List[List]=None, number_of_rows: int=None, number_of_columns: int=None) -> None:
+    def __init__(self, real_numbers: List[List]=None, nrows: int=None, ncols: int=None) -> None:
         """
         Attrs:
             real_numbers (List[List]): Filled matrix, if not defined, zero matrix will be set up
-            number_of_rows (int): Number of rows in matrix
-            number_of_columns (int): number of columns in matrix
+            nrows (int): Number of rows in matrix
+            ncol (int): number of columns in matrix
         """
         if real_numbers:
             self._real_numbers = real_numbers
         else:
-            self._real_numbers = [[0 for _row in range(number_of_rows)] for _column in range(number_of_columns)]
-        self._number_of_rows = len(self._real_numbers)
-        self._number_of_columns = len(self._real_numbers[0])
+            self._real_numbers = [[0 for _row in range(nrows)] for _column in range(ncols)]
+        self._nrows = len(self._real_numbers)
+        self._ncols = len(self._real_numbers[0])
 
     def __add__(self, other: Matrix) -> Matrix:
         """
@@ -44,13 +44,13 @@ class Matrix:
         Returns:
             Matrix: New matrix, where new elements are sum of elements of two prev matrix.
         """
-        eq_for_columns = self._number_of_columns == other._number_of_columns
-        eq_for_rows = self._number_of_rows == other._number_of_rows 
-        if (eq_for_columns and eq_for_rows):
+        eq_for_columns = self._ncols == other._ncols
+        eq_for_rows = self._nrows == other._nrows 
+        if eq_for_columns and eq_for_rows:
             return Matrix([
                 [self._real_numbers[i][j] + other._real_numbers[i][j]
-                for j in range(len(self._real_numbers[0]))]
-                for i in range(len(self._real_numbers))
+                for j in range(self._ncols)]
+                for i in range(self._nrows)
             ])
 
         print("To perform matrix addition, two matrices must have the same dimensions."
@@ -69,7 +69,7 @@ class Matrix:
         """
         if isinstance(multiplier, (int, float)):
             return Matrix([[val * multiplier for val in row] for row in self._real_numbers])
-        elif self._number_of_columns == multiplier._number_of_rows:
+        elif self._ncols == multiplier._nrows:
             return Matrix([
                 [sum(i * j for i, j in zip(col, row))
                 for col in zip(*multiplier._real_numbers)] 
