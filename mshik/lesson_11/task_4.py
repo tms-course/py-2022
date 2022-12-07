@@ -32,8 +32,8 @@ def is_valid_email(email: str) -> bool:
 
     try:
         username, hostname = email.split("@")
-        hostname_match = re.match(HOSTNAME_PATTERN, hostname, re.IGNORECASE)
-        username_match = re.match(USERNAME_PATTERN, username, re.IGNORECASE)
+        hostname_match = re.match(HOSTNAME_PATTERN, hostname)
+        username_match = re.match(USERNAME_PATTERN, username)
         return True if hostname_match and username_match else False
     except ValueError:
         raise ValidationException(f"Provided email {email} is not valid.")
