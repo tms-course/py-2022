@@ -43,20 +43,21 @@ class ContentAnalyzer:
         :return: True if line is valid, False otherwise
         """
         list_of_words_in_line = line.split()
+        if len(list_of_words_in_line) <= 10:
+            return False
         amount_of_open_brackets = 0
         amount_of_words_with_two_d = 0
-        is_valid_brackets = True
         for word in list_of_words_in_line:
             if word.count('d') >= 2:
                 amount_of_words_with_two_d += 1
+                if amount_of_words_with_two_d > 2: return False
             if '{' in word:
                 amount_of_open_brackets += 1
             elif '}' in word:
                 if amount_of_open_brackets > 0:
                     amount_of_open_brackets -= 1
                 else:
-                    is_valid_brackets = False
-                    break
+                    return False
         else:
             is_valid_brackets = amount_of_open_brackets == 0
 
