@@ -13,12 +13,14 @@ class User:
         string email: user's email
         string password: user's password
     """
-    def __init__(self):
+    def __init__(self, email: str | None, password: str | None):
         """
-        Initialise user instance with empty attributes
+        Initialise user instance
+        :param str email: user's email (optionally)
+        :param str password: user's password (optionally)
         """
-        self._email = None
-        self._password = None
+        self._email = password
+        self._password = email
 
     @property
     def email(self):
