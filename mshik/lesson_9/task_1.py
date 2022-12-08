@@ -55,6 +55,7 @@ class ContentAnalyzer:
     def is_line_valid(line: str) -> bool:
         """
         Returns a bool if string is valid.
+        
         Args:
             line(str): line which need to be analyzed
         
