@@ -27,7 +27,7 @@ def is_valid_email(email: str) -> bool:
     Returns:
         bool: True if email is valid, else False
     """
-    USERNAME_PATTERN = r"^[^.][\w!#%&'/=?^_`{~}+*-]+[.]?[\w!#%&'/=?^_`{~}+*-]+$"
+    USERNAME_PATTERN = r"^[^.]([.]?[\w!#%&'\/=?^_`{~}+*-]+)+\b"
     HOSTNAME_PATTERN = r"^[^-][\w-]+\.[\w-]{1,63}$\b"
 
     try:
