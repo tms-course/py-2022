@@ -34,12 +34,16 @@ def is_valid_email(email: str) -> bool:
         username, hostname = email.split("@")
         hostname_match = re.match(HOSTNAME_PATTERN, hostname)
         username_match = re.match(USERNAME_PATTERN, username)
-        return True if hostname_match and username_match else False
+        if username_match:
+            username_match_valid = username_match.group() == username
+            return True if hostname_match and username_match_valid else False
+        return False
     except ValueError:
         raise ValidationException(f"Provided email {email} is not valid.")
 
 
-print(is_valid_email("te.st.name@username.com")) # False. Double dot in the username
+print(is_valid_email("te..st.name@username.com")) # False. Double dot in the username
+print(is_valid_email("te.st.name@username.com")) # True.
 print(is_valid_email("testname@username.com")) # True.
 print(is_valid_email("TestUserName@GmaIL.COM")) # True
 print(is_valid_email(".testname@username.com")) # False. Dot in the beggining of the username.
