@@ -69,6 +69,7 @@ class Iterator:
         self._start_year = start_year
     
     def __iter__(self):
+        self.year = self._start_year
         return self
     
     def __next__(self) -> str:
@@ -81,9 +82,9 @@ class Iterator:
         Exception:
             StopIteration: Error will be raised, if start_year greater than datetime.MAXYEAR
         """
-        if self._start_year <= datetime.MAXYEAR:
-            birthday = Birthday(self._start_year)
-            self._start_year += 1
+        if self.year <= datetime.MAXYEAR:
+            birthday = Birthday(self.year)
+            self.year += 1
             return birthday
         else:
             raise StopIteration
