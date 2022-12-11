@@ -1,21 +1,34 @@
 """
 Создает файл, записывает сразу две строки, потом две оставшиеся добавляет
-:param first_line: первая строка
-:param second_line: вторая строка
-:param thirt_line: третья строка
-:param fourth_line: четвертая строка
+:param line: вводимая строка
+:param first_input: массив строк для первичной записи в файл
+:param second_input: массив строк для последующей записи в файл
 :param f1: запись двух первых строк
 :param f2: запись двух последних строк
 """
-first_line = (input('Enter 1th line: '))
-second_line = (input('Enter 2nd line: '))
-thirt_line = (input('Enter 3rd line: '))
-fourth_line = (input('Enter 4th line: '))
+
+# определяем пустой список
+
+first_input = list()
+n = int(input ('Количество строк при первом вводе:'))
+
+for i in range(n):
+    line = input("Введите строку " + str(i+1) + ": ")
+    first_input.append(line + "\n")
 
 with open ('textfile.txt','w') as f1:
-    f1.writelines(list(map(lambda x : x+'\n', [first_line, second_line])))
+    for line in first_input:
+        f1.write(line)
 f1.close()
 
-with open ('textfile.txt','a') as f2:
-    f2.writelines(list(map(lambda x : x+'\n', [thirt_line, fourth_line])))
-f2.close()
+second_input  = list()
+n = int(input ('Количество строк при втором вводе:'))
+
+for i in range(n):
+    line = input("Введите строку " + str(i+1) + ": ")
+    second_input.append(line + "\n")
+
+with open ('textfile.txt','a') as f1:
+    for line in second_input:
+        f1.write(line)
+f1.close()
