@@ -12,16 +12,9 @@ class Birthday:
     """
     Class that represents birthday
     Attributes:
-        weekdays: dict - dict where keys are ordered numbers and values are weekdays
+        weekdays: list - of ordered weekdays
     """
-    weekdays = {0: 'понедельник',
-                1: 'вторник',
-                2: 'среда',
-                3: 'четверг',
-                4: 'пятница',
-                5: 'суббота',
-                6: 'воскресенье'
-                }
+    weekdays = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
 
     def __init__(self, year: int = 2004, month: int = 7, day: int = 5):
         """
@@ -56,6 +49,7 @@ class Iterator:
         self.month = birth_month
         self.day = birth_day
         self.current_year = datetime.datetime.now().year
+        self.iteration_year = self.start_year
 
     def __next__(self):
         """
@@ -63,22 +57,22 @@ class Iterator:
         while birth year less or equal current year
         :return: Birthday object
         """
-        if self.start_year > self.current_year:
+        if self.iteration_year > self.current_year:
             raise StopIteration
-        birthday = Birthday(self.start_year, self.month, self.day)
-        self.start_year += 1
+        birthday = Birthday(self.iteration_year, self.month, self.day)
+        self.iteration_year += 1
         return birthday
 
     def __iter__(self):
         """
         :return: Iterator object
         """
-        return self
-
+        return Iterator(self.iteration_year)
 
 
 bd_iter = Iterator()
 for bd in bd_iter:
+    for g in bd_iter:
+        print(g)
     print(bd)
-
 
