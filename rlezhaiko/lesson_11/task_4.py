@@ -25,7 +25,7 @@ def email_validation(email: str) -> bool:
     try:
         username, hostname = email.split('@')
         
-        user_regular_pattern = r"^[^.]([\.]?[\w!#%&'\+\-/=\?\^_`\{~\}\|])+[^.]$"
+        user_regular_pattern = r"^[^\.]([\.]?[\w!#%&'+\-/=?^_`{~}|])+$"
         if not re.match(user_regular_pattern, username):
             return False
         

@@ -51,6 +51,7 @@ class Birthday(object):
     """ 
     A class representing a person's birthday
     """
+    weekdays = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
     def __init__(self, year: int, month: int = 7, day: int = 5) -> None:
         """ 
         :param year: year of birthday
@@ -60,7 +61,6 @@ class Birthday(object):
         self.year = year
         self.month = month
         self.day = day
-        self.weekdays = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
     
     
     def weekday_from_date(self) -> int:
@@ -78,7 +78,7 @@ class Birthday(object):
         returns: return a string consisting of the year and the day of the week
         """
         day = self.weekday_from_date()
-        return f"{self.year} {self.weekdays[day]}"
+        return f"{self.year} {Birthday.weekdays[day]}"
     
 
 bd_iter = Iterator(2006)
