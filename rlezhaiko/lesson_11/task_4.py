@@ -26,13 +26,11 @@ def email_validation(email: str) -> bool:
         username, hostname = email.split('@')
         
         user_regular_pattern = r"^[^.]([\.]?[\w!#%&'\+\-/=\?\^_`\{~\}\|])+[^.]$"
-        user_match = re.match(user_regular_pattern, username)
-        if not user_match:
+        if not re.match(user_regular_pattern, username):
             return False
         
         host_regular_pattern = r'^[^-][\w\.-]{1,61}[^-]$\b'
-        host_match = re.match(host_regular_pattern, hostname)
-        if not host_match:
+        if not re.match(host_regular_pattern, hostname):
             return False
     except ValueError:
         return False
