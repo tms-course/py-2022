@@ -11,11 +11,12 @@ for bd in bd_iter:
 # ...
 """
 from __future__ import annotations
+import datetime
 
 
 class Iterator(object):
     """ 
-    Iterator for generate birthday objects.
+    Iterator for generate birthday objects from start_year to 9999 year.
     """
     def __init__(self, start_year: int = 1997) -> None:
         """ 
@@ -38,9 +39,12 @@ class Iterator(object):
         
         :returns: return Birthday object
         """
-        birthday = Birthday(self.year)
-        self.year += 1
-        return birthday
+        if self.year <= datetime.MAXYEAR:
+            birthday = Birthday(self.year)
+            self.year += 1
+            return birthday
+        else:
+            raise StopIteration
 
 
 class Birthday(object):
@@ -56,6 +60,7 @@ class Birthday(object):
         self.year = year
         self.month = month
         self.day = day
+        self.weekdays = ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресенье']
     
     
     def weekday_from_date(self) -> int:
@@ -64,17 +69,7 @@ class Birthday(object):
         
         :returns: return weekday in in format. 0 - Sunday, 6 - Saturday
         """
-        year, month, day = self.year, self.month, self.day 
-        if (month == 1 or month == 2):
-            year -= 1
-            
-        month = month - 2
-        if month <= 0:
-            month += 12
-        c = year // 100
-        year = year - c * 100
-            
-        weekday = (day + ((13 * month - 1) // 5) + year + (year // 4 + c // 4 - 2 * c + 777)) % 7
+        weekday = datetime.datetime.weekday(datetime.date(self.year, self.month, self.day))
         return weekday
     
     
@@ -83,10 +78,9 @@ class Birthday(object):
         returns: return a string consisting of the year and the day of the week
         """
         day = self.weekday_from_date()
-        return f"{self.year} {days_of_week[day]}"
+        return f"{self.year} {self.weekdays[day]}"
     
 
-days_of_week = ['воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота']
 bd_iter = Iterator(2006)
 for bd in bd_iter:
     print(bd)
