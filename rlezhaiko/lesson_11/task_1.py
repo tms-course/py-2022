@@ -3,7 +3,7 @@
 """
 
 
-def geometric_progression_generator(first_term, denominator, count) -> int | float:
+def geometric_progression_generator(first_term: int | float, denominator: int | float, count: int) -> int | float:
     """
     :param first_term_: first term of geometric progression
     :param denominator: denominator of geometric progression
