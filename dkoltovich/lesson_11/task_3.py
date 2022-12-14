@@ -18,7 +18,6 @@ class Birthday:
 
     def __init__(self, year: int = 2004, month: int = 7, day: int = 5):
         """
-        Initialization of birthday objects.
         :param year: birth year
         :param month: birth month
         :param day: birthday
@@ -39,10 +38,10 @@ class Iterator:
     Attributes:
         int start_year: start year for iteration
         int current_year: current year, last year for iteration
+        int iterator_year: current year for Iterator, which will be returned by next() method
     """
     def __init__(self, start_year: int = 2004, birth_month: int = 7, birth_day: int = 5):
         """
-        Initialization of Iterator objects.
         :param start_year: start year for iteration
         """
         self.start_year = start_year
@@ -67,7 +66,8 @@ class Iterator:
         """
         :return: Iterator object
         """
-        return Iterator(self.iteration_year)
+        self.iteration_year = self.start_year
+        return self
 
 
 bd_iter = Iterator()
