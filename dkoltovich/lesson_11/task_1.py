@@ -24,5 +24,5 @@ def geometrical_progression(first: int, denominator: int, n: int):
 
 
 progression = geometrical_progression(2, 4, 5)
-while True:
-    print(next(progression))
+for item in progression:
+    print(item)

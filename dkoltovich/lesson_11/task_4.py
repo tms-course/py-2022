@@ -7,7 +7,7 @@ def is_email_valid(email: str) -> bool:
     :param email: email to check
     :return: True if email is valid, False otherwise
     """
-    valid_username_exp = r'^[^\.]([\d\w!#%&\'\*\+\-=\/\?\^\_\{\}\|\~]\.?)+[^\.]'
+    valid_username_exp = r"^[^.](\.?[\d\w!#%&'*+-=/?^_{}|~])+"
     valid_hostname_exp = r'[^\-]([\w\d\-]{1,63}\.?)+[^\-\.]$'
     return re.fullmatch(valid_username_exp + r'@' + valid_hostname_exp, email) is not None
 
