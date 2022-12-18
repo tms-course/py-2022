@@ -24,12 +24,25 @@ class Auto:
         self.weight = weight
 
     def move(self):
+        """
+        prints 'move'
+        :return: None
+        """
         print('move')
 
     def stop(self):
+        """
+        prints 'stop'
+        :return: None
+        """
+        print("stop")
         print('stop')
 
     def birthday(self):
+        """
+        Increases age on 1
+        :return: None
+        """
         self.age += 1
         print(self.age)
 
@@ -50,23 +63,22 @@ max_speed и при вызове метода move, после появлени�
 
 class Truck(Auto):
     def __init__(self, brand: str, mark: str, age: int, max_load: int, color: str = None, weight: int = None):
-        """
-        Init Truck object
-        :param brand:
-        :param mark:
-        :param age:
-        :param max_load:
-        :param color:
-        :param weight:
-        """
         super().__init__(brand, mark, age, color, weight)
         self.max_load = max_load
 
     def move(self):
+        """
+        Prints 'attention', then prints 'move'
+        :return: None
+        """
         print('attencion')
         super().move()
 
     def load(self):
+        """
+        Waits for a sec, then prints 'load' and waits for a second again
+        :return: None
+        """
         time.sleep(1)
         print('load')
         time.sleep(1)
@@ -74,19 +86,14 @@ class Truck(Auto):
 
 class Car(Auto):
     def __init__(self, brand: str, mark: str, age: int, max_speed: int, color: str = None, weight: int = None):
-        """
-        Init Car object
-        :param brand:
-        :param mark:
-        :param age:
-        :param max_speed:
-        :param color:
-        :param weight:
-        """
         super().__init__(brand, mark, age, color, weight)
         self.max_speed = max_speed
 
     def move(self):
+        """
+        Prints 'move' then prints max_speed
+        :return: None
+        """
         print(f'max speed is {self.max_speed}')
         super().move()
 

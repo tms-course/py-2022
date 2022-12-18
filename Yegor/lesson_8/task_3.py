@@ -26,18 +26,20 @@ class Point:
 
 class Circle(Point):
 
-    def __init__(self, radius: int):
+    def __init__(self, x: int, y: int, radius: int):
         """Init of Circle object
         :param radius: radius of the circle
         """
-        super().__init__(radius, 0)
+        super().__init__(x, y)
+        self.x = x
+        self.y = y
         self.radius = radius
 
     def edge_distance_from_origin(self):
         """
         :return: Circle radius
         """
-        return self.radius
+        return sqrt(self.x**2 + self.y**2)
 
     def area(self):
         return math.pi * self.radius ** 2
@@ -46,7 +48,7 @@ class Circle(Point):
         if self.radius == other.radius:
             return Point(0, 0)
 
-        return Circle(abs(self.radius - other.radius))
+        return Circle(self.x, self.y, abs(self.radius - other.radius))
 
     def circumference(self):
         return 2 * math.pi * self.radius
