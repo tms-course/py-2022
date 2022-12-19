@@ -11,15 +11,16 @@ from random import randint
 with open('data.json') as f:
     data = json.load(f)
 
+def gen_phone():
+    return f'{randint(100, 999)}-{randint(10, 99)}-{randint(10, 99)}'
 
 with open('file_3.csv', 'w') as f:
     writer = csv.writer(f)
-    writer.writerow(['id', 'Name', 'Age', 'Phone'])
+    writer.writerow(['id', 'Name', 'Age', 'phone'])
+    for obj in data:
+        writer.writerow([obj.values(), gen_phone()])
+
 
     
 
-    for key, value in data.items():
-        
-        writer.writerow(key, value[0], value[1], value[2])
-        value[2].items = [f'375(44){randint(100, 999)}-{randint(10,99)}-{randint(10,99)}']
 
