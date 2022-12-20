@@ -55,8 +55,6 @@ class Circle(Point):
                 radius (float): Radius of Circle
         """
         super().__init__(x, y)
-        self.x = x
-        self.y = y
         self.radius = radius
 
     def edge_distance_from_origin(self):
@@ -81,7 +79,7 @@ class Circle(Point):
         if self.radius == other.radius:
             return Point(0, 0)
 
-        return Circle(self.x, self.y, abs(self.radius - other.radius))
+        return Circle(x, y, abs(self.radius - other.radius))
 
     def circumference(self):
         """
