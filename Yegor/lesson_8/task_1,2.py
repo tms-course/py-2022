@@ -8,14 +8,27 @@ import time
 
 
 class Auto:
+    """
+    A classed used to represent an Auto
+    Attributes:
+        brand (str): Car brand
+        age (int): An age of a Car
+        mark (str): Car mark
+        color (str): Car color
+        weight (int): Gross Car weight
+    Methods:
+        move(): Prints move
+        stop(): Print stop
+        birthday(): Increases an age on 1
+      """
     def __init__(self, brand: str, mark: str, age: int, color: str = None, weight: int = None):
         """
-        Init Auto object
-        :param brand: auto's brand
-        :param mark: auto's mark
-        :param age: auto's age
-        :param color: auto's color
-        :param weight: auto's weight
+        Args:
+            brand (str): Car brand
+            age (int): An age of a car
+            mark (str): Car mark
+            color (str): Car color
+            weight (int): Gross car weight
         """
         self.brand = brand
         self.mark = mark
@@ -62,7 +75,31 @@ max_speed и при вызове метода move, после появлени�
 
 
 class Truck(Auto):
+    """
+    A classed used to represent a Truck.
+    Truck class inherits from class Auto.
+    Attributes:
+        brand (str): Car brand
+        age (int): An age of a car
+        mark (str): Car mark
+        max_load (int): Max load of a truck
+        color (str): Car color
+        weight (int): Gross car weight
+
+    Methods:
+        move(): Prints attention, then move
+        load(): Waits for a sec, then prints load and after sleeps 1  sec
+    """
     def __init__(self, brand: str, mark: str, age: int, max_load: int, color: str = None, weight: int = None):
+        """
+            Args:
+                brand (str): Trucket brand
+                age (int): An age of a truck
+                mark (str): Truck mark
+                max_load (int): Max load of a truck
+                color (str): Truck color
+                weight (int): Gross truck weight
+        """
         super().__init__(brand, mark, age, color, weight)
         self.max_load = max_load
 
@@ -85,7 +122,30 @@ class Truck(Auto):
 
 
 class Car(Auto):
+    """
+        A classed used to represent a Car
+        Car class inherits from class Auto.
+        Attributes:
+            brand (str): Car brand
+            age (int): An age of a vehicle
+            mark (str): Car mark
+            max_speed (int): Max speed of a truck
+            color (str): Car color
+            weight (int): Gross car weight
+
+        Methods:
+            move(): Prints move, then max speed of a car
+    """
     def __init__(self, brand: str, mark: str, age: int, max_speed: int, color: str = None, weight: int = None):
+        """
+            Args:
+                brand (str): Car brand
+                age (int): An age of a car
+                mark (str): Car mark
+                max_speed (int): Max speed of a car
+                color (str): Car color
+                weight (int): Gross car weight
+        """
         super().__init__(brand, mark, age, color, weight)
         self.max_speed = max_speed
 
