@@ -1,93 +1,55 @@
 """ 
-1. Написать калькулятор математических выражений на базе шаблона проектирования
-Интерпретатор с возможностью вывода последовательности вычислений, все исключительные
-ситуации отловить try/except блоками, чтобы не дать программе упасть. Поддерживаемые
-операции: умножение, деление, сложениек, разность, степень. На ввод программе можно 
-передавать выражения типа:
-python calc.py
-? 10 * 2 + 3 ** 2
-= 10 * 2 + 9
-= 20 + 9
-= 29
-? 2.34 ** 2 - 6 / 0
-= 5.4756 - 6 / 0
-= Нельзя делить на 0
+1. Реализовать класс Context, который будет принимать обязательный аргумент expression
+- это строка с математическим выражением. у класса также будет метод evaluate, в
+котором нужно рекурсивно разобрать expression на составляющие и вернуть переформатированное 
+выражение, где числа будут обернуты в [x], а операторы с операндами в (x*y):
+ctx = Context("3*2 + 7^3")
+print(ctx.evaluate())
+# (([3] * [2]) + ([7] ^ [3]))
 """
-from sys import stdin
 
 
-sequence_of_operations = ['**', '*', '/', '+', '-']
-
-
-def check_elements(elements: list) -> list:
+class Context(object):
     """
-    Check elements function
-    Check first element and length elements for valid
-    
-    :param elements: list of element
-    :returns: return list of element
+    :attribute op_order: list containing mathematical operators
     """
-    if elements[0] == '?':
-        elements.pop(0)
-    else:
-        raise IndexError
+    op_order = ['+', '-', '*', '/', '^']
+    def __init__(self, expression: str) -> None:
+        """ 
+        :param expression: expression from user input 
+        """
+        self.expression = expression
+        
     
-    if len(elements) < 3:
-        raise IndexError
+    def _eval(self, substring: str) -> str:
+        """ 
+        The method parses the expression into a binary tree, then collects this tree to the top.
+        
+        :param substring: a string that can be a number or a mathematical expression 
+        :returns: return wrapped substring by rules: number wrapped by [], expression wrapped by ().
+        """
+        substring = substring.strip()
+        if substring.isdigit() or substring.replace('.', '', 1).isdigit():
+            return f'[{substring}]'
+        
+        for op in self.op_order:
+            if op not in substring:
+                continue
+            
+            parts = substring.split(op, 1)
+            return f'({self._eval(parts[0])} {op} {self._eval(parts[1])})'
+        
     
-    return elements
+    def evaluate(self) -> str:
+        """ 
+        :returns: return string where string wrapped by rules: number wrapped by [], all expression wrapped by (). 
+        """
+        return self._eval(self.expression)
 
 
-def make_operation(operand_1: int | float, operator: str, operand_2: int | float) -> int | float:
-    """
-    Check elements function
-    Check first element and length elements for valid
-    
-    :param operand_1: first operand
-    :param operator: operator
-    :param operand_2: second operand
-    :returns: return result of operation
-    """
-    result = 0
-    if operator == '**':
-        result = operand_1 ** operand_2
-    elif operator == '*':
-        result = operand_1 * operand_2
-    elif operator == '/':
-        result = operand_1 / operand_2
-    elif operator == '+':
-        result = operand_1 + operand_2
-    elif operator == '-':
-        result = operand_1 - operand_2
-    else:
-        raise IndexError
-    
-    return result
+ctx = Context("3*2 + 7^3")
+print(ctx.evaluate())
 
 
-for line in stdin:
-    line = line.strip()
-    if line == 'exit':
-        break
-    
-    try:
-        elements = line.split()
-        elements = check_elements(elements)
-        for operator in sequence_of_operations:
-            operator_count = elements.count(operator)
-            for i in range(operator_count):
-                index_of_operator = elements.index(operator)
-                index_of_operand_1, index_of_operand_2 = index_of_operator - 1, index_of_operator + 1
-                operand_1 = float(elements[index_of_operand_1]) if '.' in elements[index_of_operand_1] else int(elements[index_of_operand_1])
-                operand_2 = float(elements[index_of_operand_2]) if '.' in elements[index_of_operand_2] else int(elements[index_of_operand_2])
-                result = make_operation(operand_1, elements[index_of_operator], operand_2)
-                for i in range(index_of_operand_2, index_of_operand_1 - 1, -1):
-                    elements.pop(i)
-                elements.insert(index_of_operand_1, str(result))
-                print('=', *elements)
-    except IndexError:
-        print('Проверьте строку которую Вы ввели!')
-    except ZeroDivisionError:
-        print('Нельзя делить на 0')
-    except ValueError:
-        print('Вы пытаетесь выполнить математическую операцию не с числом')
+ctx = Context("3.57657*2.436554 -1 + 7^3")
+print(ctx.evaluate())
