@@ -18,7 +18,7 @@ with open('file_3.csv', 'w') as f:
     writer = csv.writer(f)
     writer.writerow(['id', 'Name', 'Age', 'phone'])
     for obj in data:
-        writer.writerow([obj.values(), gen_phone()])
+        writer.writerow([*obj.values(), gen_phone()])
 
 
     
