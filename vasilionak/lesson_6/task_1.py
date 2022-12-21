@@ -5,7 +5,7 @@
 data = b'r\xc3\xa9sum\xc3\xa9'
 
 data_decode_utf = data.decode("utf-8")
-"""Декодируем строку в байтовое значение в кодировке utf-8"""
+"""Декодируем байтовое значение в строку в кодировке utf-8"""
 print(data_decode_utf)
 
 data_encode_latin = data_decode_utf.encode("Latin1")
