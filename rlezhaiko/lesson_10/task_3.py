@@ -30,10 +30,16 @@ class TerminalExpression(AbstractExpression):
     All Terminal expressions must be inherited from this class
     """
     def __init__(self, value: float) -> None:
-        self.value = float(value) if '.' in value else int(value)
+        """ 
+        :param value: number in float format
+        """
+        self.value = value
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
+        """ 
+        :returns: return value in float format
+        """
         return self.value
 
 
@@ -41,7 +47,11 @@ class NonTerminalExpression(AbstractExpression):
     """ 
     All Non-Terminal expressions must be inherited from this class
     """
-    def __init__(self, left, right) -> None:
+    def __init__(self, left: NonTerminalExpression | float, right: NonTerminalExpression | float) -> None:
+        """ 
+        :param left: left part of expression
+        :param right: right part of expression
+        """
         self.left = left
         self.right = right
     
@@ -51,98 +61,53 @@ class NonTerminalExpression(AbstractExpression):
 
 
 class Number(TerminalExpression):
-    def __init__(self, value: str) -> None:
-        """ 
-        :param value: value is float or int
-        """
-        super().__init__(value)
-    
-    
-    def interpret(self) -> int | float:
-        """ 
-        :returns: return value (int or float)
-        """
-        return self.value
+    pass
 
 
 class Add(NonTerminalExpression):
-    def __init__(self, left: Any, right: Any) -> None:
-        """ 
-        :param left: left part of expression
-        :param right: right part of expression
-        """
-        super().__init__(left, right)
-    
-    
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() + self.right.interpret()
 
 
 class Sub(NonTerminalExpression):
-    def __init__(self, left: Any, right: Any) -> None:
-        """ 
-        :param left: left part of expression
-        :param right: right part of expression
-        """
-        super().__init__(left, right)
-    
-    
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() - self.right.interpret()
     
 
 class Mul(NonTerminalExpression):
-    def __init__(self, left: Any, right: Any) -> None:
-        """ 
-        :param left: left part of expression
-        :param right: right part of expression
-        """
-        super().__init__(left, right)
-    
-    
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() * self.right.interpret()
 
 
 class Div(NonTerminalExpression):
-    def __init__(self, left: Any, right: Any) -> None:
-        """ 
-        :param left: left part of expression
-        :param right: right part of expression
-        """
-        super().__init__(left, right)
-    
-    
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() / self.right.interpret()
 
 
 class Pow(NonTerminalExpression):
-    def __init__(self, left: Any, right: Any) -> None:
-        """ 
-        :param left: left part of expression
-        :param right: right part of expression
-        """
-        super().__init__(left, right)
-    
-    
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() ** self.right.interpret()
     
     
 class Context(object):
-    """
-    :attribute op_order: list containing mathematical operators
-    """
-    op_order = ['+', '-', '*', '/', '^']
     def __init__(self, expression: str) -> None:
         """ 
         :param expression: expression from user input 
         """
         self.expression = expression
-        
-    
-    def _eval(self, substring: str) -> Any:
+        add = lambda left, right: Add(self._eval(left), self._eval(right))
+        sub = lambda left, right: Sub(self._eval(left), self._eval(right))
+        mul = lambda left, right: Mul(self._eval(left), self._eval(right))
+        div = lambda left, right: Div(self._eval(left), self._eval(right))
+        power = lambda left, right: Pow(self._eval(left), self._eval(right))
+        self.op_map = {'+': add, 
+                       '-': sub, 
+                       '*': mul, 
+                       '/': div,
+                       '^': power}
+
+
+    def _eval(self, substring: str) -> float | Add | Sub | Mul | Div | Pow:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
@@ -151,30 +116,25 @@ class Context(object):
         """
         substring = substring.strip()
         if substring.isdigit() or substring.replace('.', '', 1).isdigit():
-            return Number(substring)
+            return Number(float(substring))
         
-        for op in self.op_order:
+        for op in list(self.op_map.keys()):
             if op not in substring:
                 continue
             
             parts = substring.split(op, 1)
-            if op == '+':
-                return Add(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '-':
-                return Sub(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '*':
-                return Mul(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '/':
-                return Div(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '^':
-                return Pow(self._eval(parts[0]), self._eval(parts[1]))
+            return self.op_map[op](parts[0], parts[1])
         
     
-    def evaluate(self) -> int | float:
+    def evaluate(self) -> float:
         """ 
         :returns: return result of expression 
         """
         return self._eval(self.expression)
+
+
+class CustomZeroDivisionError(Exception):
+    pass
 
 
 for line in stdin:
@@ -183,7 +143,7 @@ for line in stdin:
     
     try:    
         print(Context(line).evaluate().interpret())
-    except ZeroDivisionError:
-        print('Нельзя делить на 0')
+    except CustomZeroDivisionError as error:
+        print(error)
     except AttributeError:
         print('Проверьте выражение которое вы ввели.')
