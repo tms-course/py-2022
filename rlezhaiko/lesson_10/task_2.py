@@ -22,20 +22,20 @@ from sys import stdin
 class Number(object):
     def __init__(self, value: str) -> None:
         """ 
-        :param value: value is float or int
+        :param value: value is float or int in str format
         """
-        self.value = float(value) if '.' in value else int(value)
+        self.value = float(value) 
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         """ 
-        :returns: return value (int or float)
+        :returns: return value (float number)
         """
         return self.value
 
 
 class Add(object):
-    def __init__(self, left: Any, right: Any) -> None:
+    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -44,12 +44,12 @@ class Add(object):
         self.right = right
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() + self.right.interpret()
 
 
 class Sub(object):
-    def __init__(self, left: Any, right: Any) -> None:
+    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -58,12 +58,12 @@ class Sub(object):
         self.right = right
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() - self.right.interpret()
     
 
 class Mul(object):
-    def __init__(self, left: Any, right: Any) -> None:
+    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -72,12 +72,12 @@ class Mul(object):
         self.right = right
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() * self.right.interpret()
 
 
 class Div(object):
-    def __init__(self, left: Any, right: Any) -> None:
+    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -86,12 +86,15 @@ class Div(object):
         self.right = right
     
     
-    def interpret(self) -> int | float:
-        return self.left.interpret() / self.right.interpret()
+    def interpret(self) -> float:
+        try:
+            return self.left.interpret() / self.right.interpret()
+        except ZeroDivisionError:
+            raise CustomZeroDivisionError('Нельзя делить на 0')
 
 
 class Pow(object):
-    def __init__(self, left: Any, right: Any) -> None:
+    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -100,23 +103,29 @@ class Pow(object):
         self.right = right
     
     
-    def interpret(self) -> int | float:
+    def interpret(self) -> float:
         return self.left.interpret() ** self.right.interpret()
     
     
 class Context(object):
-    """
-    :attribute op_order: list containing mathematical operators
-    """
-    op_order = ['+', '-', '*', '/', '^']
     def __init__(self, expression: str) -> None:
         """ 
         :param expression: expression from user input 
         """
         self.expression = expression
-        
-    
-    def _eval(self, substring: str) -> Any:
+        add = lambda left, right: Add(self._eval(left), self._eval(right))
+        sub = lambda left, right: Sub(self._eval(left), self._eval(right))
+        mul = lambda left, right: Mul(self._eval(left), self._eval(right))
+        div = lambda left, right: Div(self._eval(left), self._eval(right))
+        power = lambda left, right: Pow(self._eval(left), self._eval(right))
+        self.op_map = {'+': add, 
+                       '-': sub, 
+                       '*': mul, 
+                       '/': div,
+                       '^': power}
+
+
+    def _eval(self, substring: str) -> float | Add | Sub | Mul | Div | Pow:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
@@ -127,28 +136,23 @@ class Context(object):
         if substring.isdigit() or substring.replace('.', '', 1).isdigit():
             return Number(substring)
         
-        for op in self.op_order:
+        for op in list(self.op_map.keys()):
             if op not in substring:
                 continue
             
             parts = substring.split(op, 1)
-            if op == '+':
-                return Add(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '-':
-                return Sub(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '*':
-                return Mul(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '/':
-                return Div(self._eval(parts[0]), self._eval(parts[1]))
-            elif op == '^':
-                return Pow(self._eval(parts[0]), self._eval(parts[1]))
+            return self.op_map[op](parts[0], parts[1])
         
     
-    def evaluate(self) -> int | float:
+    def evaluate(self) -> float:
         """ 
         :returns: return result of expression 
         """
         return self._eval(self.expression)
+
+
+class CustomZeroDivisionError(Exception):
+    pass
 
 
 for line in stdin:
@@ -157,7 +161,7 @@ for line in stdin:
     
     try:    
         print(Context(line).evaluate().interpret())
-    except ZeroDivisionError:
-        print('Нельзя делить на 0')
+    except CustomZeroDivisionError as error:
+        print(error)
     except AttributeError:
         print('Проверьте выражение которое вы ввели.')
