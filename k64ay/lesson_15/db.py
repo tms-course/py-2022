@@ -6,7 +6,7 @@ def _get_connector():
     connect_args = {
         'host': os.getenv('MYSQL_HOST'),
         'port': int(os.getenv('MYSQL_PORT')),
-        'user': os.getenv('MYSQL_USERNAME'),
+        'user': os.getenv('MYSQL_USER'),
         'password': os.getenv('MYSQL_PASSWORD'),
         'db': os.getenv('MYSQL_DATABASE'),
         'cursorclass': pymysql.cursors.DictCursor,
