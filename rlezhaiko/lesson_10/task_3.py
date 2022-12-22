@@ -107,7 +107,7 @@ class Context(object):
                        '^': power}
 
 
-    def _eval(self, substring: str) -> float | Add | Sub | Mul | Div | Pow:
+    def _eval(self, substring: str) -> float | NonTerminalExpression:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
