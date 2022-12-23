@@ -20,11 +20,11 @@ from sys import stdin
 
 
 class Number(object):
-    def __init__(self, value: str) -> None:
+    def __init__(self, value: float) -> None:
         """ 
-        :param value: value is float or int in str format
+        :param value: value in float format
         """
-        self.value = float(value) 
+        self.value = value 
     
     
     def interpret(self) -> float:
@@ -35,7 +35,7 @@ class Number(object):
 
 
 class Add(object):
-    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
+    def __init__(self, left: Number | Add | Sub | Mul | Div | Pow, right: Number | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -49,7 +49,7 @@ class Add(object):
 
 
 class Sub(object):
-    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
+    def __init__(self, left: Number | Add | Sub | Mul | Div | Pow, right: Number | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -63,7 +63,7 @@ class Sub(object):
     
 
 class Mul(object):
-    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
+    def __init__(self, left: Number | Add | Sub | Mul | Div | Pow, right: Number | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -77,7 +77,7 @@ class Mul(object):
 
 
 class Div(object):
-    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
+    def __init__(self, left: Number | Add | Sub | Mul | Div | Pow, right: Number | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -94,7 +94,7 @@ class Div(object):
 
 
 class Pow(object):
-    def __init__(self, left: float | Add | Sub | Mul | Div | Pow, right: float | Add | Sub | Mul | Div | Pow) -> None:
+    def __init__(self, left: Number | Add | Sub | Mul | Div | Pow, right: Number | Add | Sub | Mul | Div | Pow) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -108,24 +108,22 @@ class Pow(object):
     
     
 class Context(object):
+    """
+    :attribute op_map: dict containing key: mathematical operator, value: class represent mathematical operator 
+    """
+    op_map = {'+': Add, 
+              '-': Sub, 
+              '*': Mul, 
+              '/': Div,
+              '^': Pow}
     def __init__(self, expression: str) -> None:
         """ 
         :param expression: expression from user input 
         """
         self.expression = expression
-        add = lambda left, right: Add(self._eval(left), self._eval(right))
-        sub = lambda left, right: Sub(self._eval(left), self._eval(right))
-        mul = lambda left, right: Mul(self._eval(left), self._eval(right))
-        div = lambda left, right: Div(self._eval(left), self._eval(right))
-        power = lambda left, right: Pow(self._eval(left), self._eval(right))
-        self.op_map = {'+': add, 
-                       '-': sub, 
-                       '*': mul, 
-                       '/': div,
-                       '^': power}
 
 
-    def _eval(self, substring: str) -> float | Add | Sub | Mul | Div | Pow:
+    def _eval(self, substring: str) -> Number | Add | Sub | Mul | Div | Pow:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
@@ -134,14 +132,21 @@ class Context(object):
         """
         substring = substring.strip()
         if substring.isdigit() or substring.replace('.', '', 1).isdigit():
-            return Number(substring)
+            try:
+                return Number(float(substring))
+            except AttributeError:
+                raise IncorrectExpressionError('Введенно неверное математическое выражение.')
+        elif substring is None:
+            raise IncorrectExpressionError('Введенно неверное математическое выражение.')
         
-        for op in list(self.op_map.keys()):
+        for op in Context.op_map:
             if op not in substring:
                 continue
             
             parts = substring.split(op, 1)
-            return self.op_map[op](parts[0], parts[1])
+            left = self._eval(parts[0])
+            right = self._eval(parts[1])
+            return self.op_map[op](left, right)
         
     
     def evaluate(self) -> float:
@@ -155,6 +160,10 @@ class CustomZeroDivisionError(Exception):
     pass
 
 
+class IncorrectExpressionError(Exception):
+    pass
+
+
 for line in stdin:
     if line.strip() == 'exit':
         break
@@ -163,5 +172,13 @@ for line in stdin:
         print(Context(line).evaluate().interpret())
     except CustomZeroDivisionError as error:
         print(error)
-    except AttributeError:
-        print('Проверьте выражение которое вы ввели.')
+    except IncorrectExpressionError as error:
+        print(error)
+
+
+    # try:    
+    #     print(Context(line).evaluate().interpret())
+    # except CustomZeroDivisionError as error:
+    #     print(error)
+    # except AttributeError:
+    #     print('Проверьте выражение которое вы ввели.')
