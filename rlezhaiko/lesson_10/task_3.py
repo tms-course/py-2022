@@ -11,9 +11,9 @@ NonTerminalExpression с двумя обязательными аргумент�
 должны быть унаследованы от него.
 """
 from __future__ import annotations
-from typing import Any
 from sys import stdin
 from abc import abstractmethod
+from string import punctuation
 
 
 class AbstractExpression(object):
@@ -22,7 +22,7 @@ class AbstractExpression(object):
     """
     @abstractmethod
     def interpret(self):
-        pass
+        raise NotImplementedError
 
 
 class TerminalExpression(AbstractExpression):
@@ -47,7 +47,7 @@ class NonTerminalExpression(AbstractExpression):
     """ 
     All Non-Terminal expressions must be inherited from this class
     """
-    def __init__(self, left: NonTerminalExpression | float, right: NonTerminalExpression | float) -> None:
+    def __init__(self, left: NonTerminalExpression | TerminalExpression, right: NonTerminalExpression | TerminalExpression) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -90,24 +90,22 @@ class Pow(NonTerminalExpression):
     
     
 class Context(object):
+    """
+    :attribute op_map: dict containing key: mathematical operator, value: class represent mathematical operator 
+    """
+    op_map = {'+': Add, 
+              '-': Sub, 
+              '*': Mul, 
+              '/': Div,
+              '^': Pow}
     def __init__(self, expression: str) -> None:
         """ 
         :param expression: expression from user input 
         """
         self.expression = expression
-        add = lambda left, right: Add(self._eval(left), self._eval(right))
-        sub = lambda left, right: Sub(self._eval(left), self._eval(right))
-        mul = lambda left, right: Mul(self._eval(left), self._eval(right))
-        div = lambda left, right: Div(self._eval(left), self._eval(right))
-        power = lambda left, right: Pow(self._eval(left), self._eval(right))
-        self.op_map = {'+': add, 
-                       '-': sub, 
-                       '*': mul, 
-                       '/': div,
-                       '^': power}
 
 
-    def _eval(self, substring: str) -> float | NonTerminalExpression:
+    def _eval(self, substring: str) -> Number | Add | Sub | Mul | Div | Pow:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
@@ -117,13 +115,17 @@ class Context(object):
         substring = substring.strip()
         if substring.isdigit() or substring.replace('.', '', 1).isdigit():
             return Number(float(substring))
+        elif substring == '' or substring.isalpha() or substring in punctuation:
+            raise IncorrectExpressionError('Введенно неверное математическое выражение.')
         
-        for op in list(self.op_map.keys()):
+        for op in Context.op_map:
             if op not in substring:
                 continue
             
             parts = substring.split(op, 1)
-            return self.op_map[op](parts[0], parts[1])
+            left = self._eval(parts[0])
+            right = self._eval(parts[1])
+            return self.op_map[op](left, right)
         
     
     def evaluate(self) -> float:
@@ -137,6 +139,10 @@ class CustomZeroDivisionError(Exception):
     pass
 
 
+class IncorrectExpressionError(Exception):
+    pass
+
+
 for line in stdin:
     if line.strip() == 'exit':
         break
@@ -144,6 +150,8 @@ for line in stdin:
     try:    
         print(Context(line).evaluate().interpret())
     except CustomZeroDivisionError as error:
+        print(error)
+    except IncorrectExpressionError as error:
         print(error)
     except AttributeError:
         print('Проверьте выражение которое вы ввели.')
