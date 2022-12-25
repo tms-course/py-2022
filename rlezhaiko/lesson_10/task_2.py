@@ -15,8 +15,8 @@ print(ctx.evaluate())
 # 349
 """
 from __future__ import annotations
-from typing import Any
 from sys import stdin
+from string import punctuation
 
 
 class Number(object):
@@ -132,11 +132,8 @@ class Context(object):
         """
         substring = substring.strip()
         if substring.isdigit() or substring.replace('.', '', 1).isdigit():
-            try:
-                return Number(float(substring))
-            except AttributeError:
-                raise IncorrectExpressionError('Введенно неверное математическое выражение.')
-        elif substring is None:
+            return Number(float(substring))
+        elif substring == '' or substring.isalpha() or substring in punctuation:
             raise IncorrectExpressionError('Введенно неверное математическое выражение.')
         
         for op in Context.op_map:
@@ -174,11 +171,5 @@ for line in stdin:
         print(error)
     except IncorrectExpressionError as error:
         print(error)
-
-
-    # try:    
-    #     print(Context(line).evaluate().interpret())
-    # except CustomZeroDivisionError as error:
-    #     print(error)
-    # except AttributeError:
-    #     print('Проверьте выражение которое вы ввели.')
+    except AttributeError:
+        print('Проверьте выражение которое вы ввели.')
