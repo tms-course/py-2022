@@ -47,7 +47,7 @@ class NonTerminalExpression(AbstractExpression):
     """ 
     All Non-Terminal expressions must be inherited from this class
     """
-    def __init__(self, left: NonTerminalExpression | TerminalExpression, right: NonTerminalExpression | TerminalExpression) -> None:
+    def __init__(self, left: AbstractExpression, right: AbstractExpression) -> None:
         """ 
         :param left: left part of expression
         :param right: right part of expression
@@ -81,7 +81,10 @@ class Mul(NonTerminalExpression):
 
 class Div(NonTerminalExpression):
     def interpret(self) -> float:
-        return self.left.interpret() / self.right.interpret()
+        try:
+            return self.left.interpret() / self.right.interpret()
+        except ZeroDivisionError:
+            raise CustomZeroDivisionError('Нельзя делить на 0')
 
 
 class Pow(NonTerminalExpression):
@@ -105,7 +108,7 @@ class Context(object):
         self.expression = expression
 
 
-    def _eval(self, substring: str) -> Number | Add | Sub | Mul | Div | Pow:
+    def _eval(self, substring: str) -> AbstractExpression:
         """ 
         The method parses the expression into a binary tree, then collects this tree to the top.
         
