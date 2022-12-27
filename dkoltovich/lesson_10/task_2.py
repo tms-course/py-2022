@@ -1,40 +1,38 @@
-import task_3 as t3
+from task_3 import TerminalExpression, NonTerminalExpression
 
 
-class Number(t3.TerminalExpression):
-    def __float__(self):
-        return float(self.value)
-
-
-class Add(t3.NonTerminalExpression):
+class Number(TerminalExpression):
     def interpret(self):
-        return Number()
+        return self.value
 
 
-class Sub(t3.NonTerminalExpression):
-
+class Add(NonTerminalExpression):
     def interpret(self):
-        return float(self.left) - float(self.right)
+        return self.left.interpret() + self.right.interpret()
 
 
-class Mul(t3.NonTerminalExpression):
-
+class Sub(NonTerminalExpression):
 
     def interpret(self):
-        return float(self.left) * float(self.right)
+        return self.left.interpret() - self.right.interpret()
 
 
-class Div(t3.NonTerminalExpression):
+class Mul(NonTerminalExpression):
+    def interpret(self):
+        return self.left.interpret() * self.right.interpret()
+
+
+class Div(NonTerminalExpression):
 
     def interpret(self):
         try:
-            result = float(self.left) / float(self.right)
-            return result
+            return self.left.interpret() / self.right.interpret()
         except ZeroDivisionError:
             print('Division by zero error')
             raise SystemExit
 
-class Pow(t3.NonTerminalExpression):
+
+class Pow(NonTerminalExpression):
 
     def interpret(self):
-        return float(self.left) ** float(self.right)
+        return self.left.interpret() ** self.right.interpret()
