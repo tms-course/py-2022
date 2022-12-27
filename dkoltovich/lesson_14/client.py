@@ -6,9 +6,7 @@ load_dotenv()
 
 
 class Client:
-    """
-    Class represents client
-    """
+
     def __init__(self):
         self.sock = socket.socket()
         self.sock.connect(('', int(os.getenv('SOCKET_PORT'))))
