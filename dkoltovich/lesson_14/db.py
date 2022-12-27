@@ -13,12 +13,12 @@ def _get_connector():
     }
 
     connection = pymysql.connect(**connect_args)
-
     try:
         yield connection
     finally:
         print('Closing connection')
         connection.close()
+
 
 connector = _get_connector()
 
