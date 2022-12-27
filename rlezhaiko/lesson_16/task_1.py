@@ -17,3 +17,7 @@ def update_delete_users(id):
         return '<p>Hello GET {id}</p>'
     elif request.method == 'POST':
         return '<p>Hello POST {id}</p>'
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
