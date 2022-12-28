@@ -10,6 +10,7 @@
         <li>Возраст: {{ u.profile.old }}</li>
         <li>Город: {{ u.profile.city }}</li>
     </ul>
+    <button onclick="deleteUser('{{ u.id }}')">Удалить</button>
 </li>
 {% endfor %}
 </ul>

@@ -49,6 +49,18 @@ def register():
             pass
     return render_template('register.html', title="Регистрация")
 
+@app.delete('/users/<int:id>')
+def delete_user(id):
+    session = get_db()
+    try:
+        Profiles.query.filter_by(user_id=id).delete()
+        Users.query.filter_by(id=id).delete()
+        session.commit()
+    except:
+        session.rollback()
+        return {}, 403
+
+    return {}, 200
 
 if __name__ == '__main__':
     app.run(debug=True)
