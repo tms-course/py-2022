@@ -1,0 +1,14 @@
+.mainmenu {
+    width: 100%;
+    background-color: aquamarine;
+    display: flex;
+}
+
+.mainmenu li {
+    list-style-type: none;
+    padding: 10px;
+}
+
+.mainmenu li:hover {
+    background-color: aqua;
+}
