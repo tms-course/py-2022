@@ -1,10 +1,23 @@
-from flask import Flask, render_template, request
+from flask import Flask, g, render_template, request
 from werkzeug.security import generate_password_hash
 
-from db import session
+from db import Session
 from models import Users, Profiles
 
 app = Flask(__name__)
+
+def get_db() -> Session:
+    print('Getting db instance')
+    if not hasattr(g, 'db'):
+        g.db = Session()
+    
+    return g.db
+
+@app.teardown_appcontext
+def shutdown(error):
+    print('Shutdown app', error)
+    if hasattr(g, 'db'):
+        g.db.close()
 
 @app.route('/')
 def index():
@@ -19,6 +32,7 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
+        session = get_db()
         try:
             hash = generate_password_hash(request.form['password'])
             u = Users(email=request.form['email'], password_hash=hash)
