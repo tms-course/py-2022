@@ -15,48 +15,58 @@ ctx = Context("3*2 + 7^3")
 print(ctx.evaluate())
 # 349
 """
+from __future__ import annotations
+
 
 class Number:
-    def __init__(self, value: str):
-        self.value = float(value)
+    def __init__(self, value: float):
+        self.value = value
 
-    def interpret(self):
+    def interpret(self) -> float:
         return self.value
 
 
 class Add:
-    def __init__(self, left, right):
+    def __init__(self,
+                 left: Add | Sub | Mul | Div | Pow | Number,
+                 right: Add | Sub | Mul | Div | Pow | Number):
         self.left = left
         self.right = right
 
-    def interpret(self):
+    def interpret(self) -> float:
         return self.left.interpret() + self.right.interpret()
 
 
 class Sub:
-    def __init__(self, left, right):
+    def __init__(self,
+                 left: Add | Sub | Mul | Div | Pow | Number,
+                 right: Add | Sub | Mul | Div | Pow | Number):
         self.left = left
         self.right = right
 
-    def interpret(self):
+    def interpret(self) -> float:
         return self.left.interpret() - self.right.interpret()
 
 
 class Mul:
-    def __init__(self, left, right):
+    def __init__(self,
+                 left: Add | Sub | Mul | Div | Pow | Number,
+                 right: Add | Sub | Mul | Div | Pow | Number):
         self.left = left
         self.right = right
 
-    def interpret(self):
+    def interpret(self) -> float:
         return self.left.interpret() * self.right.interpret()
 
 
 class Div:
-    def __init__(self, left, right):
+    def __init__(self,
+                 left: Add | Sub | Mul | Div | Pow | Number,
+                 right: Add | Sub | Mul | Div | Pow | Number):
         self.left = left
         self.right = right
 
-    def interpret(self):
+    def interpret(self) -> float:
         try:
             return self.left.interpret() / self.right.interpret()
         except ZeroDivisionError:
@@ -65,22 +75,48 @@ class Div:
 
 
 class Pow:
-    def __init__(self, left, right):
+    def __init__(self,
+                 left: Add | Sub | Mul | Div | Pow | Number,
+                 right: Add | Sub | Mul | Div | Pow | Number):
         self.left = left
         self.right = right
 
-    def interpret(self):
+    def interpret(self) -> float:
         return self.left.interpret() ** self.right.interpret()
 
 
 class Context:
+    """
+       Attributes:
+           operators: list - operators that could be included in expression
+           operation_class: dict - key is operator and value is its class
+       """
+    operators = ['+', '-', '*', '/', '^']
+    operation_class = {'+': Add,
+                       '-': Sub,
+                       '*': Mul,
+                       '/': Div,
+                       '^': Pow
+                       }
+
     def __init__(self, expression: str):
         """
         :param expression: expression needs to be evaluated
         """
         self.expression = expression
 
-    def _evaluate(self, expression_part: str):
+    def is_expression_valid(self, expression) -> bool:
+        """
+        Checks if expression includes only numbers, spaces and operators (+, -, *, /, ^)
+        Returns: True if expression is valid, False otherwise
+
+        """
+        for char in expression:
+            if char not in self.operators and not char.isdigit() and char != ' ':
+                return False
+        return True
+
+    def _evaluate(self, expression_part: str) -> Add | Sub | Mul | Div | Pow | Number:
         """
         Recursion method that processes expression by operators
         :param expression_part: either part or full expression needs to be evaluated
@@ -88,28 +124,20 @@ class Context:
             Add | Sub | Mul | Div | Pow | Number 's constructors could be other objects of this classes
         """
         expression_part = expression_part.strip()
-        for operator in ['+', '-', '*', '/', '^']:
-            operator_position = expression_part.find(operator)
-            left_part, right_part = None, None
-            if operator_position != -1:
-                left_part = self._evaluate(expression_part[:operator_position], )
-                right_part = self._evaluate(expression_part[operator_position + 1:])
-            else: continue
-            match operator:
-                case '+': return Add(left_part, right_part)
-                case '-': return Sub(left_part, right_part)
-                case '*': return Mul(left_part, right_part)
-                case '/': return Div(left_part, right_part)
-                case '^': return Pow(left_part, right_part)
-        return Number(expression_part)
+        for operator in self.operators:
+            operands = expression_part.split(operator, 1)
+            if len(operands) > 1:
+                left_part = self._evaluate(operands[0])
+                right_part = self._evaluate(operands[1])
+                return self.operation_class[operator](left_part, right_part)
+        return Number(float(expression_part))
 
-    def evaluate(self):
-        """
-        Interprets object returned from _evaluate method
-        Returns: float number
-        """
-        return self._evaluate(self.expression).interpret()
+    def evaluate(self) -> Add | Sub | Mul | Div | Pow | Number:
+        if not self.is_expression_valid(self.expression):
+            print('Expression is not valid')
+        else:
+            return self._evaluate(self.expression)
 
 
 c = Context('2*5 + 3^4')
-print(c.evaluate())
+print(c.evaluate().interpret())
