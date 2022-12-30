@@ -47,6 +47,10 @@ class NonTerminalExpression(AbstractExpression):
         raise NotImplementedError
 
 
+class DivisionByZero(Exception):
+    pass
+
+
 class Number(TerminalExpression):
     pass
 
@@ -68,13 +72,11 @@ class Mul(NonTerminalExpression):
 
 class Div(NonTerminalExpression):
     def interpret(self) -> float:
-        try:
-            return self.left.interpret() / self.right.interpret()
-        except ZeroDivisionError:
-            print('Division by zero error')
-            raise SystemExit
-
-
+        right_value = self.right.interpret()
+        if right_value == 0:
+            raise DivisionByZero('Делить на ноль нельзя!')
+        else:
+            return self.left.interpret() / right_value
 class Pow(NonTerminalExpression):
     def interpret(self) -> float:
         return self.left.interpret() ** self.right.interpret()
@@ -142,5 +144,8 @@ class Context:
 
 c = Context('2*5 + 3^4')
 print(c.evaluate().interpret())
-
-
+expr = c.evaluate()
+try:
+    print(expr.interpret())
+except DivisionByZero as er:
+    print(er)
