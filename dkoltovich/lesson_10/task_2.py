@@ -18,6 +18,10 @@ print(ctx.evaluate())
 from __future__ import annotations
 
 
+class DivisionByZero(Exception):
+    pass
+
+
 class Number:
     def __init__(self, value: float):
         self.value = value
@@ -67,11 +71,11 @@ class Div:
         self.right = right
 
     def interpret(self) -> float:
-        try:
-            return self.left.interpret() / self.right.interpret()
-        except ZeroDivisionError:
-            print('Division by zero error')
-            raise SystemExit
+        right_value = self.right.interpret()
+        if right_value == 0:
+            raise DivisionByZero('Делить на ноль нельзя!')
+        else:
+            return self.left.interpret() / right_value
 
 
 class Pow:
@@ -139,5 +143,9 @@ class Context:
             return self._evaluate(self.expression)
 
 
-c = Context('2*5 + 3^4')
-print(c.evaluate().interpret())
+c = Context('2 / 0 + 3^4')
+expr = c.evaluate()
+try:
+    print(expr.interpret())
+except DivisionByZero as er:
+    print(er)
