@@ -4,13 +4,15 @@
 <ul>
 {% for u in list %}
 <li>
+    <p>id: {{ u.id }}</p>
+    <p>first_name: {{ u.first_name }}</p>
+    <p>last_name: {{ u.last_name }}</p>
+    <p>phone: {{ u.phone }}</p>
+    <p>birthday: {{ u.birthday }}</p>
+    <p>created_at: {{ u.created_at }}</p>
     <p>
-        id: {{ u.id }}, 
-        first_name: {{ u.first_name }},
-        last_name: {{ u.last_name }},
-        phone: {{ u.phone }},
-        birthday: {{ u.birthday }},
-        created_at: {{ u.created_at }},
+        <button onclick="deleteUser('{{ u.id }}')">Удалить</button>
+        <button onclick="updateUser('{{ u.id }}')">Редактировать</button>
     </p>
 </li>
 {% endfor %}

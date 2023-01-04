@@ -1,7 +1,8 @@
-from flask import Flask, g, render_template, request
+from flask import Flask, g, render_template, request, redirect, url_for
 
 from models import Users
 from db import Session
+from datetime import date
 
 app = Flask(__name__)
 
@@ -29,6 +30,43 @@ def index():
         print('Ошибка чтения')
 
     return render_template("index.html", title="Главная", list=users)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        session = get_db()
+        try:
+            data = request.form['birthday'].split('-')
+            birthday_tmp = date(int(data[0]), int(data[1]), int(data[2]))
+            u = Users(first_name=request.form['first_name'],
+                      last_name=request.form['last_name'],
+                      phone=request.form['phone'],
+                      birthday=birthday_tmp)
+            session.add(u)
+            session.commit()
+        except Exception as e:
+            session.rollback()
+            print('Ошибка добавления данных')
+    return render_template('register.html', title="Регистрация")
+
+
+@app.delete('/users/<int:id>')
+def delete_user(id):
+    session = get_db()
+    try:
+        Users.query.filter_by(id=id).delete()
+        session.commit()
+        return redirect("http://www.google.com", code=302)
+    except:
+        session.rollback()
+        return {}, 403
+
+
+@app.get('/users/<int:id>')
+def update_user(id):
+    return f'Good {id}'
+
 
 
 if __name__ == '__main__':

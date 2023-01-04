@@ -10,8 +10,8 @@ class Users(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(30), nullable=False)
-    last_name = Column(String(50), nullable=False)
+    first_name = Column(String(30), nullable=True)
+    last_name = Column(String(50), nullable=True)
     phone = Column(String(13), unique=True)
-    birthday = Column(Date, nullable=False)
+    birthday = Column(Date, nullable=True)
     created_at = Column(DateTime, default=dt.datetime.utcnow)

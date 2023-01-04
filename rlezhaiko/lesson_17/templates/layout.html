@@ -3,6 +3,18 @@
     <head>
         <link type="text/css" href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
         <title>{{ title }}</title>
+        <script>
+            function deleteUser(id) {
+                fetch(`/users/${id}`, {
+                    method: 'DELETE'
+                });
+            }
+            function updateUser(id) {
+                fetch(`/users/${id}`, {
+                    method: 'GET'
+                });
+            }
+        </script>
     </head>
     <body>
         <ul class="mainmenu">
