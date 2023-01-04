@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<ul>
+{% for u in list %}
+<li>
+    <p>
+        id: {{ u.id }}, 
+        first_name: {{ u.first_name }},
+        last_name: {{ u.last_name }},
+        phone: {{ u.phone }},
+        birthday: {{ u.birthday }},
+        created_at: {{ u.created_at }},
+    </p>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
