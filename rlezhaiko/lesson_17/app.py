@@ -57,16 +57,16 @@ def delete_user(id):
     try:
         Users.query.filter_by(id=id).delete()
         session.commit()
-        return redirect("http://www.google.com", code=302)
     except:
         session.rollback()
         return {}, 403
+
+    return {}, 200
 
 
 @app.get('/users/<int:id>')
 def update_user(id):
     return f'Good {id}'
-
 
 
 if __name__ == '__main__':

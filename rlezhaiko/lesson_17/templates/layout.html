@@ -8,6 +8,7 @@
                 fetch(`/users/${id}`, {
                     method: 'DELETE'
                 });
+                document.location.reload();
             }
             function updateUser(id) {
                 fetch(`/users/${id}`, {
