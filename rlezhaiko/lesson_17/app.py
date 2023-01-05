@@ -64,9 +64,27 @@ def delete_user(id):
     return {}, 200
 
 
-@app.get('/users/<int:id>')
+@app.route('/users/<int:id>', methods=['GET', 'POST'])
 def update_user(id):
-    return f'Good {id}'
+    if request.method == 'POST':
+        session = get_db()
+        try:
+            data = request.form['birthday'].split('-')
+            birthday_tmp = date(int(data[0]), int(data[1]), int(data[2]))
+            user = Users.query.filter_by(id=id)
+            data = dict(first_name =request.form['first_name'],
+                        last_name=request.form['last_name'],
+                        phone=request.form['phone'],
+                        birthday=birthday_tmp)
+            user.update(data)
+            session.commit()
+            return index()
+        except Exception as e:
+            session.rollback()
+            print('Ошибка обновления данных')
+            return {}, 403
+    if request.method == 'GET':
+        return render_template('update.html', title="Обновление данных", u=request.args)
 
 
 if __name__ == '__main__':
