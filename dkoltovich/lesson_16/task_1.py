@@ -5,7 +5,7 @@
 дается.
 """
 
-from flask import Flask, request
+from flask import Flask, request, abort
 
 
 class UniqueUsernameError(Exception): ...
@@ -60,7 +60,7 @@ def create_user() -> dict:
             users.append(user)
             return user
     except UniqueUsernameError as e:
-        return e.args
+        abort(403,e.args)
 
 
 @app.post('/users/<int:id>')
@@ -80,11 +80,11 @@ def update_user(id: int) -> dict:
             users[id - 1] = {'id': id, 'username': new_username}
             return users[id - 1]
     except UniqueUsernameError as e:
-        return e.args
+        abort(403,e.args)
     except IndexError:
         raise InvalidId('Invalid user id') from KeyError
     except InvalidId as e:
-        return e.args
+        abort(403,e.args)
 
     
 @app.delete('/users/<int:id>')
@@ -104,7 +104,7 @@ def delete_user(id: int) -> dict:
     except IndexError:
         raise InvalidId('Invalid user id') from IndexError
     except InvalidId as e:
-        return e.args
+        abort(403,e.args)
         
         
 app.run(debug=True)

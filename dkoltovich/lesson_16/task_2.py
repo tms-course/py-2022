@@ -6,6 +6,7 @@
 """
 
 from fastapi import FastAPI, Form
+from fastapi.responses import JSONResponse
 import uvicorn
 
 
@@ -61,7 +62,7 @@ def create_user(username = Form()) -> dict:
             users.append(user)
             return user
     except UniqueUsernameError as e:
-        return e.args
+        return JSONResponse(content={"message": e.args}, status_code=403)
 
 @app.post('/users/{id}')
 def update_user(id, new_username = Form()) -> dict:
@@ -84,11 +85,11 @@ def update_user(id, new_username = Form()) -> dict:
             users[id - 1] = {'id': id, 'username': new_username}
             return users[id - 1]
     except UniqueUsernameError as e:
-        return e.args
+        return JSONResponse(content={"message": e.args}, status_code=403)
     except IndexError:
         raise InvalidId('Invalid user id') from KeyError
     except InvalidId as e:
-        return e.args
+        return JSONResponse(content={"message": e.args}, status_code=403)
 
 
     
@@ -110,7 +111,7 @@ def delete_user(id: int) -> dict:
     except IndexError:
         raise InvalidId('Invalid user id') from IndexError
     except InvalidId as e:
-        return e.args
+        return JSONResponse(content={"message": e.args}, status_code=403)
         
 
 if __name__ == '__main__':
