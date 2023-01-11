@@ -7,9 +7,9 @@
 
 class ContentAnalyzer(object):
     """
-    Class "ContentAnalyzer"
+    A classed used to represent a ContentAnalyzer
         Attributes:
-        filepath: str
+        filepath: str, path to file need to be analyzed
     """
     def __init__(self, filepath: str):
         """
@@ -19,23 +19,29 @@ class ContentAnalyzer(object):
  
         
     @staticmethod
-    def analyze_file(line) -> bool:
+    def is_line_valide(line) -> bool:
         """
         Check file for valid
+        :param: string for analyze
+        :return: True if line is vslid, False otherwise 
         """
         words = line.split()
-        if len(words) > 10:
-            return True
+        if len(words) <= 10:
+            return False
 
         words_with_dd = list(filter(lambda x: x.count('d') == 2, words))
         if len(words_with_dd) <= 2:
-            return True
+            return False
+
+        return True and ContentAnalyzer.valid_brackets(line)# ????
 
 
     @staticmethod
     def valid_brackets(line) -> bool:
         """
         Check line for valid brackets
+        :param: string for analyze
+        :return: True if line is valid for brackets and False if not
         """
         counter = 0
         for i in line:
@@ -51,10 +57,12 @@ class ContentAnalyzer(object):
     def analyze(self):
         """
         Analyze file
+        :return: list of typles, where the first elemnt says is string valid,
+        and second - first 7 chars in line
         """
         list_of_result = []
         with open(self.filepath, 'r') as f:
             for line in f:
-                valid_line = self.analyze_file(line), self.valid_brackets(line) 
-                list_of_result.append((line[:7], valid_line))
+                valid_line = self.is_line_valide(line) 
+                list_of_result.append((valid_line, line[:7]))
 

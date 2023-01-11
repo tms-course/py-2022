@@ -6,7 +6,7 @@
 
 class User(object):
     """
-    Class 'User'
+    Class represent a user
     Attributes:
     email: str;
     password: str

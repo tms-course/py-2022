@@ -7,7 +7,7 @@
 
 class Registry(type):
     """ 
-    Metaclass 'Registry' to make instance counter 
+    Metaclass to make instance counter 
     Attributes:
         itertools.count
     """
