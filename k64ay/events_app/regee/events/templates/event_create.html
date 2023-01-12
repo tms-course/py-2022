@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>
+    <form action="{% url 'event_list' %}" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Event name:</label>
+            <input 
+                class="form-control"
+                type="text" 
+                name="name" 
+                placeholder="Enter event name..." 
+            />
+        </div>
+        <div class="mb-3">
+            <label for="location" class="form-label">Event location:</label>
+            <textarea 
+                class="form-control" 
+                id="location" 
+                rows="3">
+            </textarea>
+        </div>
+        <div class="mb-3">
+            <label for="datetime" class="form-label">Event time:</label>
+            <input 
+                class="form-control"
+                type="text" 
+                name="datetime" 
+                placeholder="2023-01-23 10:00:00" 
+            />
+        </div>
+
+        <div class="mb-3">
+            <input
+                class="btn btn-primary"
+                type="submit"
+                value="Submit"
+            />
+        </div>
+    </form>
+</div>
+{% endblock %}
