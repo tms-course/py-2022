@@ -6,6 +6,8 @@
 """
 from fastapi import FastAPI
 import uvicorn
+from fastapi.responses import JSONResponse
+
 
 simple_db = {1: {'username': 'JohnWick'},
              2: {'username': 'SandraBullok'},
@@ -27,7 +29,9 @@ def create_user(username: str) -> str:
     keys = list(simple_db.keys())
     cursor = max(keys) + 1
     simple_db[cursor] = simple_db.get(cursor, {"username": username})
-    return 'User successfully created'
+    print(simple_db[cursor])
+    print(type(simple_db[cursor]))
+    return JSONResponse(content=simple_db[cursor])
 
 
 @app.delete("/users/{id}")
@@ -37,9 +41,9 @@ def delete_user(id: int) -> str:
     """
     try:
         simple_db.pop(id)
-        return 'User successfully deleted'
+        return JSONResponse(content={"message": "Success", "errors": None})
     except KeyError:
-        return 'There is no user with given id'
+        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'})
 
 
 @app.post("/users/{id}")
@@ -50,9 +54,9 @@ def update_user(id: int, new_username: str) -> str:
     """
     try:
         simple_db[id]['username'] = new_username
-        return 'User successfully updated'
+        return JSONResponse(content={"message": "Success", "errors": None})
     except KeyError:
-        return 'There is no user with given id'
+        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'})
 
 
 if __name__ == '__main__':

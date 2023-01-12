@@ -14,9 +14,9 @@ app = Flask(__name__)
 
 
 @app.route('/users', methods=['GET', 'POST'])
-def create_read_users(username: str = None) -> dict | str:
+def create_read_users(username: str = None) -> dict:
     """ 
-    :param username: username in string format 
+    :param username: username in integer format 
     """
     if request.method == 'GET':
         return simple_db
@@ -25,28 +25,27 @@ def create_read_users(username: str = None) -> dict | str:
         keys = list(simple_db.keys())
         cursor = max(keys) + 1
         simple_db[cursor] = simple_db.get(cursor, {"username": username})
-        return 'User successfully created'
+        return simple_db[cursor]
 
 
-@app.route('/users/<id>', methods=['DELETE', 'POST'])
-def update_delete_users(id: str) -> str:
+@app.route('/users/<int:id>', methods=['DELETE', 'POST'])
+def update_delete_users(id: int) -> str:
     """ 
     :param id: id of user which need to update or delete 
     """
-    print(id)
     if request.method == 'DELETE':
         try:
             print(id)
-            simple_db.pop(int(id))
-            return 'User successfully deleted'
+            simple_db.pop(id)
         except KeyError:
-            return 'There is no user with given id'
+            return {"message": "Failure", "errors": 'There is no user with given id'}
     elif request.method == 'POST':
         try:
-            simple_db[int(id)]['username'] = request.args['new_username']
-            return 'User successfully updated'
+            simple_db[id]['username'] = request.args['new_username']
         except KeyError:
-            return 'There is no user with given id'
+            return {"message": "Failure", "errors": 'There is no user with given id'}
+
+    return {"message": "Success", "errors": None}
 
 
 if __name__ == '__main__':
