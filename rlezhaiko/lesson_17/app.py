@@ -1,5 +1,5 @@
-from flask import Flask, g, render_template, request, redirect, url_for
-
+from flask import Flask, g, render_template, request
+import datetime as dt
 from models import Users
 from db import Session
 from datetime import date
@@ -37,8 +37,7 @@ def register():
     if request.method == 'POST':
         session = get_db()
         try:
-            data = request.form['birthday'].split('-')
-            birthday_tmp = date(int(data[0]), int(data[1]), int(data[2]))
+            birthday_tmp = dt.datetime.strptime(request.form['birthday'], '%Y-%m-%d')
             u = Users(first_name=request.form['first_name'],
                       last_name=request.form['last_name'],
                       phone=request.form['phone'],
@@ -69,8 +68,7 @@ def update_user(id):
     if request.method == 'POST':
         session = get_db()
         try:
-            data = request.form['birthday'].split('-')
-            birthday_tmp = date(int(data[0]), int(data[1]), int(data[2]))
+            birthday_tmp = dt.datetime.strptime(request.form['birthday'], '%Y-%m-%d')
             user = Users.query.filter_by(id=id)
             data = dict(first_name =request.form['first_name'],
                         last_name=request.form['last_name'],

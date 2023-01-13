@@ -1,8 +1,5 @@
 import datetime as dt
-
 from sqlalchemy import Column, Integer, String, DateTime, Date
-# from sqlalchemy.orm import relationship
-
 from db import Base
 
 

@@ -1,9 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-{% for cat, msg in get_flashed_messages(True) %}
-<div class="flash {{ cat }}">{{ msg }}</div>
-{% endfor %}
 <form action="" method="post" class="form-contact">
     <p><label>Имя: </label><input type="text" name="first_name" value="" required /></p>
     <p><label>Фамилия: </label><input type="text" name="last_name" value="" required /></p>
