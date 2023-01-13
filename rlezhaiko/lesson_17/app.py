@@ -1,3 +1,10 @@
+"""
+1. Создать приложение для регистрации на мероприятие используя фреймворк Flask. 
+Подключить базу данных используя SQLAlchemy, в которой будет храниться только 
+список всех участников. От участников нам необходимо знать имя, фамилию, телефон, 
+дату рождения и время регистрации. Каждый может получить список всех участников,
+отменить свою регистрацию по номеру телефона, изменить данные.
+"""
 from flask import Flask, g, render_template, request
 import datetime as dt
 from models import Users
@@ -52,6 +59,9 @@ def register():
 
 @app.delete('/users/<int:id>')
 def delete_user(id):
+    """ 
+    :param id: id of user which need to delete 
+    """
     session = get_db()
     try:
         Users.query.filter_by(id=id).delete()
@@ -65,6 +75,9 @@ def delete_user(id):
 
 @app.route('/users/<int:id>', methods=['GET', 'POST'])
 def update_user(id):
+    """ 
+    :param id: id of user which need to update
+    """
     if request.method == 'POST':
         session = get_db()
         try:
