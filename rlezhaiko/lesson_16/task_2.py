@@ -43,7 +43,7 @@ def delete_user(id: int) -> str:
         simple_db.pop(id)
         return JSONResponse(content={"message": "Success", "errors": None})
     except KeyError:
-        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'})
+        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'}, status_code=404)
 
 
 @app.post("/users/{id}")
@@ -56,7 +56,7 @@ def update_user(id: int, new_username: str) -> str:
         simple_db[id]['username'] = new_username
         return JSONResponse(content={"message": "Success", "errors": None})
     except KeyError:
-        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'})
+        return JSONResponse(content={"message": "Failure", "errors": 'There is no user with given id'}, status_code=404)
 
 
 if __name__ == '__main__':

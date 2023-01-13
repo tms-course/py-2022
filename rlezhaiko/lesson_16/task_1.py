@@ -38,12 +38,12 @@ def update_delete_users(id: int) -> str:
             print(id)
             simple_db.pop(id)
         except KeyError:
-            return {"message": "Failure", "errors": 'There is no user with given id'}
+            return {"message": "Failure", "errors": 'There is no user with given id'}, 404
     elif request.method == 'POST':
         try:
             simple_db[id]['username'] = request.args['new_username']
         except KeyError:
-            return {"message": "Failure", "errors": 'There is no user with given id'}
+            return {"message": "Failure", "errors": 'There is no user with given id'}, 404
 
     return {"message": "Success", "errors": None}
 
