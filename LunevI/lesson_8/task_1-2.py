@@ -26,7 +26,6 @@ class Auto:
 
     def __init__(self, brand: str, age: int, mark: str, color: str = 'red', weight: int = 2000) -> None:
         """
-        Initialisation method
         :param brand: brand of auto
         :param age: age of auto
         :param mark: mark of auto
@@ -42,19 +41,19 @@ class Auto:
 
     def move(self) -> None:
         """
-        Move method, prints 'Move'
+        Prints 'Move'
         """
         print('Move')
 
     def birthday(self) -> None:
         """
-        Birthday method, increases age by 1
+        Increases age by 1
         """
         self.age += 1
 
     def stop(self) -> None:
         """
-        Stop method, prints 'Stop'
+        Prints 'Stop'
         """
         print('Stop')
 
@@ -78,7 +77,6 @@ class Truck(Auto):
 
     def __init__(self, brand: str, age: int, mark: str, max_load: int, color: str = 'blue', weight: int = 3000):
         """
-        Initialization method
         :param brand: brand of truck
         :param age: age of truck
         :param mark: mark of truck
@@ -120,7 +118,6 @@ class Car(Auto):
 
     def __init__(self, brand: str, age: int, mark: str, max_speed: int, color: str = 'black', weight: int = 1500):
         """
-        Initialization method
         :param brand: brand of a car
         :param age: age of a car
         :param mark: mark of a car

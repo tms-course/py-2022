@@ -15,7 +15,6 @@ class Point:
 
     def __init__(self, x: float, y: float):
         """
-        Initialisation method
         :param x: point x
         :param y: point y
         """
@@ -30,7 +29,6 @@ class Point:
 
     def __eq__(self, other):
         """
-        __eq__ function
         :param other:  other object of class
         :return: True if equals, False otherwise
         """
@@ -38,14 +36,12 @@ class Point:
 
     def __repr__(self):
         """
-        __repr__ function
         :return: str
         """
         return f'First point x = {self.x}, second point y = {self.y}'
 
     def __str__(self):
         """
-        __str__ function
         :return: str
         """
         return f'Point x = {self.x}, point y = {self.y}'
@@ -62,7 +58,6 @@ class Circle(Point):
 
     def __init__(self, x: float, y: float, radius: float):
         """
-        Initialisation method
         :param x: float
         :param y: float
         :param radius: radius of a circle
@@ -72,22 +67,19 @@ class Circle(Point):
 
     def __eq__(self, other):
         """
-        __eq__ function
         :param other: other object of class
         :return: True if equal, False otherwise
         """
-        return (self.x == other.x) and (self.y == other.y) and (self.radius == other.radius)
+        return super().__eq__(other) and self.radius == other.radius
 
     def __repr__(self):
         """
-        __repr__ function
         :return: str
         """
         return f'First point x = {self.x}, second point y = {self.y}, and radius = {self.radius}'
 
     def __str__(self):
         """
-        __str__ function
         :return: str
         """
         return f'Point x = {self.x}, point y = {self.y}, radius = {self.radius}'
@@ -100,21 +92,18 @@ class Circle(Point):
 
     def area(self):
         """
-        area function
         :return: area of a circle
         """
         return pi * self.radius ** 2
 
     def circumference(self):
         """
-        circumference function
         :return: circumference
         """
         return 2 * pi * self.radius
 
     def __sub__(self, other):
         """
-        __sub__ function
         :param other: other object of class
         :return: Point, if radius of both circle are the same, otherwise Circle
         """
