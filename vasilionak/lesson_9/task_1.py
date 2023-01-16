@@ -33,7 +33,7 @@ class ContentAnalyzer(object):
         if len(words_with_dd) <= 2:
             return False
 
-        return True and ContentAnalyzer.valid_brackets(line)# ????
+        return True
 
 
     @staticmethod
@@ -63,6 +63,8 @@ class ContentAnalyzer(object):
         list_of_result = []
         with open(self.filepath, 'r') as f:
             for line in f:
-                valid_line = self.is_line_valide(line) 
-                list_of_result.append((valid_line, line[:7]))
+                valid_line = self.is_line_valide(line)
+                if self.is_line_valide(line) == True:
+                    valid_line = self.valid_brackets(line)
+                    list_of_result.append((valid_line, line[:7]))
 
