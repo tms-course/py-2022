@@ -6,6 +6,13 @@
 
 {% block content %}
 <h2>{% translate "Polls" %}</h2>
-<span>{{ now }}</span>
-<div>{{ 1000000 }}</div>
+
+<form action="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+
+    <button type="submit">Submit</button>
+</form>
+
+
 {% endblock %}
