@@ -15,6 +15,7 @@ def list_events(request):
         location = request.POST['location']
 
         Event.objects.create(
+            organizer=request.user,
             name=name,
             datetime=datetime,
             location=location
