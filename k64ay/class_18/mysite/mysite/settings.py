@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'datetimewidget',
     'accounts',
-    'polls',
+    'polls.apps.PollsConfig',
     'formats',
 ]
 
