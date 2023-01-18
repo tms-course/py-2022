@@ -1,6 +1,6 @@
 import datetime as dt
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.http import HttpResponseNotFound
 
@@ -40,3 +40,8 @@ def get_event(request, event_id: int):
     ctx = {'event': event}
 
     return render(request, 'event_details.html', ctx)
+
+def delete_event(request, event_id: int):
+    Event.objects.filter(id=event_id).delete()
+
+    return redirect('event_list')

@@ -7,6 +7,11 @@ from .forms import QuestionForm
 from .models import Question
 
 def index(request):
+    if request.method == 'POST':
+        postForm = QuestionForm(request.POST)
+        if postForm.is_valid():
+            postForm.save()
+            
     date = dt.datetime.now()
     questionForm = QuestionForm()
     
