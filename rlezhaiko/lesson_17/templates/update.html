@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form action="" method="post" class="form-contact">
+    <p><label>Имя: </label><input type="text" name="first_name" value="{{ u['first_name'] }}" required /></p>
+    <p><label>Фамилия: </label><input type="text" name="last_name" value="{{ u['last_name'] }}" required /></p>
+    <p><label>Телефон: </label><input type="text" name="phone" value="{{ u['phone'] }}" required /></p>
+    <p><label>Дата рождения: </label><input type="date" name="birthday" value="{{ u['birthday'] }}" required /></p>
+    <p><button>Обновить</button></p>
+</form>
+{% endblock %}

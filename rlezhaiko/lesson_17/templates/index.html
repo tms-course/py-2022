@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<ul>
+{% for u in list %}
+<li>
+    <p>id: {{ u.id }}</p>
+    <p>first_name: {{ u.first_name }}</p>
+    <p>last_name: {{ u.last_name }}</p>
+    <p>phone: {{ u.phone }}</p>
+    <p>birthday: {{ u.birthday }}</p>
+    <p>created_at: {{ u.created_at }}</p>
+    <p>
+        <button onclick="deleteUser('{{ u.id }}')">Удалить</button>
+        <a href="{{ url_for('update_user', id=u.id) }}">
+            <button>Редактировать</button>
+        </a>
+    </p>
+</li>
+{% endfor %}
+</ul>
+{% endblock %}
