@@ -5,7 +5,7 @@
 дату рождения и время регистрации. Каждый может получить список всех участников,
 отменить свою регистрацию по номеру телефона, изменить данные.
 """
-from flask import Flask, g, render_template, request
+from flask import Flask, g, render_template, request, redirect
 import datetime as dt
 from models import Users
 from db import Session
@@ -35,6 +35,7 @@ def index():
         users = Users.query.all()
     except:
         print('Ошибка чтения')
+        return {}, 500
 
     return render_template("index.html", title="Главная", list=users)
 
@@ -54,6 +55,8 @@ def register():
         except Exception as e:
             session.rollback()
             print('Ошибка добавления данных')
+            return {}, 500
+
     return render_template('register.html', title="Регистрация")
 
 
@@ -67,13 +70,12 @@ def delete_user(id):
         Users.query.filter_by(id=id).delete()
         session.commit()
     except:
-        session.rollback()
         return {}, 403
 
     return {}, 200
 
 
-@app.route('/users/<int:id>', methods=['GET', 'POST'])
+@app.route('/users/<int:id>/update', methods=['GET', 'POST'])
 def update_user(id):
     """ 
     :param id: id of user which need to update
@@ -89,13 +91,18 @@ def update_user(id):
                         birthday=birthday_tmp)
             user.update(data)
             session.commit()
-            return index()
+            return redirect('http://127.0.0.1:5000/')
         except Exception as e:
             session.rollback()
             print('Ошибка обновления данных')
             return {}, 403
     if request.method == 'GET':
-        return render_template('update.html', title="Обновление данных", u=request.args)
+        try:
+            user = Users.query.get(id)
+            return render_template('update.html', title="Обновление данных", u=user.__dict__)
+        except:
+            print('Ошибка чтения')
+            return {}, 500
 
 
 if __name__ == '__main__':
