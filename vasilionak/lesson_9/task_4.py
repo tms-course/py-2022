@@ -24,9 +24,7 @@ class Matrix(object):
         Method add one matrix by another
         Args:
             other: other matrix
-
         Returns: matrix
-
         """
         if (self.numb_rows != other.numb_rows or
             self.numb_columns != other.numb_columns):
@@ -42,7 +40,6 @@ class Matrix(object):
         Args:
             other: matrix or number
         Returns:matrix
-
         """
         if type(other) == int or type(other) == float:
             for i in range(self.numb_rows):
