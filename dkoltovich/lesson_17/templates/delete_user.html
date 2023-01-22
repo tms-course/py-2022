@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="" method="post" class="form-contact">
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Введите номер телефона для отмены регистрации</label>
+        <input type="text" name="phone_number" class="form-control" id="formGroupExampleInput" placeholder="+375"required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+{% endblock %}
