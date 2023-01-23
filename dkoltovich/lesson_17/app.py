@@ -54,7 +54,6 @@ def register():
                 registration_time=dt.datetime.now()
                 )      
             session.add(u)
-            session.flush()
             session.commit()
         except Exception as e:
             session.rollback()
