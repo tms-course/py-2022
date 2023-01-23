@@ -7,5 +7,23 @@
         <div><b>Time:</b> {{ event.datetime }}</div>
         <div><b>Location:</b> {{ event.location }}</div>
     </div>
+    <div>
+        {% if has_user_joint %}
+        {% else %}
+        <form method="post" action="{% url 'join_event' event.id %}">
+            {% csrf_token %}
+            <button type="submit">Join Event</button>
+        </form>
+        {% endif %}
+    </div>
+    <div>
+        <h4>Attendees:</h4>
+
+        {% for att in attendees %}
+        <div>
+            {{ att.username }}
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
