@@ -8,3 +8,8 @@ class Event(models.Model):
     datetime = models.DateTimeField()
     location = models.CharField(max_length=256, blank=False)
     attendees = models.ManyToManyField(User, related_name='attendees')
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['name']),
+        ]
