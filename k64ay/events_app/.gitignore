@@ -2,5 +2,7 @@
 .DS_Store
 **/.DS_Store
 regee/db.sqlite3
+regee/media/*
 **/__pycache__/
 *.pyc
+

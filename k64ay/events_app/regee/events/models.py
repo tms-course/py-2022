@@ -8,6 +8,7 @@ class Event(models.Model):
     datetime = models.DateTimeField()
     location = models.CharField(max_length=256, blank=False)
     attendees = models.ManyToManyField(User, related_name='attendees')
+    poster = models.ImageField(upload_to='events/images/', blank=True)
 
     class Meta:
         indexes = [

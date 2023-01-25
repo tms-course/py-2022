@@ -3,6 +3,9 @@
 {% block content %}
 <div>
     <h3>{{ event.name }}</h3>
+    {% if event.poster %}
+    <img src="{{ event.poster.url }}" height="150" />
+    {% endif %}
     <div class="event-details-container">
         <div><b>Time:</b> {{ event.datetime }}</div>
         <div><b>Location:</b> {{ event.location }}</div>

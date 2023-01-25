@@ -8,7 +8,7 @@ from .models import Question
 
 def index(request):
     if request.method == 'POST':
-        postForm = QuestionForm(request.POST)
+        postForm = QuestionForm(request.POST, request.FILES)
         if postForm.is_valid():
             postForm.save()
             
