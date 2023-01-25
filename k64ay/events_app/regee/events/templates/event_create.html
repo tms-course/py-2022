@@ -2,35 +2,27 @@
 
 {% block content %}
 <div>
-    <form action="{% url 'event_list' %}" method="post">
+    <form 
+        action="{% url 'create_event' %}"
+        method="post"
+        enctype="multipart/form-data"
+    >
         {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
         <div class="mb-3">
-            <label for="name" class="form-label">Event name:</label>
-            <input 
-                class="form-control"
-                type="text" 
-                name="name" 
-                placeholder="Enter event name..." 
-            />
+            {{ field.label_tag }}
+            {{ field.errors }}
+            {{ field }}
+            {{ field.help_text }}
         </div>
-        <div class="mb-3">
-            <label for="location" class="form-label">Event location:</label>
-            <textarea 
-                class="form-control" 
-                id="location" 
-                name="location"
-                rows="3">
-            </textarea>
-        </div>
-        <div class="mb-3">
-            <label for="datetime" class="form-label">Event time:</label>
-            <input 
-                class="form-control"
-                type="text" 
-                name="datetime" 
-                placeholder="2023-01-23 10:00:00" 
-            />
-        </div>
+        {% endfor %}
 
         <div class="mb-3">
             <input
