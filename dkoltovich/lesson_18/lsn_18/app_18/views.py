@@ -1,7 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import User
 from .forms import RegistrationForm
-from django.http import HttpResponseForbidden
 
 
 def index(request):
@@ -12,7 +11,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
+            user = form.save()
             user.save()
             return redirect('index')
     else:
@@ -21,18 +20,11 @@ def register(request):
 
 
 def update_user(request, id: int):
-    try:
-        user = User.objects.get(pk=id)
-    except:
-        return HttpResponseForbidden()
+    user = get_object_or_404(User, pk=id)
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, instance=user)
         if form.is_valid():
-            user_form = form.save(commit=False)
-            user.first_name = user_form.first_name
-            user.second_name = user_form.second_name
-            user.phone_number = user_form.phone_number
-            user.birth_date = user_form.birth_date
+            user = form.save()
             user.save()
             return redirect('index')
 
