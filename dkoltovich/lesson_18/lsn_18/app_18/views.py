@@ -11,8 +11,7 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            user.save()
+            form.save()
             return redirect('index')
     else:
         form = RegistrationForm
@@ -24,8 +23,7 @@ def update_user(request, id: int):
     if request.method == 'POST':
         form = RegistrationForm(request.POST, instance=user)
         if form.is_valid():
-            user = form.save()
-            user.save()
+            form.save()
             return redirect('index')
 
     form = RegistrationForm
