@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-grid gap-2 d-md-flex justify-content-end">
+        <a href="{% url 'blog_create' %}" 
+            class="btn btn-primary">Create blog</a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 m-3">
+        {% for blog in blogs %}
+        <div class="row">
+            <div class="col">
+                <a class="text" href="{% url 'blog_content' id=blog.id %}">
+                    <div class="card">
+                        <div class="card-header text-center">
+                            <h5>{{ blog.title }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ blog.theme }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
