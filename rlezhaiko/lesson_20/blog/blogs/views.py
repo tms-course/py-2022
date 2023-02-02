@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseNotFound
 from .models import Blog
 from posts.models import Post
@@ -24,6 +24,7 @@ def get_blog_content(request, id: int):
 
 def create_blog(request):
     if request.method == 'POST':
-        blog = Blog(title=request.title, theme=request.theme, author=request.user)
-        print(blog.__dict__)
+        blog = Blog(title=request.POST['title'], theme=request.POST['theme'], author=request.user)
+        blog.save()
+        return redirect('blog_list')
     return render(request, 'blog_create.html', {})
