@@ -30,14 +30,18 @@ def create_blog(request):
     if request.method == 'POST':
         form = BlogCreationForm(request.POST)
         if form.is_valid():
-            print('valid')
             blog = form.save(commit=False)
             blog.author = request.user
             blog.save()
             return redirect('list_user_blogs')
+    else:
+        form = BlogCreationForm()
 
-    form = BlogCreationForm
-    return render(request, 'create_blog.html', {'title': 'Create blog', 'form': form})
+    ctx = {
+        'title': 'Create blog',
+        'form': form
+    }
+    return render(request, 'create_blog.html', ctx)
 
 
 def list_user_blogs(request):

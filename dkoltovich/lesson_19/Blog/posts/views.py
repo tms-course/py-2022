@@ -21,9 +21,14 @@ def create_post(request, blog_id: int):
             post.blog = blog
             post.save()
             return redirect(f'/blogs/{blog.pk}/')
-        
-    form = PostCreationForm
-    return render(request, 'create_post.html', {'form': form, 'blog_id': blog_id})
+    else:
+        form = PostCreationForm()
+
+    ctx = {
+        'form': form,
+        'blog_id': blog_id
+    }
+    return render(request, 'create_post.html', ctx)
 
 
 def redirect_to_blog(request, id: int):
