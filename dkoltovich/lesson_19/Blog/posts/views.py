@@ -12,18 +12,18 @@ def show_feed(request):
     return render(request, 'feed.html', ctx)
 
 
-def create_post(request):
+def create_post(request, blog_id: int):
     if request.method == 'POST':
         form = PostCreationForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            blog = get_object_or_404(Blog, author=request.user)
+            blog = get_object_or_404(Blog, pk=blog_id)
             post.blog = blog
             post.save()
             return redirect(f'/blogs/{blog.pk}/')
-    else:
-        form = PostCreationForm
-        return render(request, 'create_post.html', {'form': form})
+        
+    form = PostCreationForm
+    return render(request, 'create_post.html', {'form': form, 'blog_id': blog_id})
 
 
 def redirect_to_blog(request, id: int):

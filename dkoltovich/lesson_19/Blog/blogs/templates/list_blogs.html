@@ -20,7 +20,8 @@
                 Author: {{ blog.author }}
             </div>
             <div class="card-body">
-                <h5 class="card-title">{{ blog.description }}</h5>
+                <h5 class="card-title">{{ blog.title }}</h5>
+                <p class="card-text small">{{ blog.description }}.</p>
                 <a href="{% url 'show_blog' blog.id %}" class="btn btn-primary">Go to blog</a>
             </div>
         </div>

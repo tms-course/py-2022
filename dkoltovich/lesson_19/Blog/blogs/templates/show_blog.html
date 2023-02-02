@@ -30,7 +30,7 @@
 
 {% if is_owner %}
 <div>
-<a class="btn btn-primary" href="{% url 'create_post' %}" role="button">Create new post</a>
+<a class="btn btn-primary" href="{% url 'create_post' blog.id%}" role="button">Create new post</a>
 </div>
 {% endif %}
 

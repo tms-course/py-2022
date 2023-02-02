@@ -12,7 +12,7 @@
 </head>
 <body>
 <div>
-    <form action="{% url 'create_post' %}"
+    <form action="{% url 'create_post' blog_id%}"
           method="post">
         {% csrf_token %}
     {{ form.non_field_errors }}

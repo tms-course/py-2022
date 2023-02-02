@@ -16,9 +16,8 @@ def register(request):
                 password=raw_password)
             login(request, user)
             return redirect('feed')
-    else:
-        form = UserCreationForm()
 
+    form = UserCreationForm
     return render(request,
                   'registration/register.html',
                   {'form': form})

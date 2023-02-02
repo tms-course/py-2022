@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
 from posts.models import Post
@@ -13,26 +14,8 @@ def list_blogs(request):
     return render(request, 'list_blogs.html', ctx)
 
 
-def create_blog(request):
-    if request.method == 'POST':
-        form = BlogCreationForm(request.POST)
-        if form.is_valid():
-            print('valid')
-            blog = form.save(commit=False)
-            blog.author = request.user
-            blog.save()
-            return render(request, 'show_blog.html', {'title': 'Blog', 'blog': blog})
-
-    form = BlogCreationForm
-    return render(request, 'create_blog.html', {'title': 'Create blog', 'form': form})
-
-
 def show_blog(request, id: int):
-    try:
-        blog = get_object_or_404(Blog, pk=id)
-    except:
-        return redirect('create_blog')
-
+    blog = get_object_or_404(Blog, pk=id)
     posts = Post.objects.filter(blog=blog)
     ctx = {
         'title': blog.title,
@@ -43,10 +26,35 @@ def show_blog(request, id: int):
     return render(request, 'show_blog.html', ctx)
 
 
-def show_my_blog(request):
-    try:
-        blog = get_object_or_404(Blog, author=request.user)
-    except:
+def create_blog(request):
+    if request.method == 'POST':
+        form = BlogCreationForm(request.POST)
+        if form.is_valid():
+            print('valid')
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            return redirect('list_user_blogs')
+
+    form = BlogCreationForm
+    return render(request, 'create_blog.html', {'title': 'Create blog', 'form': form})
+
+
+def list_user_blogs(request):
+    blogs = Blog.objects.filter(author=request.user)
+    if blogs.count() == 0:
+        return redirect('create_blog')
+    ctx = {
+        'title': 'Blogs',
+        'blogs': blogs
+    }
+
+    return render(request, 'list_blogs.html', ctx)
+
+
+def show_my_blog(request, id):
+    blog = Blog.objects.filter(author=request.user, pk=id)
+    if blog.count() == 0:
         return redirect('create_blog')
 
     posts = Post.objects.filter(blog=blog)
