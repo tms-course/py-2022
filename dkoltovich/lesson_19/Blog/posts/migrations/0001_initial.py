@@ -20,7 +20,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(blank=True, max_length=64)),
                 ('content', models.CharField(max_length=1024)),
                 ('created_time', models.DateTimeField(auto_now_add=True)),
-                ('edited_time', models.DateTimeField(auto_now=True)),
+                ('edited_tima', models.DateField(auto_now=True)),
                 ('blog', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='blogs.blog')),
             ],
             options={
