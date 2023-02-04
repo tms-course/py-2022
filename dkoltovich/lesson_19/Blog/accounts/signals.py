@@ -3,12 +3,13 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 import logging
 
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
+LOGGER = logging.getLogger("Logger")
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s %(message)s')
 
 
 @receiver(post_save, sender=User)
 def audit_log(sender, instance, **kwargs):
-    logging.warning(f'{sender} {instance} was created')
+    LOGGER.info(f'{sender} {instance} was created')
 
 
 @receiver(pre_save, sender=User)

@@ -8,10 +8,10 @@ logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
 
 @receiver(post_save, sender=Post)
 def audit_log(sender, instance, **kwargs):
-    logging.warning(f'{sender} {instance} was created')
+    logging.info(f'{sender} {instance} was created')
 
 
 @receiver(pre_save, sender=Post)
 def audit_log(sender, instance, **kwargs):
-    logging.warning(f'{sender} {instance} ready to be created')
+    logging.info(f'{sender} {instance} ready to be created')
 

@@ -3,15 +3,15 @@ from django.dispatch import receiver
 from .models import Blog
 import logging
 
-logging.basicConfig(format='%(asctime)s %(message)s', level=logging.DEBUG)
-
+LOGGER = logging.getLogger("Logger")
+logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
 @receiver(post_save, sender=Blog)
 def audit_log(sender, instance, **kwargs):
-    logging.warning(f'{sender} {instance} was created')
+    LOGGER.info(f'{sender} {instance} was created')
 
 
 @receiver(pre_save, sender=Blog)
 def audit_log(sender, instance, **kwargs):
-    logging.warning(f'{sender} {instance} ready to be created')
+    LOGGER.info(f'{sender} {instance} ready to be created')
 
