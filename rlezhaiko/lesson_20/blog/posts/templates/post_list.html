@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="d-grid gap-2 d-md-flex justify-content-end">
-    <a href="#" class="btn btn-primary">Create post</a>
-</div>
-
-{% for post in posts %}
 <div class="container">
+    <div class="d-grid gap-2 d-md-flex justify-content-end">
+        <a href="{% url 'post_create' %}" class="btn btn-primary">Create post</a>
+    </div>
+
+    {% for post in posts %}
     <div class="row">
         <div class="col-md-12 m-3">
             <div class="card">
@@ -19,7 +19,6 @@
             </div>
         </div>
     </div>
+    {% endfor %}
 </div>
-{% endfor %}
-
 {% endblock %}

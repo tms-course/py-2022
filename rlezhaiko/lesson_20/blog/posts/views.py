@@ -10,6 +10,9 @@ def list_post(request):
 
 
 def create_post(request):
+    ctx = {'title': 'Create post',
+           'blog_id': 0,}
+    print(request)
     if request.method == 'POST':
         blog = Post(title=request.title, theme=request.theme, author=request.user)
         print(blog.__dict__)
