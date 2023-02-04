@@ -7,14 +7,3 @@ def list_post(request):
     ctx = {'title': 'Posts',
            'posts': list(posts),}
     return render(request, 'post_list.html', ctx)
-
-
-def create_post(request):
-    # print(request.path_info)
-    # ctx = {'title': 'Create post',
-    #        'blog_id': 0,}
-    # print(request)
-    # if request.method == 'POST':
-    #     blog = Post(title=request.title, theme=request.theme, author=request.user)
-    #     print(blog.__dict__)
-    return render(request, 'post_create.html', {})

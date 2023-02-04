@@ -16,7 +16,8 @@ def get_blog_content(request, id: int):
         blog = get_object_or_404(Blog, pk=id)
         posts = blog.posts.all()
         ctx = {'title': blog.title,
-            'posts': list(posts),}
+            'posts': list(posts),
+            'blog_id': blog.id}
     except Blog.DoesNotExist:
         return HttpResponseNotFound
     return render(request, 'post_list.html', ctx)
@@ -28,3 +29,12 @@ def create_blog(request):
         blog.save()
         return redirect('blog_list')
     return render(request, 'blog_create.html', {})
+
+
+def create_post(request, id: int):
+    if request.method == 'POST':
+        blog = get_object_or_404(Blog, pk=id)
+        post = Post(title=request.POST['title'], content=request.POST['content'], blog=blog)
+        post.save()
+        return redirect('blog_content', id=id)
+    return render(request, 'post_create.html', {})
