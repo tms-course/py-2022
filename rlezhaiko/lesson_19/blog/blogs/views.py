@@ -14,7 +14,7 @@ def list_blog(request):
 def get_blog_content(request, id: int):
     try:
         blog = get_object_or_404(Blog, pk=id)
-        posts = Post.objects.filter(blog__pk=id)
+        posts = blog.posts.all()
         ctx = {'title': blog.title,
             'posts': list(posts),}
     except Blog.DoesNotExist:
