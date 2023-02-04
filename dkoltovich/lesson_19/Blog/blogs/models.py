@@ -9,5 +9,3 @@ class Blog(models.Model):
 
     creation_date = models.DateTimeField(auto_now=True)
 
-
-
