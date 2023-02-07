@@ -2,10 +2,12 @@
 
 {% block content %}
 <div class="container">
+    {% if user.is_authenticated %}
     <div class="d-grid gap-2 d-md-flex justify-content-end">
         <a href="{% url 'blog_create' %}" 
             class="btn btn-primary">Create blog</a>
     </div>
+    {% endif %}
 
     <div class="row row-cols-1 row-cols-md-2 m-3">
         {% for blog in blogs %}

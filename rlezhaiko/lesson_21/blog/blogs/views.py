@@ -6,7 +6,14 @@ from posts.models import Post
 
 def list_blog(request):
     blogs = Blog.objects.all()
-    ctx = {'title': 'Blogs',
+    ctx = {'title': 'All blogs',
+           'blogs': list(blogs),}
+    return render(request, 'blog_list.html', ctx)
+
+
+def user_list_blog(request):
+    blogs = Blog.objects.filter(author=request.user)
+    ctx = {'title': 'User blogs',
            'blogs': list(blogs),}
     return render(request, 'blog_list.html', ctx)
 
@@ -17,7 +24,8 @@ def get_blog_content(request, id: int):
         posts = blog.posts.all()
         ctx = {'title': blog.title,
             'posts': list(posts),
-            'blog_id': blog.id}
+            'blog_id': blog.id,
+            'author': blog.author}
     except Blog.DoesNotExist:
         return HttpResponseNotFound
     return render(request, 'post_list.html', ctx)

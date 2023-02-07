@@ -8,4 +8,5 @@ urlpatterns = [
     path('<int:id>/', views.get_blog_content, name='blog_content'),
     path('create/', views.create_blog, name='blog_create'),
     path('<int:id>/posts', views.create_post, name='post_create'),
+    path('user_blogs/', views.user_list_blog, name='user_blog_list'),
 ]
