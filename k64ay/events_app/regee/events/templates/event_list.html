@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load i18n l10n %}
 
 {% block content %}
-<div>
-    <h2>Event list</h2>
+<div class="container">
+    <h2>{% translate 'Event list' %}</h2>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="{% url 'create_event' %}" 
-            class="btn btn-primary">Create event</a>
+            class="btn btn-primary">{% translate 'Create event' %}</a>
     </div>
     
     <br />
@@ -33,16 +34,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <p>Time: {{ event.datetime }}</p>
+                    <p>{% translate 'Time' %}: {{ event.datetime }}</p>
                     <div class="d-flex">
                         <div class="p-2 flex-grow-1">
                             <small class="text-muted">
-                                Created by  <a href="#">{{ event.organizer }}</a>
+                                {% translate 'Created by' %}  <a href="#">{{ event.organizer }}</a>
                             </small>
                         </div>
                         <div class="p-2">
-                            <a href="{% url 'event_details' event.id %}" 
-                                class="btn btn-link btn-sm">Read details >>>
+                            <a href="{% url 'event_details_slug' event.slug %}" 
+                                class="btn btn-link btn-sm">{% translate 'Read details' %} >>>
                             </a>
                         </div>
                     </div>
