@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-  <h2>Registration</h2>
+<div class="container">
+    <h2>{% translate 'Registration' %}</h2>
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-  </form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">{% translate 'Register' %}</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,0 +1,132 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-02-07 07:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+#: events/forms.py:22
+msgid "Name is too long, make it shorter"
+msgstr "Название слишком длинное, сделайте покороче"
+
+#: events/forms.py:30
+msgid "Works only for Minsk"
+msgstr "Работает только для Минска"
+
+#: events/models.py:8
+msgid "Name"
+msgstr "Название"
+
+#: events/models.py:9
+msgid "Datetime"
+msgstr "Дата/время"
+
+#: events/models.py:10 events/templates/event_details.html:12
+msgid "Location"
+msgstr "Место"
+
+#: events/models.py:12
+msgid "Poster"
+msgstr "Постер"
+
+#: events/models.py:13
+msgid "Slug"
+msgstr "Слаг"
+
+#: events/signals.py:11
+msgid "Request finished!"
+msgstr "Запрос завершен!"
+
+#: events/templates/event_create.html:32
+msgid "Submit"
+msgstr "Отправить"
+
+#: events/templates/event_details.html:11 events/templates/event_list.html:37
+msgid "Time"
+msgstr "Время"
+
+#: events/templates/event_details.html:19
+msgid "Join Event"
+msgstr "Участвовать в событии"
+
+#: events/templates/event_details.html:24
+msgid "Attendees"
+msgstr "Участники"
+
+#: events/templates/event_list.html:6
+msgid "Event list"
+msgstr "Список событий"
+
+#: events/templates/event_list.html:9
+msgid "Create event"
+msgstr "Создать событие"
+
+#: events/templates/event_list.html:41
+msgid "Created by"
+msgstr "Создано"
+
+#: events/templates/event_list.html:46
+msgid "Read details"
+msgstr "Читать дальше"
+
+#: events/views.py:14
+msgid "Events list"
+msgstr "Список событий"
+
+#: events/views.py:41 events/views.py:49
+msgid "Event does not exists"
+msgstr "События не существует"
+
+#: regee/settings.py:119
+msgid "Russian"
+msgstr "Русский"
+
+#: regee/settings.py:120
+msgid "English"
+msgstr "Английский"
+
+#: templates/base.html:18
+msgid "Home"
+msgstr "Домашняя"
+
+#: templates/base.html:27
+msgid "Events"
+msgstr "События"
+
+#: templates/base.html:51
+msgid "Logout"
+msgstr "Выйти"
+
+#: templates/base.html:55 templates/registration/register.html:9
+msgid "Register"
+msgstr "Зарегистрироваться"
+
+#: templates/base.html:58 templates/registration/login.html:28
+msgid "Log in"
+msgstr "Войти"
+
+#: templates/registration/login.html:8 templates/registration/login.html:14
+msgid "Username"
+msgstr "Ник"
+
+#: templates/registration/login.html:18 templates/registration/login.html:24
+msgid "Password"
+msgstr "Пароль"
+
+#: templates/registration/register.html:4
+msgid "Registration"
+msgstr "Регистрация"

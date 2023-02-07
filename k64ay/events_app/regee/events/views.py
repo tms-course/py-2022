@@ -3,6 +3,7 @@ import datetime as dt
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.http import HttpResponseNotFound
+from django.utils.translation import gettext_lazy as _
 
 from .forms import EventCreationForm
 from .models import Event
@@ -10,7 +11,7 @@ from .models import Event
 def list_events(request):
     events = Event.objects.filter(datetime__gte=dt.datetime.now())
     ctx = {
-        'title': 'Events list',
+        'title': _('Events list'),
         'events': list(events),
     }
     return render(request, 'event_list.html', ctx)
@@ -23,6 +24,8 @@ def create_event(request):
             event = form.save(commit=False)
             event.organizer = request.user
             event.save()
+
+            return redirect('event_list')
     else:
         form = EventCreationForm()
     
@@ -30,12 +33,21 @@ def create_event(request):
 
     return render(request, 'event_create.html', ctx)
 
-def get_event(request, event_id: int):
+def get_event_by_id(request, event_id: int):
+    """Если пользователь пытается достучаться до события по id перенаправляем его на ссылку со slug"""
     try:
         event = Event.objects.get(pk=event_id)
     except Event.DoesNotExist:
-        return HttpResponseNotFound('Event does not exists')
+        return HttpResponseNotFound(_('Event does not exists'))
 
+    return redirect('event_details_slug', event.slug)
+
+def get_event_by_slug(request, event_slug: str):
+    try:
+        event = Event.objects.get(slug=event_slug)
+    except Event.DoesNotExist:
+        return HttpResponseNotFound(_('Event does not exists'))
+    
     ctx = {
         'event': event, 
         'attendees': list(event.attendees.all()),
