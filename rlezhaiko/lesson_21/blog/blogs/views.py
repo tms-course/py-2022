@@ -11,13 +11,6 @@ def list_blog(request):
     return render(request, 'blog_list.html', ctx)
 
 
-def user_list_blog(request):
-    blogs = Blog.objects.filter(author=request.user)
-    ctx = {'title': 'User blogs',
-           'blogs': list(blogs),}
-    return render(request, 'blog_list.html', ctx)
-
-
 def get_blog_content(request, id: int):
     try:
         blog = get_object_or_404(Blog, pk=id)
