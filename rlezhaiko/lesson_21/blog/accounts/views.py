@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse
 
 from blogs.models import Blog
+from posts.models import Post
 
 
 def logout_user(request):
@@ -41,14 +42,9 @@ def user_list_blog(request):
 
 
 def user_list_post(request):
-    blogs = Blog.objects.filter(author=request.user).all()
-    all_user_posts = []
-    for blog in blogs:
-       all_user_posts.extend(list(blog.posts.all()))
-
-    print(all_user_posts)
+    user_posts = Post.objects.filter(blog__author=request.user)
     ctx = {'title': 'User posts',
-           'posts': all_user_posts,}
+           'posts': list(user_posts),}
     return render(request, 'post_list.html', ctx)
 
 
