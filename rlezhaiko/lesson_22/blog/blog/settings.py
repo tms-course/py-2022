@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'blogs',
     'posts',
     'accounts',
+    'django_seed',
 ]
 
 MIDDLEWARE = [
