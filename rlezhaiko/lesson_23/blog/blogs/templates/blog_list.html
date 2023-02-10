@@ -15,12 +15,33 @@
             <div class="col">
                 <a class="text" href="{% url 'blog_content' id=blog.id %}">
                     <div class="card" id="card-blog">
-                        <div class="card-header text-center">
+                        
+                        <!-- <div class="card-header text-center">
                             <h5>{{ blog.title }}</h5>
                         </div>
                         <div class="card-body">
                             <p>{{ blog.theme }}</p>
+                        </div> -->
+
+                        <div class="card-header text-center">
+                            <div class="d-flex">
+                                <div class="p-2 flex-grow-1">
+                                    <h5>{{ blog.title }}</h5>
+                                </div>
+                                {% if request.user == blog.author %}
+                                <div class="p-2">
+                                    <form class="row" method="post" action="{% url 'blog_delete' blog.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">✕</button>
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
                         </div>
+                        <div class="card-body">
+                            <p>{{ blog.theme }}</p>
+                        </div>
+
                     </div>
                 </a>
             </div>

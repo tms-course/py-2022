@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
+from django.db.transaction import set_autocommit, rollback, commit
+
 from .models import Blog
 from posts.models import Post
 
@@ -39,3 +41,16 @@ def create_post(request, id: int):
         post.save()
         return redirect('blog_content', id=id)
     return render(request, 'post_create.html', {})
+
+
+def delete_blog(request, blog_id: int):
+    try:
+        set_autocommit(False)
+        Post.objects.filter(blog=blog_id).delete()
+        Blog.objects.filter(id=blog_id).delete()
+        commit()
+    except:
+        rollback()
+        return HttpResponseNotFound('Bad request')
+    
+    return redirect('blog_list')
