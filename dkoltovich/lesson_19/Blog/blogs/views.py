@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Blog
 from posts.models import Post
 from .forms import BlogCreationForm
-
+from django.db import transaction
 
 def list_blogs(request):
     blogs = Blog.objects.all()
@@ -24,6 +24,14 @@ def show_blog(request, id: int):
         'is_owner': blog.author == request.user
     }
     return render(request, 'show_blog.html', ctx)
+
+
+@transaction.atomic()
+def mark_blog_as_deleted(request, id):
+    blog = get_object_or_404(Blog, pk=id)
+    blog.status = False
+    posts = Post.objects.filter(blog=blog)
+    posts.update(status=False)
 
 
 def create_blog(request):
@@ -57,10 +65,10 @@ def list_user_blogs(request):
 
 
 def show_my_blog(request, id):
-    blog = Blog.objects.filter(author=request.user, pk=id)
-    if blog.count() == 0:
+    try:
+        blog = Blog.objects.get(author=request.user, pk=id)
+    except:
         return redirect('create_blog')
-
     posts = Post.objects.filter(blog=blog)
     ctx = {
         'title': blog.title,

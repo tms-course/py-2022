@@ -16,6 +16,16 @@
 {% for blog in blogs %}
     <div class="col">
         <div class="card">
+            {% if blog.status %}
+            <div class="card-header text-muted">
+                Status: Active
+            </div>
+            {% else %}
+            <div class="card-header text-muted">
+                Status: Deleted
+            </div>
+            {% endif %}
+
             <div class="card-header">
                 Author: {{ blog.author }}
             </div>
@@ -28,6 +38,7 @@
     </div>
 
 {% endfor %}
+
 </div>
 </body>
 </html>

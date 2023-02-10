@@ -22,6 +22,15 @@
 
         <h5 class="card-title">{{ blog.title }}</h5>
         <p class="card-text">{{ blog.description }}.</p>
+
+          {% if blog.status %}
+          {% else %}
+               <a href="{% url 'mark_blog_as_deleted' blog.id %}" >
+                <div class="d-grid gap-2 red d-md-flex justify-content-md-end">
+                 <button class="btn btn-primary me-md-2" type="button">Delete</button>
+                </div>
+            </a>
+          {% endif %}
         <p class="card-text text-right"><small class="text-muted text-right">Created: {{ blog.creation_date }}</small></p>
       </div>
     </div>
@@ -38,6 +47,37 @@
 
 {% for post in posts %}
     <div class="col">
+    {% if is_owner%}
+        <div class="card">
+            <div class="card-header text-muted">
+                {{ post.status }}
+            </div>
+            <div class="card-body">
+
+                <h5 class="card-title text-center">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content }}.</p>
+            <div>
+                <a href="{% url 'update_post' post.id %}" class="card-link"> Edit post</a>
+
+            </div>
+            </div>
+            <div class="card-footer text-muted">
+                {{ post.created_time }}
+            </div>
+
+            {% if post.status == 'draft' %}
+            <a href="{% url 'publish_post' post.id %}" class="btn btn-primary">Publish</a>
+            {% endif %}
+            {% if post.status != 'deleted' %}
+
+            <a href="{% url 'mark_posts_as_deleted' post.id %}" >
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                 <button class="btn btn-primary me-md-2" type="button">Delete</button>
+                </div>
+            </a>
+            {% endif %}
+
+        {% elif post.status == 'published'%}
         <div class="card">
             <div class="card-header">
                 {{ post.blog.author }}
@@ -46,10 +86,16 @@
 
                 <h5 class="card-title text-center">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content }}.</p>
+                <div>
+                <a href="{% url 'update_post' post.id %}" class="card-link"> Edit post</a>
+
             </div>
+            </div>
+
             <div class="card-footer text-muted">
                 {{ post.created_time }}
             </div>
+    {% endif %}
         </div>
     </div>
 {% endfor %}
