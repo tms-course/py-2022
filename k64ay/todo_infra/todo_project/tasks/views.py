@@ -8,3 +8,7 @@ from .serializers import TaskSerializer
 class TaskViewSet(ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
+
+
+    def perform_create(self, serializer):
+      serializer.save(author=self.request.user)
