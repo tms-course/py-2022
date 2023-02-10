@@ -23,7 +23,13 @@
                 <h5 class="card-title">{{ post.title }}</h5>
                 <p class="card-text">{{ post.content }}.</p>
                 <a href="{% url 'show_blog' post.blog.id %}" class="btn btn-primary">Go to blog</a>
+                <div>
+                <a href="{% url 'update_post' post.id %}" class="card-link"> Edit post</a>
+
             </div>
+            </div>
+
+
             <div class="card-footer text-muted">
                 {{ post.created_time }}
             </div>
