@@ -8,3 +8,10 @@ class Post(models.Model):
     content = models.TextField(max_length=2048, blank=False)
     creation_date = models.DateTimeField(auto_now=True)
     edition_date = models.DateTimeField(auto_now=True)
+
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['id']),
+            models.Index(fields=['blog']),
+        ]
