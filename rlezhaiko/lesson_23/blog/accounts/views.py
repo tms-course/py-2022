@@ -35,14 +35,14 @@ def register_user(request):
 
 
 def user_list_blog(request):
-    blogs = Blog.objects.filter(author=request.user)
+    blogs = Blog.objects.filter(author=request.user, status=Blog.STATUS_PUBLISHED)
     ctx = {'title': 'User blogs',
            'blogs': list(blogs),}
     return render(request, 'blog_list.html', ctx)
 
 
 def user_list_post(request):
-    user_posts = Post.objects.filter(blog__author=request.user)
+    user_posts = Post.objects.filter(blog__author=request.user, status=Post.STATUS_PUBLISHED)
     ctx = {'title': 'User posts',
            'posts': list(user_posts),}
     return render(request, 'post_list.html', ctx)

@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="container">
-    <form class="row" method="post" action="{% url 'post_search' %}">
+    <form class="row" method="post" action="{% url 'post_list' %}">
         <div class="input-group">
             {% csrf_token %}
             <input type="search" id="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />

@@ -4,19 +4,17 @@ from .models import Post
 
 
 def list_post(request):
-    posts = Post.objects.all()
+    query = ''
+    if request.method == 'POST':
+        query = request.POST.get('search', '')
+
+    posts = Post.objects.filter(status=Post.STATUS_PUBLISHED, title__contains=query)
     ctx = {'title': 'All posts',
            'posts': list(posts),}
     return render(request, 'post_list.html', ctx)
 
 
 def delete_post(request, post_id: int):
-    Post.objects.filter(id=post_id).delete()
-
+    post = Post.objects.filter(id=post_id)
+    post.update(status=Post.STATUS_DELETED)
     return redirect('post_list')
-
-def search_post(request):
-    posts = Post.objects.filter(title__contains=request.POST['search'])
-    ctx = {'title': f'Post by query: request.POST["search"]',
-           'posts': list(posts),}
-    return render(request, 'post_list.html', ctx)
