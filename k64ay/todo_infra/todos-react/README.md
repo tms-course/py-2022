@@ -1,3 +1,11 @@
+# Установка
+
+1. Установить nodejs (у меня на данный момент v18.14.0) и npm (9.4.2 - обычно идет вместе с nodejs), чтобы удобней контролировать и обновлять эти программы я пользуюсь NVM, но его сложнее устанавливать, поэтому можно только их установить, как вам удобнее.
+2. Из корня папки `todos-react` запустить команду `npm install`
+3. Запустите django веб-сервер и посмотрите на каком порту он запущен.
+4. Откройте `src/config.js` и укажите URL веб-сервера.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
