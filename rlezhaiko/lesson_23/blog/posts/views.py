@@ -1,19 +1,16 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 
 from .models import Post
 from blogs.models import Blog
 
 
 def list_post(request):
-    query = ''
-    if request.method == 'POST':
-        query = request.POST.get('search', '')
-    
-    posts = Post.objects.filter(status=Post.STATUS_PUBLISHED, title__contains=query) \
-        | Post.objects.filter(status=Post.STATUS_PUBLISHED, blog__title__contains=query)
-
+    query = request.GET.get('search', '')
+    posts = Post.objects.filter(Q(status=Post.STATUS_PUBLISHED), Q(title__contains=query) | Q(blog__title__contains=query))
     ctx = {'title': 'All posts',
            'posts': list(posts),}
+    
     return render(request, 'post_list.html', ctx)
 
 
