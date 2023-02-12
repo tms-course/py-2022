@@ -9,17 +9,11 @@ def list_post(request):
     if request.method == 'POST':
         query = request.POST.get('search', '')
     
-    posts = Post.objects.filter(status=Post.STATUS_PUBLISHED, title__contains=query)
-    posts_all = Post.objects.filter(status=Post.STATUS_PUBLISHED)
-    blogs_posts = []
-    for post in list(posts_all):
-        if query in post.blog.title:
-            blogs_posts.append(post)
-    
-    blogs_posts.extend(list(posts))
+    posts = Post.objects.filter(status=Post.STATUS_PUBLISHED, title__contains=query) \
+        | Post.objects.filter(status=Post.STATUS_PUBLISHED, blog__title__contains=query)
 
     ctx = {'title': 'All posts',
-           'posts': set(blogs_posts),}
+           'posts': list(posts),}
     return render(request, 'post_list.html', ctx)
 
 
