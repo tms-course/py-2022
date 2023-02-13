@@ -25,3 +25,7 @@ class Blog(models.Model):
             models.Index(fields=['id']),
             models.Index(fields=['author']),
         ]
+
+
+    def __str__(self) -> str:
+        return self.title
