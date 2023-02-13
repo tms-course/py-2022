@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'djoser',
     'tasks',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -136,7 +137,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+
 }
 
 CORS_ORIGIN_WHITELIST = [
