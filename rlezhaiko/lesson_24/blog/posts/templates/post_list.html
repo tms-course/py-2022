@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <form class="row" method="get" action="{% url 'post_list' %}">
+        <div class="input-group">
+            {% csrf_token %}
+            <input type="search" id="search" name="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="submit" class="btn btn-outline-primary">Search</button>
+            
+        </div>
+    </form>
+
+    {% if user.is_authenticated and user == author %}
+    <div class="d-grid gap-2 d-md-flex justify-content-end">
+        <a href="{% url 'post_create' blog_id %}" class="btn btn-primary">Create post</a>
+    </div>
+    {% endif %}
+
+    {% for post in posts %}
+    <div class="row">
+        <div class="col-md-12 m-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="d-flex">
+                        <div class="p-2 flex-grow-1">
+                            <h5>{{ post.title }}</h5>
+                        </div>
+                        {% if user == author %}
+                        <div class="p-2">
+                            <form class="row" method="post" action="{% url 'post_delete' post.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-outline-danger">✕</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <p>{{ post.content }}</p>
+                </div>
+                <div class="card-footer">
+                    <p>From blog: {{ post.blog.title }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
