@@ -50,7 +50,13 @@
         {% if is_owner%}
         <div class="card">
             <div class="card-header text-muted">
-                {{ post.status }}
+                {% if post.status == post.STATUS_DELETED %}
+                    Status: Deleted
+                    {% elif post.status == post.STATUS_DRAFT %}
+                    Status: Draft
+                    {% else %}
+                    Status: Active
+                    {% endif %}
             </div>
             <div class="card-body">
 

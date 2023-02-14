@@ -15,6 +15,7 @@
 
 {% for blog in blogs %}
     <div class="col">
+        {% if user == blog.author %}
         <div class="card">
             {% if blog.status == blog.STATUS_ACTIVE %}
             <div class="card-header text-muted">
@@ -25,6 +26,7 @@
                 Status: Deleted
             </div>
             {% endif %}
+        {% endif %}
 
             <div class="card-header">
                 Author: {{ blog.author }}
@@ -34,8 +36,17 @@
                 <p class="card-text small">{{ blog.description }}.</p>
                 <a href="{% url 'show_blog' blog.id %}" class="btn btn-primary">Go to blog</a>
             </div>
+        {% if user == blog.author and blog.status != blog.STATUS_DELETED  %}
+        <div>
+                <a href="{% url 'mark_blog_as_deleted' blog.id %}" class="card-link"> Delete blog</a>
         </div>
+            {% elif user == blog.author and blog.status == blog.STATUS_DELETED %}
+                <a href="{% url 'activate_blog' blog.id %}" class="card-link"> Activate blog</a>
+
+        </div>
+        {% endif %}
     </div>
+
 
 {% endfor %}
 

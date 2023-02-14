@@ -5,7 +5,6 @@ from .forms import PostCreationForm, PostSearchingForm
 
 def show_feed(request):
     post_title = request.GET.get('search')
-    print(post_title)
     if post_title:
         posts = Post.objects.filter(title__contains=post_title)
         blogs = Blog.objects.filter(post__in=posts)
