@@ -4,6 +4,8 @@ from django.db import transaction
 
 from .models import Blog
 from posts.models import Post
+from .forms import BlogCreationForm
+from posts.forms import PostCreationForm
 
 
 def list_blog(request):
@@ -28,19 +30,45 @@ def get_blog_content(request, id: int):
 
 def create_blog(request):
     if request.method == 'POST':
-        blog = Blog(title=request.POST['title'], theme=request.POST['theme'], author=request.user)
-        blog.save()
-        return redirect('blog_list')
-    return render(request, 'blog_create.html', {})
+        form = BlogCreationForm(request.POST)
+        
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+
+            return redirect('blog_list')
+    else:
+        form = BlogCreationForm()
+    
+    ctx = {'form': form}
+
+    return render(request, 'blog_create.html', ctx)
 
 
 def create_post(request, id: int):
     if request.method == 'POST':
-        blog = get_object_or_404(Blog, pk=id)
-        post = Post(title=request.POST['title'], content=request.POST['content'], blog=blog)
-        post.save()
-        return redirect('blog_content', id=id)
-    return render(request, 'post_create.html', {})
+        print(request.POST)
+        form = PostCreationForm(request.POST)
+        
+        if form.is_valid():
+            blog = get_object_or_404(Blog, pk=id)
+            post = form.save(commit=False)
+            post.blog = blog
+            post.save()
+
+            return redirect('blog_content', id=id)
+    else:
+        form = PostCreationForm()
+    
+    ctx = {'form': form}
+
+    # if request.method == 'POST':
+    #     blog = get_object_or_404(Blog, pk=id)
+    #     post = Post(title=request.POST['title'], content=request.POST['content'], blog=blog)
+    #     post.save()
+    #     return redirect('blog_content', id=id)
+    return render(request, 'post_create.html', ctx)
 
 
 def delete_blog(request, blog_id: int):    
