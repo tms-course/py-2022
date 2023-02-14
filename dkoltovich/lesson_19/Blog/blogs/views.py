@@ -29,7 +29,7 @@ def show_blog(request, id: int):
 @transaction.atomic()
 def mark_blog_as_deleted(request, id):
     blog = get_object_or_404(Blog, pk=id)
-    blog.status = False
+    blog.status = Blog.STATUS_DELETED
     posts = Post.objects.filter(blog=blog)
     posts.update(status=False)
 
@@ -66,7 +66,7 @@ def list_user_blogs(request):
 
 def show_my_blog(request, id):
     try:
-        blog = Blog.objects.get(author=request.user, pk=id)
+        blog = Blog.objects.get(pk=id)
     except:
         return redirect('create_blog')
     posts = Post.objects.filter(blog=blog)

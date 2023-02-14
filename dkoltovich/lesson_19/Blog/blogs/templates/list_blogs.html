@@ -16,7 +16,7 @@
 {% for blog in blogs %}
     <div class="col">
         <div class="card">
-            {% if blog.status %}
+            {% if blog.status == blog.STATUS_ACTIVE %}
             <div class="card-header text-muted">
                 Status: Active
             </div>

@@ -12,8 +12,8 @@
 </head>
 <body>
 <div>
-    <form action="{% url 'search_posts' %}"
-          method="post">
+    <form action="{% url 'feed' %}"
+          method="GET">
         {% csrf_token %}
     {{ form.non_field_errors }}
 
@@ -23,7 +23,7 @@
         {% endfor %}
          {% for field in form.visible_fields %}
              <div class = "mb-3">
-                  <label for="formGroupExampleInput" class="form-label">Blog title:</label>
+                  <label for="formGroupExampleInput" class="form-label">Post title:</label>
                   <div class ="mb-3 text">
                     {{ field.as_text }}
                  </div>

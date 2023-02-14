@@ -3,11 +3,14 @@ from django.contrib.auth.models import User
 
 
 class Blog(models.Model):
+    STATUS_DELETED = 0
+    STATUS_ACTIVE = 1
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, null=False, blank=False)
     description = models.CharField(max_length=256, null=True, blank=True)
     creation_date = models.DateTimeField(auto_now=True)
-    status = models.BooleanField(default=True)
+    status = models.IntegerField(default=STATUS_ACTIVE)
 
     class Meta:
         indexes = [

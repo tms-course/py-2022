@@ -4,12 +4,20 @@ from .forms import PostCreationForm, PostSearchingForm
 
 
 def show_feed(request):
-    posts = Post.objects.exclude(status=Post.DRAFT)
-    ctx = {
-        'title': 'Feed',
-        'posts': posts,
-    }
-    return render(request, 'feed.html', ctx)
+    post_title = request.GET.get('search')
+    print(post_title)
+    if post_title:
+        posts = Post.objects.filter(title__contains=post_title)
+        blogs = Blog.objects.filter(post__in=posts)
+        return render(request, "list_blogs.html", {"blogs": blogs, 'title': 'Founded blogs'})
+    else:
+        posts = Post.objects.exclude(status=Post.STATUS_DRAFT)
+        ctx = {
+            'title': 'Feed',
+            'posts': posts,
+            'user': request.user
+        }
+        return render(request, 'feed.html', ctx)
 
 
 def create_post(request, blog_id: int):
@@ -37,14 +45,14 @@ def redirect_to_blog(request, id: int):
 
 def publish_post(request, id: int):
     post = get_object_or_404(Post, pk=id)
-    post.status = Post.PUBLISHED
+    post.status = Post.STATUS_PUBLISHED
     post.save()
     return redirect(f'show_my_blog', post.blog.pk)
 
 
 def mark_post_as_deleted(request, id):
     post = get_object_or_404(Post, pk=id)
-    post.status = Post.DELETED
+    post.status = Post.STATUS_DELETED
     post.save()
     return redirect(f'show_my_blog', post.blog.pk)
 
@@ -65,16 +73,3 @@ def update_post(request, id):
         'post': post
     }
     return render(request, 'update_post.html', ctx)
-
-
-def search_post(request):
-    if request.method == 'POST':
-        form = PostSearchingForm(request.POST)
-        if form.is_valid():
-            posts = Post.objects.filter(title__contains=form.cleaned_data['post_title'])
-            blogs = Blog.objects.filter(post__in=posts)
-            return render(request, "list_blogs.html", {"blogs": blogs, 'title': 'Founded blogs'})
-    else:
-        form = PostSearchingForm()
-
-    return render(request, 'search.html', {'form': form, 'title': 'Founded blogs'})

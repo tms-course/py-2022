@@ -3,22 +3,16 @@ from blogs.models import Blog
 
 
 class Post(models.Model):
-    DRAFT = 'draft'
-    PUBLISHED = 'published'
-    DELETED = 'deleted'
-
-    CHOICES = (
-        (DRAFT, DRAFT),
-        (PUBLISHED, PUBLISHED),
-        (DELETED, DELETED),
-    )
+    STATUS_DRAFT = 0
+    STATUS_PUBLISHED = 1
+    STATUS_DELETED = 2
 
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
     title = models.CharField(max_length=64, blank=True)
     content = models.CharField(max_length=1024, null=False, blank=False)
     created_time = models.DateTimeField(auto_now_add=True)
     edited_time = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=16, choices=CHOICES, default=DRAFT)
+    status = models.IntegerField(default=STATUS_DRAFT)
 
     class Meta:
         ordering = ['-created_time']
