@@ -9,6 +9,8 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = ['id', 'desc', 'done', 'created_at']
 
 
+# Аналог сериализатора описанного выше, но если все прописывать руками
+
 # class TaskSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
 #     author = serializers.PrimaryKeyRelatedField(read_only=True)
