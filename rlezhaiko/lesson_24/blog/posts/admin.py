@@ -4,7 +4,7 @@ from .models import Post
 
 
 @admin.action(description="Publish posts")
-def update_status(modeladmin, request, queryset):
+def update_posts_status(modeladmin, request, queryset):
     queryset.update(status=Post.STATUS_PUBLISHED)
 
 
@@ -12,4 +12,6 @@ def update_status(modeladmin, request, queryset):
 class AdminBlog(admin.ModelAdmin):
     list_display = ('id', 'title', 'content', 'blog', 'creation_date', 'edition_date', 'status',)
     search_fields = ('title',)
-    actions = [update_status]
+    list_filter = ('blog', 'status',)
+    ordering = ('-creation_date',)
+    actions = [update_posts_status]
