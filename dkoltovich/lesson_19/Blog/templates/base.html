@@ -47,6 +47,12 @@
                         <li><a class="dropdown-item" href="{% url 'register' %}">Registration</a></li>
                       </ul>
                     </ul>
+                    <form class="d-flex" role="search"
+                    method="GET"
+                    action="{% url 'feed' %}">
+                        <input type="text" name="search" placeholder="Enter post title">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                   </form>
                 </div>
                 </div>
             </nav>

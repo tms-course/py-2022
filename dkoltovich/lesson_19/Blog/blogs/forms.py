@@ -5,7 +5,7 @@ from .models import Blog
 class BlogCreationForm(forms.ModelForm):
     class Meta:
         model = Blog
-        exclude = ['creation_date', 'author']
+        exclude = ['creation_date', 'author', 'status']
 
     def __init__(self, *args, **kwargs):
         super(BlogCreationForm, self).__init__(*args, **kwargs)
