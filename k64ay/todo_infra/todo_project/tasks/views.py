@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import viewsets, filters
+from rest_framework import viewsets, filters, decorators
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -39,9 +39,31 @@ class TaskViewSet(viewsets.ModelViewSet):
       serializer.save(author=self.request.user)
 
     def get_permissions(self):
+        print(self.request.custom)
         if self.request.method in ('GET', 'POST'):
             self.permission_classes = [IsAuthenticated, ]
         elif self.request.method == 'PUT':
             self.permission_classes = [IsOwnerPermission, ]
 
         return super(TaskViewSet, self).get_permissions()
+    
+
+@decorators.api_view(['GET'])
+def filter_view(request):
+    queryset = Task.objects.all()
+    qp = request.query_params
+
+    search = qp.get('search', None)
+    page = int(qp.get('page', 1))
+
+    if search:
+        queryset = queryset.filter(desc__contains=search)
+
+    if page:
+        limit = 5
+        offset = (page - 1) * limit + 1
+        queryset = queryset[offset:offset+limit]
+
+    data = TaskSerializer(queryset, many=True).data
+
+    return Response(data)
