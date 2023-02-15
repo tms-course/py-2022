@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post, Blog
-from .forms import PostCreationForm, PostSearchingForm
+from .forms import PostCreationForm
+from django.db.models import Q
+
 
 
 def show_feed(request):
-    post_title = request.GET.get('search')
-    if post_title:
-        posts = Post.objects.filter(title__contains=post_title)
-        blogs = Blog.objects.filter(post__in=posts)
+    title_to_search = request.GET.get('search')
+    if title_to_search:
+        posts = Post.objects.filter(title__contains=title_to_search)
+        blogs = Blog.objects.filter(Q(post__in=posts) | Q(title__contains=title_to_search))
         return render(request, "list_blogs.html", {"blogs": blogs, 'title': 'Founded blogs'})
     else:
         posts = Post.objects.exclude(status=Post.STATUS_DRAFT)

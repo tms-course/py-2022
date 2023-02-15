@@ -10,5 +10,4 @@ urlpatterns = [
     path('<int:id>/', views.show_blog, name='show_blog'),
     path('my_blogs/', views.list_user_blogs, name='list_user_blogs'),
     path('my_blog/<int:id>/', views.show_my_blog, name='show_my_blog'),
-
 ]
