@@ -19,7 +19,9 @@ class BlogCreationForm(forms.ModelForm):
     def clean_title(self):
         title = self.cleaned_data.get('title')
 
-        if len(title) > 30 or not title.istitle():
-            raise ValidationError('Lenght too much or title startswith lowercase')
+        if len(title) > 128:
+            raise ValidationError('Lenght too much.')
+        elif not title.istitle():
+            raise ValidationError('Title startswith lowercase.')
         
         return title
