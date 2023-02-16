@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.views import View
 
 from .models import Post
 from blogs.models import Blog
@@ -14,7 +15,8 @@ def list_post(request):
     return render(request, 'post_list.html', ctx)
 
 
-def delete_post(request, post_id: int):
-    post = Post.objects.filter(id=post_id)
-    post.update(status=Post.STATUS_DELETED)
-    return redirect('post_list')
+class DeletePost(View):
+    def post(self, request, post_id: int):
+        post = Post.objects.filter(id=post_id)
+        post.update(status=Post.STATUS_DELETED)
+        return redirect('post_list')

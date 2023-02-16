@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseNotFound
 from django.db import transaction
+from django.views import View
 
 from .models import Blog
 from posts.models import Post
@@ -48,13 +49,12 @@ def create_blog(request):
 
 def create_post(request, id: int):
     if request.method == 'POST':
-        print(request.POST)
         form = PostCreationForm(request.POST)
         
         if form.is_valid():
-            blog = get_object_or_404(Blog, pk=id)
+            # blog = get_object_or_404(Blog, pk=id)
             post = form.save(commit=False)
-            post.blog = blog
+            post.blog = get_object_or_404(Blog, pk=id)
             post.save()
 
             return redirect('blog_content', id=id)
@@ -63,20 +63,16 @@ def create_post(request, id: int):
     
     ctx = {'form': form}
 
-    # if request.method == 'POST':
-    #     blog = get_object_or_404(Blog, pk=id)
-    #     post = Post(title=request.POST['title'], content=request.POST['content'], blog=blog)
-    #     post.save()
-    #     return redirect('blog_content', id=id)
     return render(request, 'post_create.html', ctx)
 
 
-def delete_blog(request, blog_id: int):    
-    blog = Blog.objects.filter(id=blog_id)
-    posts = Post.objects.filter(blog=blog_id, status=Post.STATUS_PUBLISHED)
-    
-    with transaction.atomic():
-        blog.update(status=Blog.STATUS_DELETED)
-        posts.update(status=Post.STATUS_DELETED)
-    
-    return redirect('blog_list')
+class DeleteBlog(View):
+    def post(self, request, blog_id: int):
+        blog = Blog.objects.filter(id=blog_id)
+        posts = Post.objects.filter(blog=blog_id, status=Post.STATUS_PUBLISHED)
+        
+        with transaction.atomic():
+            blog.update(status=Blog.STATUS_DELETED)
+            posts.update(status=Post.STATUS_DELETED)
+        
+        return redirect('blog_list')
