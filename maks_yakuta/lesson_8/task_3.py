@@ -32,7 +32,7 @@ class Circle(Point):
         self.radius = radius
 
     def __eq__(self, other):
-        return self.radius == other.radius
+        return self.radius == other.radius and super().__eq__(other)
 
     def __repr__(self):
         return f'First point x = {self.x}, second point y = {self.y}, and radius = {self.radius}'
@@ -55,5 +55,16 @@ class Circle(Point):
         if self.radius == other.radius:
             return Point(x, y)
         return Circle(x, y, abs(self.radius - other.radius))
+
+circle_1 = Circle(2,3,5)
+circle_2 = Circle(2,3,5)
+print(circle_1.area())
+print(circle_1.circumference())
+print(circle_1.edge_distance_from_origin())
+print(circle_1 == circle_2)
+p = Point(3,2)
+p1 = Point(2,3)
+print(p == p1)
+
 
 
