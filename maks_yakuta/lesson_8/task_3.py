@@ -14,7 +14,7 @@ class Point:
         self.y = y
 
     def distance_from_origin(self):
-        print(sqrt(self.x ** 2 + self.y ** 2))
+        return sqrt(self.x ** 2 + self.y ** 2)
 
     def __eq__(self, other):
         return (self.x == other.x) and (self.y == other.y)

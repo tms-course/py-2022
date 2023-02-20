@@ -16,7 +16,7 @@ class Auto:
     Class Auto
     this is a class describing a car
     """
-    def __init__(self, brand, mark, age, color, weight):
+    def __init__(self, brand, mark, age, color=None, weight=None):
         self.brand = brand
         self.mark = mark
         self.age = age
@@ -38,7 +38,7 @@ class Truck(Auto):
     class Truck
     inherited class from class Auto
     """
-    def __init__(self, brand, mark, age, max_load, color, weight):
+    def __init__(self, brand, mark, age, max_load, color=None, weight=None):
         self.brand = brand
         self.mark = mark
         self.age = age

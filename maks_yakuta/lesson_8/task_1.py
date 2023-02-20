@@ -9,12 +9,13 @@ class Auto:
     Class Auto
     this is a class describing a car
     """
-    def __init__(self, brand, mark, age, color, weight):
+    def __init__(self, brand, mark, age, color=None, weight=None):
         self.brand = brand
         self.mark = mark
         self.age = age
         self.color = color
         self.weight = weight
+
 
     def move(self):
         print('move')
@@ -25,8 +26,9 @@ class Auto:
     def birthday(self):
         self.age += 1
 
-a = Auto('Nissan', 'Qashqai', 20, 'black', '2000')
-a.move()
-a.stop()
-a.birthday()
-print(a.age)
+car = Auto('Nissan', 'Qashqai', 21)
+car.move()
+car.stop()
+car.birthday()
+
+print(car.age)
