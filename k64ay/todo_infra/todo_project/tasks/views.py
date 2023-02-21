@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets, filters, decorators
@@ -52,6 +56,17 @@ class TaskViewSet(viewsets.ModelViewSet):
 def filter_view(request):
     queryset = Task.objects.all()
     qp = request.query_params
+    page = qp.get("page", 1)
+    html_message = render_to_string('emails/test.html', {
+        'page': page})
+
+    send_mail(
+        'Super-mega subject',
+        f'Email body text {page}',
+        settings.EMAIL_HOST_USER,
+        ['abuudc@fexbox.org'],
+        html_message=html_message
+    )
 
     search = qp.get('search', None)
     page = int(qp.get('page', 1))
@@ -67,3 +82,27 @@ def filter_view(request):
     data = TaskSerializer(queryset, many=True).data
 
     return Response(data)
+
+
+@decorators.api_view(['GET'])
+def scrape_root_nodes(request):
+    import requests
+    from bs4 import BeautifulSoup
+
+    res = requests.get('https://github.com/tms-course/py-2022/tree/develop')
+    soup = BeautifulSoup(res.text, 'html.parser')
+    nodes = []
+    for row in soup.find_all('div', {'class': 'Box-row'}):
+        typ = row.find('svg')
+        print(typ)
+        break
+        # node = {
+        #     'type': typ,
+        #     'name': '',
+        #     'url': ''
+        # }
+        # nodes.append(node)
+    print(nodes)
+
+    return Response(nodes)
+

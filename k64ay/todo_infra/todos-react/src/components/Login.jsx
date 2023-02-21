@@ -13,10 +13,10 @@ const Login = () => {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const { data } = await api.post('/auth/token/login/', {
+        const { data } = await api.post('/auth/jwt/create/', {
             username, password
         })
-        reloadUser(data.auth_token);
+        reloadUser(data.access);
         navigate('/');
     }
 
