@@ -1,8 +1,8 @@
-import React, { createContext, useReducer, useEffect, useContext } from "react";
-// import jwtDecode from "jwt-decode";
+import React, { createContext, useReducer, useEffect, useContext, useState } from "react";
+import jwtDecode from "jwt-decode";
 
-// import api from "../utils/api";
-import { getToken, removeToken, setToken } from "../utils/token";
+import api from "../utils/api";
+import { getRefreshToken, removeRefreshToken, removeTokens, setTokens } from "../utils/token";
 
 const LOGIN_FETCHING = 'LOGIN_FETCHING';
 const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -19,7 +19,7 @@ export const AuthContext = createContext({
     // user: null,
     login: (data) => { },
     logout: () => { },
-    reloadUser: async (token) => { },
+    reloadUser: async (authData) => { },
 });
 
 export function useAuthContext() {
@@ -52,59 +52,68 @@ function authReducer(state, action) {
 }
 
 export function AuthProvider(props) {
+    const [timerId, setTimerId] = useState();
     const [state, dispatch] = useReducer(authReducer, initialState);
 
-    useEffect(() => {
+    async function refresh() {
+        const { data } = await api.post('/auth/jwt/refresh/', {
+            refresh: getRefreshToken()
+        });
+        setTokens(data);
+        clearTimeout(timerId);
+        const tid = setTimeout(refresh, 1000 * 60 * 4.5);
+        setTimerId(tid);
+    }
+
+    async function manageTokens () {
         let isGuest = true;
-        const token = getToken();
+        const refreshToken = getRefreshToken();
 
-        if (token) {
+        if (refreshToken) {
             isGuest = false;
-            reloadUser(token);
-            // const decoded = jwtDecode(token);
+            const refreshData = jwtDecode(refreshToken);
 
-            // if (decoded.exp * 1000 < Date.now()) {
-            //     console.log('removing expired token');
-            //     removeToken()
-            // } else {
-            //     if (!state.user) {
-            //         isGuest = false;
-            //         reloadUser();
-            //     }
-            // }
+            /* Refresh token is expired */
+            if (refreshData.exp * 1000 < Date.now()) {
+                removeRefreshToken();
+            } else {
+                dispatch({ type: LOGIN_SUCCESS, payload: {} });
+                await refresh();
+            }
         }
 
         if (isGuest) {
             dispatch({ type: LOGIN_SUCCESS, payload: null });
         }
+    }
+
+    useEffect(() => {
+        manageTokens();
         // eslint-disable-next-line
     }, []);
 
-    async function reloadUser(token) {
-        if (token) {
-            setToken(token);
-        }
+    async function login(username, password) {
+        const { data } = await api.post('/auth/jwt/create/', {
+            username, password
+        })
+        console.log('login', data);
+        setTokens(data);
+        refresh();
 
-        dispatch({ type: LOGIN_FETCHING })
-        //const {data:res} = await api.get('/me');        
-        login({});
-    }
-
-    function login(userData = {}) {
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: userData
+            payload: {}
         });
     }
 
     function logout() {
-        removeToken()
+        removeTokens()
         dispatch({ type: LOGOUT });
     }
 
     return (state.isFetching ? 'Fetching...' :
         <AuthContext.Provider
-            value={{ ...state, login, logout, reloadUser }}
+            value={{ ...state, login, logout }}
             {...props}
         />
     );

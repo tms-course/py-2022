@@ -125,6 +125,7 @@ const TodoProvider = (props) => {
 
     useEffect(() => {
         loadTodos();
+    // eslint-disable-next-line
     }, []);
 
     return (

@@ -1,4 +1,10 @@
+import requests
+from bs4 import BeautifulSoup
 from django.shortcuts import render
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+
+from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets, filters, decorators
@@ -25,7 +31,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by()
     serializer_class = TaskSerializer
     filter_backends = [
        DjangoFilterBackend, filters.SearchFilter,
@@ -33,6 +39,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_fields = ['done', 'desc']
     search_fields = ['desc']
     ordering_fields = ['done', 'created_at']
+    ordering = ['-created_at']
     pagination_class = StandardResultsSetPagination
 
     def perform_create(self, serializer):
@@ -52,6 +59,17 @@ class TaskViewSet(viewsets.ModelViewSet):
 def filter_view(request):
     queryset = Task.objects.all()
     qp = request.query_params
+    page = qp.get("page", 1)
+    html_message = render_to_string('emails/test.html', {
+        'page': page})
+
+    send_mail(
+        'Super-mega subject',
+        f'Email body text {page}',
+        settings.EMAIL_HOST_USER,
+        ['abuudc@fexbox.org'],
+        html_message=html_message
+    )
 
     search = qp.get('search', None)
     page = int(qp.get('page', 1))
@@ -67,3 +85,26 @@ def filter_view(request):
     data = TaskSerializer(queryset, many=True).data
 
     return Response(data)
+
+
+@decorators.api_view(['GET'])
+def scrape_root_nodes(request):
+
+    res = requests.get('https://github.com/tms-course/py-2022/tree/develop')
+    soup = BeautifulSoup(res.text, 'html.parser')
+    nodes = []
+    for row in soup.find_all('div', {'class': 'Box-row'}):
+        typ = row.find('svg')['aria-label']
+        node_name = row.find('a', {'class': 'Link--primary'})
+        last_commit = row.find('a', {'class': 'Link--secondary'})
+        
+        node = {
+            'type': typ,
+            'name': node_name.text,
+            'url': node_name['href'],
+            'last_commit': last_commit.text,
+        }
+        nodes.append(node)
+
+    return Response(nodes)
+

@@ -5,3 +5,5 @@ markdown
 python-dotenv
 django-cors-headers
 djoser
+beautifulsoup4
+requests
