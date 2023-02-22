@@ -4,7 +4,6 @@ from rest_framework.routers import DefaultRouter
 from .views import TaskViewSet, \
     filter_view, scrape_root_nodes
 
-
 router = DefaultRouter()
 router.register(r'', TaskViewSet)
 

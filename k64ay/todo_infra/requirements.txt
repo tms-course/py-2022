@@ -7,3 +7,4 @@ django-cors-headers
 djoser
 beautifulsoup4
 requests
+django-debug-toolbar

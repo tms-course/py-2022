@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.core.cache import cache
+from django.views.decorators.cache import cache_page
 
 from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
@@ -86,10 +88,9 @@ def filter_view(request):
 
     return Response(data)
 
-
+@cache_page(60)
 @decorators.api_view(['GET'])
 def scrape_root_nodes(request):
-
     res = requests.get('https://github.com/tms-course/py-2022/tree/develop')
     soup = BeautifulSoup(res.text, 'html.parser')
     nodes = []
