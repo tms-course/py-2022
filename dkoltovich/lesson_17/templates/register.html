@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="" method="post" class="form-contact">
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Имя</label>
+        <input type="text" name="first_name" class="form-control" id="formGroupExampleInput" placeholder="" required>
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Фамилия</label>
+        <input type="text" name="second_name" class="form-control" id="formGroupExampleInput2" placeholder="" required>
+        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label">Номер телефона</label>
+            <input type="text" name="phone_number" class="form-control" id="formGroupExampleInput" placeholder="+375" required>
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label">Дата рождения</label>
+            <input type="text" name="birth_date" class="form-control" id="formGroupExampleInput2" placeholder="1999-01-01" required>
+            </div>
+            <div class="col-12">
+        <button type="submit" class="btn btn-primary">Sign in</button>
+      </div>
+</form>
+
+{% endblock %}

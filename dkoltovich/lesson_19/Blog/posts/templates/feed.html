@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div class="cols-1 row-cols-md-2 g-4">
+
+{% for post in posts %}
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                {{ post.blog.author }}
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text">{{ post.content }}.</p>
+                <a href="{% url 'show_blog' post.blog.id %}" class="btn btn-primary">Go to blog</a>
+                <div>
+                    {% if post.blog.author == user %}
+                <a href="{% url 'update_post' post.id %}" class="card-link"> Edit post</a>
+                {% endif %}
+            </div>
+            </div>
+
+
+            <div class="card-footer text-muted">
+                {{ post.created_time }}
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+</div>
+</body>
+</html>
+
+{% endblock %}

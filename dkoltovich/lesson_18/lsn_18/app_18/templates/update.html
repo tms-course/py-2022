@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+<form action="" method="post" class="form-contact">
+        {% csrf_token %}
+    {% for field in form.visible_fields%}
+    <div class="mb-3">
+        {{ field.label_tag }}
+            {{ field.errors }}
+            {{ field }}
+            {{ field.help_text }}
+    </div>
+    {% endfor %}
+    <div class="mb-3">
+            <input
+                class="btn btn-primary"
+                type="submit"
+                value="Submit"
+            />
+    </div>
+</form>
+
+{% endblock %}

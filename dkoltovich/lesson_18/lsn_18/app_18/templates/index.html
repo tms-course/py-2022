@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="list-group">
+    {% for u in list %}
+    <a href="/users/{{u.id}}" class="list-group-item list-group-item-action " aria-current="true">
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{u.second_name}} {{u.first_name}}</h5>
+        <small>registred: {{u.registration_time}}</small>
+      </div>
+      <h6 class="mb-1">phone number: {{ u.phone_number}}.</h6>
+      <small>date of birth: {{u.birth_date}}</small>
+    </a>
+    {% endfor %}
+  </div>
+{% endblock %}
