@@ -1,11 +1,16 @@
+#!/bin/bash
+
+HOME_DIR=/home/vagrant
+
 sudo apt update
 sudo apt install -y \
-    nginx supervisor python3 python3-pip
+    curl nginx supervisor python3 python3-pip
+# curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
 
-sudo cp -r /home/vagrant/todo_infra/conf.d/sites-available/ /etc/nginx/
-sudo cp /home/vagrant/todo_infra/conf.d/supervisord.conf /etc/supervisor/
-sudo cp /home/vagrant/todo_infra/conf.d/gunicorn.conf /etc/supervisor/conf.d/
-sudo cp /home/vagrant/todo_infra/conf.d/nginx.conf /etc/nginx/
+sudo cp -r $HOME_DIR/todo_infra/conf.d/sites-available/ /etc/nginx/
+sudo cp $HOME_DIR/todo_infra/conf.d/supervisord.conf /etc/supervisor/
+sudo cp $HOME_DIR/todo_infra/conf.d/gunicorn.conf /etc/supervisor/conf.d/
+sudo cp $HOME_DIR/todo_infra/conf.d/nginx.conf /etc/nginx/
 
 sudo service supervisor restart
 
