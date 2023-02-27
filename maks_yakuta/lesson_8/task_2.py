@@ -59,7 +59,7 @@ class Car(Auto):
     class Car
     inherited class from class Auto
     """
-    def __init__(self, brand, mark, age, max_speed, color, weight):
+    def __init__(self, brand, mark, age, max_speed, color=None, weight=None):
         self.brand = brand
         self.mark = mark
         self.age = age
