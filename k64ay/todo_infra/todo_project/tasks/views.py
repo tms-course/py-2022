@@ -16,7 +16,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Task
 from .serializers import TaskSerializer
 from .permissions import IsOwnerPermission
-
+from .tasks import callback
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
@@ -106,6 +106,8 @@ def scrape_root_nodes(request):
             # 'last_commit': last_commit.text,
         }
         nodes.append(node)
+
+    callback.delay()
 
     return Response(nodes)
 

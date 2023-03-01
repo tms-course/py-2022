@@ -9,3 +9,5 @@ beautifulsoup4
 requests
 django-debug-toolbar
 gunicorn
+celery
+redis
