@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 
 def main():
-    infra_dir = os.path.dirname(os.path.dirname(__file__))
+    infra_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     load_dotenv(os.path.join(infra_dir, '.env'))
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'todo_project.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.base')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
