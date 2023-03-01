@@ -2,9 +2,13 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from dotenv import load_dotenv
 
 
 def main():
+    infra_dir = os.path.dirname(os.path.dirname(__file__))
+    load_dotenv(os.path.join(infra_dir, '.env'))
+
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'todo_project.settings')
     try:
         from django.core.management import execute_from_command_line

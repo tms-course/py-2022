@@ -97,13 +97,13 @@ def scrape_root_nodes(request):
     for row in soup.find_all('div', {'class': 'Box-row'}):
         typ = row.find('svg')['aria-label']
         node_name = row.find('a', {'class': 'Link--primary'})
-        last_commit = row.find('a', {'class': 'Link--secondary'})
+        # last_commit = row.find('a', {'class': 'Link--secondary'})
         
         node = {
             'type': typ,
             'name': node_name.text,
             'url': node_name['href'],
-            'last_commit': last_commit.text,
+            # 'last_commit': last_commit.text,
         }
         nodes.append(node)
 
