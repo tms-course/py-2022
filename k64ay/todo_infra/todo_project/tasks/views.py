@@ -16,6 +16,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Task
 from .serializers import TaskSerializer
 from .permissions import IsOwnerPermission
+from .tasks import test_task
 
 
 class StandardResultsSetPagination(PageNumberPagination):
@@ -91,21 +92,7 @@ def filter_view(request):
 @cache_page(60)
 @decorators.api_view(['GET'])
 def scrape_root_nodes(request):
-    res = requests.get('https://github.com/tms-course/py-2022/tree/develop')
-    soup = BeautifulSoup(res.text, 'html.parser')
-    nodes = []
-    for row in soup.find_all('div', {'class': 'Box-row'}):
-        typ = row.find('svg')['aria-label']
-        node_name = row.find('a', {'class': 'Link--primary'})
-        # last_commit = row.find('a', {'class': 'Link--secondary'})
-        
-        node = {
-            'type': typ,
-            'name': node_name.text,
-            'url': node_name['href'],
-            # 'last_commit': last_commit.text,
-        }
-        nodes.append(node)
+    test_task.delay()
 
-    return Response(nodes)
+    return Response({'message': 'Scraping in process'})
 
