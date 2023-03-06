@@ -1,26 +1,19 @@
-from django.shortcuts import render
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+import requests
+from bs4 import BeautifulSoup
+from django.conf import settings
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.views.decorators.cache import cache_page
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, filters, decorators
 from rest_framework.pagination import PageNumberPagination
-from django_filters.rest_framework import DjangoFilterBackend
-from django.core.mail import send_mail
-from django.conf import settings
-
-from django.template.loader import render_to_string
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from .models import Task
-from .serializers import TaskSerializer
 from .permissions import IsOwnerPermission
+from .serializers import TaskSerializer
+from .tasks import test_task
 
-
-def scrape_page(request):
-    from bs4 import BeautifulSoup
-    import requests
-
-    res = requests.get('https://github.com/tms-course/py-2022/')
-    soup = BeautifulSoup(res.text, 'html.parser')
-
-    return Response(res.status_code)
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
@@ -37,7 +30,7 @@ class StandardResultsSetPagination(PageNumberPagination):
 
 
 class TaskViewSet(viewsets.ModelViewSet):
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by()
     serializer_class = TaskSerializer
     filter_backends = [
         DjangoFilterBackend, filters.SearchFilter,
@@ -45,6 +38,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     filterset_fields = ['done', 'desc']
     search_fields = ['desc']
     ordering_fields = ['done', 'created_at']
+    ordering = ['-created_at']
     pagination_class = StandardResultsSetPagination
 
     def perform_create(self, serializer):
@@ -64,20 +58,20 @@ class TaskViewSet(viewsets.ModelViewSet):
 def filter_view(request):
     queryset = Task.objects.all()
     qp = request.query_params
+    page = qp.get("page", 1)
+    html_message = render_to_string('emails/test.html', {
+        'page': page})
+
+    send_mail(
+        'Super-mega subject',
+        f'Email body text {page}',
+        settings.EMAIL_HOST_USER,
+        ['abuudc@fexbox.org'],
+        html_message=html_message
+    )
+
     search = qp.get('search', None)
     page = int(qp.get('page', 1))
-
-    html_messege = render_to_string('emails/mail.html',
-                                    {
-                                        'page': page
-                                    })
-    send_mail(
-        subject='super mego  ',
-        message=f'Email body text {page}',
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=['muwyc@mailto.plus'],
-        html_message=html_messege
-    )
 
     if search:
         queryset = queryset.filter(desc__contains=search)
@@ -90,3 +84,11 @@ def filter_view(request):
     data = TaskSerializer(queryset, many=True).data
 
     return Response(data)
+
+
+@cache_page(60)
+@decorators.api_view(['GET'])
+def scrape_root_nodes(request):
+    test_task.delay()
+
+    return Response({'message': 'Scraping in process'})

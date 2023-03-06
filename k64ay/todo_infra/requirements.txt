@@ -2,8 +2,13 @@ django
 djangorestframework
 django-filter
 markdown
-beautifulsoup4
-
 python-dotenv
 django-cors-headers
 djoser
+beautifulsoup4
+requests
+django-debug-toolbar
+gunicorn
+celery
+redis
+drf-yasg
