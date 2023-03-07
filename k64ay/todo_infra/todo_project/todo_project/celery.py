@@ -10,6 +10,13 @@ app = Celery('todo')
 
 app.config_from_object('settings.celery')
 app.autodiscover_tasks()
+app.conf.beat_schedule = {
+    'add-every-30-seconds': {
+        'task': 'tasks.tasks.test_task',
+        'schedule': 30.0,
+        'args': ()
+    },
+}
 
 @app.task(bind=True)
 def debug_task(self):
