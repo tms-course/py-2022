@@ -1,26 +1,32 @@
-cmd_line = "3*4 + 6^4"
-
 class Context:
-    op_order = ['+', '-', '*', '/', '^']
-    def __init__(self, line: str) -> None:
-        self.line = line
+    op_map: list = ['+', '-', '/', '*', '^']
 
-    def __eval(self, sub: str) -> str:
-        sub = sub.strip()
-        if sub.isdigit():
-            return f'[{sub}]'
+    def __init__(self, expression: str) -> None:
+        self.expression = expression
 
-        for op in self.op_order:
-            if op not in sub:
+    @staticmethod
+    def _eval(expression: str) -> str:
+        prepared_expr = expression.strip()
+        print(prepared_expr)
+
+        try:
+            float(prepared_expr)
+            return f'[{prepared_expr}]'
+        except:
+            pass
+        
+        for op in Context.op_map:
+
+            if op not in prepared_expr:
                 continue
 
-            parts = sub.split(op, 1)
+            left_part, right_part = prepared_expr.split(op, 1)
 
-            return f'({self.__eval(parts[0])} {op} {self.__eval(parts[1])})'
-    
+            return f'({Context._eval(left_part)} {op} {Context._eval(right_part)})'
+
 
     def evaluate(self) -> str:
-        return self.__eval(self.line)
-
-ctx = Context(cmd_line)
+        return self._eval(self.expression)
+    
+ctx = Context('3*2 + 7^3')
 print(ctx.evaluate())
