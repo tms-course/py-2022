@@ -3,7 +3,7 @@ import select, socket
 
 print('Для выключения сервера нажмите Ctrl+C.')
 sock = socket.socket()
-sock.bind(('localhost', 8008))
+sock.bind(('0.0.0.0', 8008))
 sock.listen(5)
 sock.setblocking(False)
 inputs = [sock]  # сокеты, которые будем читать
