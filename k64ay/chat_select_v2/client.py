@@ -2,7 +2,7 @@ import socket
 
 print('Для выхода из чата наберите: `exit`, `quit` или `q`.')
 # Удаленный хост
-HOST = '127.0.0.1'
+HOST = '192.168.31.5'
 # тот же порт, что и у сервера
 PORT = 8008
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
