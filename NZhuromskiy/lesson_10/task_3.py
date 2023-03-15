@@ -45,6 +45,14 @@ class TerminalExpression(AbstractExpression):
         """
         self.value = value
 
+    def interpret(self) -> float:
+        """
+        Возвращает значение числа.
+
+        :return: значение числа.
+        """
+        return self.value
+
 
 class NonTerminalExpression(AbstractExpression):
     """
@@ -52,7 +60,7 @@ class NonTerminalExpression(AbstractExpression):
     состоящее из левого и правого операндов.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: AbstractExpression, right: AbstractExpression):
         """
         Инициализация объекта NonTerminalExpression с заданными левым и правым операндами.
 
@@ -63,34 +71,10 @@ class NonTerminalExpression(AbstractExpression):
         self.right = right
 
 
-class Number(TerminalExpression):
-    """
-    Класс Number представляет число в математическом выражении.
-    """
-
-    def interpret(self) -> float:
-        """
-        Возвращает значение числа.
-
-        :return: значение числа.
-        """
-        return self.value
-
-
 class Add(NonTerminalExpression):
     """
     Класс Add представляет операцию сложения.
     """
-
-    def __init__(self, left, right):
-        """
-        Инициализация объекта Add с заданными левым и правым операндами.
-
-        :param left: левый операнд.
-        :param right: правый операнд.
-        """
-        self.left = left
-        self.right = right
 
     def interpret(self) -> float:
         """
@@ -106,16 +90,6 @@ class Sub(NonTerminalExpression):
     Класс Sub представляет операцию вычитания.
     """
 
-    def __init__(self, left, right):
-        """
-        Инициализация объекта Sub с заданными левым и правым операндами.
-
-        :param left: левый операнд.
-        :param right: правый операнд.
-        """
-        self.left = left
-        self.right = right
-
     def interpret(self) -> float:
         """
         Возвращает результат вычитания правого операнда из левого.
@@ -130,16 +104,6 @@ class Mul(NonTerminalExpression):
     Класс Mul представляет операцию умножения.
     """
 
-    def __init__(self, left, right):
-        """
-        Инициализация объекта Mul с заданными левым и правым операндами.
-
-        :param left: левый операнд.
-        :param right: правый операнд.
-        """
-        self.left = left
-        self.right = right
-
     def interpret(self) -> float:
         """
         Возвращает результат умножения левого и правого операндов.
@@ -153,16 +117,6 @@ class Div(NonTerminalExpression):
     """
     Класс Div представляет операцию деления.
     """
-
-    def __init__(self, left: 'NonTerminalExpression', right: 'NonTerminalExpression'):
-        """
-        Инициализация объекта Div с заданными левым и правым операндами.
-
-        :param left: левый операнд.
-        :param right: правый операнд.
-        """
-        self.left = left
-        self.right = right
 
     def interpret(self) -> float:
         """
@@ -180,16 +134,6 @@ class Pow(NonTerminalExpression):
     """
     Класс Pow представляет операцию возведения в степень.
     """
-
-    def __init__(self, left, right):
-        """
-        Инициализация объекта Pow с заданными левым и правым операндами.
-
-        :param left: левый операнд.
-        :param right: правый операнд.
-        """
-        self.left = left
-        self.right = right
 
     def interpret(self) -> float:
         """
@@ -247,7 +191,7 @@ class Context:
                 left_operand = self.process_expression(operands[0])
                 right_operand = self.process_expression(operands[1])
                 return operator_class(left_operand, right_operand)
-        return Number(float(expression_part))
+        return TerminalExpression(float(expression_part))
 
     def evaluate(self) -> float:
         """

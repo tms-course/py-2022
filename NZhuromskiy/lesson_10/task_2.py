@@ -39,7 +39,7 @@ class Add:
     Класс Add представляет операцию сложения.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: 'Expression', right: 'Expression'):
         """
         Инициализация объекта Add с заданными левым и правым операндами.
 
@@ -63,7 +63,7 @@ class Sub:
     Класс Sub представляет операцию вычитания.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: 'Expression', right: 'Expression'):
         """
         Инициализация объекта Sub с заданными левым и правым операндами.
 
@@ -87,7 +87,7 @@ class Mul:
     Класс Mul представляет операцию умножения.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: 'Expression', right: 'Expression'):
         """
         Инициализация объекта Mul с заданными левым и правым операндами.
 
@@ -111,7 +111,7 @@ class Div:
     Класс Div представляет операцию деления.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: 'Expression', right: 'Expression'):
         """
         Инициализация объекта Div с заданными левым и правым операндами.
 
@@ -135,7 +135,7 @@ class Pow:
     Класс Pow представляет операцию возведения в степень.
     """
 
-    def __init__(self, left, right):
+    def __init__(self, left: 'Expression', right: 'Expression'):
         """
         Инициализация объекта Pow с заданными левым и правым операндами.
 
@@ -188,7 +188,7 @@ class Context:
                 return False
         return True
 
-    def process_expression(self, expression_part: str):
+    def process_expression(self, expression_part: str) -> 'Expression':
         """
         Рекурсивная обработка частей математического выражения.
 
