@@ -1,12 +1,9 @@
-from base import *
+from .base import *
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', '192.168.33.10', 'localhost', 'todo.local', 'api.todo.local']
-
-# Application definition
-
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

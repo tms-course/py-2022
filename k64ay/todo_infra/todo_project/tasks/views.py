@@ -1,17 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
-from django.conf import settings
+from django.shortcuts import render
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
+from django.core.cache import cache
 from django.views.decorators.cache import cache_page
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets, filters, decorators
-from rest_framework.pagination import PageNumberPagination
+
+from django.conf import settings
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import viewsets, filters, decorators
+from rest_framework.pagination import PageNumberPagination
+from django_filters.rest_framework import DjangoFilterBackend
+
 from .models import Task
-from .permissions import IsOwnerPermission
 from .serializers import TaskSerializer
+from .permissions import IsOwnerPermission
 from .tasks import test_task
 
 
@@ -33,8 +37,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().order_by()
     serializer_class = TaskSerializer
     filter_backends = [
-        DjangoFilterBackend, filters.SearchFilter,
-        filters.OrderingFilter]
+       DjangoFilterBackend, filters.SearchFilter,
+       filters.OrderingFilter]
     filterset_fields = ['done', 'desc']
     search_fields = ['desc']
     ordering_fields = ['done', 'created_at']
@@ -42,7 +46,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
 
     def perform_create(self, serializer):
-        serializer.save(author=self.request.user)
+      serializer.save(author=self.request.user)
 
     def get_permissions(self):
         print(self.request.custom)
@@ -52,7 +56,7 @@ class TaskViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsOwnerPermission, ]
 
         return super(TaskViewSet, self).get_permissions()
-
+    
 
 @decorators.api_view(['GET'])
 def filter_view(request):
@@ -79,12 +83,11 @@ def filter_view(request):
     if page:
         limit = 5
         offset = (page - 1) * limit + 1
-        queryset = queryset[offset:offset + limit]
+        queryset = queryset[offset:offset+limit]
 
     data = TaskSerializer(queryset, many=True).data
 
     return Response(data)
-
 
 @cache_page(60)
 @decorators.api_view(['GET'])
@@ -92,3 +95,4 @@ def scrape_root_nodes(request):
     test_task.delay()
 
     return Response({'message': 'Scraping in process'})
+

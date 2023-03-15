@@ -12,3 +12,4 @@ gunicorn
 celery
 redis
 drf-yasg
+django_celery_beat
