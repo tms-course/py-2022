@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'horoscope_api',
+    'django_filters',
+
 ]
 
 MIDDLEWARE = [

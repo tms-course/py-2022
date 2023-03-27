@@ -1,12 +1,23 @@
+from datetime import date
+
 from django.db import models
 
 
-class Signs(models.Model):
-    
-    name = models.CharField(max_length=64, blank=False, default=None)
-
 class Horoscope(models.Model):
-    sign = models.ForeignKey(Signs, unique=False, on_delete=models.CASCADE)
-    date = models.DateField(blank=False, default=None)
+    class Sign(models.Choices):
+        ARIES = 'Aries'
+        TAURUS = 'Taurus'
+        GEMINI = 'Gemini'
+        CANCER = 'Cancer'
+        LEO = 'Leo'
+        VIRGO = 'Virgo'
+        LIBRA = 'Libra'
+        SCORPIO = 'Scorpio'
+        SAGITTARIUS = 'Sagittarius'
+        CAPRICORN = 'Capricorn'
+        AQUARIUS = 'Aquarius'
+        PISCES = 'Pisces'
+        
+    sign = models.CharField(choices=Sign.choices, max_length=64)
+    date = models.DateField(blank=False, default=date.today())
     content = models.CharField(max_length=1024)
-    

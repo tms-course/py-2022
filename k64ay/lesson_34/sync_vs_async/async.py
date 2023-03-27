@@ -15,7 +15,6 @@ async def second(x: int) -> None:
 async def main():
     task1 = asyncio.create_task(first(4))
     task2 = asyncio.create_task(second(4))
-    await
     await task1
     await task2
     
