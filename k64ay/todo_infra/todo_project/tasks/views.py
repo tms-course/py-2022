@@ -39,7 +39,11 @@ class TaskViewSet(viewsets.ModelViewSet):
     filter_backends = [
        DjangoFilterBackend, filters.SearchFilter,
        filters.OrderingFilter]
-    filterset_fields = ['done', 'desc']
+    filterset_fields = {
+        'done': ['exact'], 
+        'desc': ['exact'], 
+        'created_at': ['gte', 'lte']
+    }
     search_fields = ['desc']
     ordering_fields = ['done', 'created_at']
     ordering = ['-created_at']

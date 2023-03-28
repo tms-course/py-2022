@@ -1,0 +1,139 @@
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+            crossorigin="anonymous"></script>
+        <style>
+            /* Chat containers */
+            .container {
+            border: 2px solid #dedede;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            }
+
+            /* Darker chat container */
+            .darker {
+            border-color: #ccc;
+            background-color: #ddd;
+            }
+
+            /* Clear floats */
+            .container::after {
+            content: "";
+            clear: both;
+            display: table;
+            }
+
+            /* Style images */
+            .container img {
+            float: left;
+            max-width: 60px;
+            width: 100%;
+            margin-right: 20px;
+            border-radius: 50%;
+            }
+
+            /* Style the right image */
+            .container img.right {
+            float: right;
+            margin-left: 20px;
+            margin-right:0;
+            }
+
+            /* Style time text */
+            .time-right {
+            float: right;
+            color: #aaa;
+            }
+
+            /* Style time text */
+            .time-left {
+            float: left;
+            color: #999;
+            }
+
+            .input-box-container {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+            }
+
+            #input-box {
+                width: 100%
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="messages"></div>
+            <div class="input-box-container">
+                <textarea id="input-box"></textarea>
+            </div>
+        </main>
+        <script>
+            try{
+                var sock = new WebSocket('ws://' + window.location.host + '/ws');
+            }
+            catch(err){
+                var sock = new WebSocket('wss://' + window.location.host + '/ws');
+            }
+
+            // show message in div#subscribe
+            function showMessage(message) {
+                console.log(message)
+                var msgs = $('.messages'),
+                    height = 0,
+                    date = new Date();
+                    options = {hour12: false};
+                var msgText = $('')
+                var msgContainer = $(`
+                    <div class="container">
+                        <p>${message}</p>
+                        <span class="time-left">${date.toLocaleTimeString('en-US', options)}</span>
+                    </div>
+                `)
+                msgs.append(msgContainer);
+
+                //msgs.animate({scrollTop: height});
+            }
+
+            function sendMessage(){
+                var msg = $('#input-box');
+                var msgText = msg.val()
+                showMessage(msgText)
+                sock.send(msgText);
+                msg.val('').focus();
+            }
+
+            sock.onopen = function(){
+                showMessage('Connection to server started')
+            }
+
+            $('#input-box').keyup(function(e){
+                if(e.keyCode == 13){
+                    sendMessage();
+                }
+            });
+
+            // income message handler
+            sock.onmessage = function(event) {
+                showMessage(event.data);
+            };
+
+            sock.onclose = function(event){
+                if(event.wasClean){
+                    showMessage('Clean connection end')
+                }else{
+                    showMessage('Connection broken')
+                }
+            };
+
+            sock.onerror = function(error){
+                showMessage(error);
+            }
+        </script>
+    </body>
+</html>
