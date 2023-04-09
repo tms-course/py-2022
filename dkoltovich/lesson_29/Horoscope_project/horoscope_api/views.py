@@ -31,29 +31,11 @@ def filter_view(request):
     
     if sign:
         queryset = queryset.filter(sign=sign)
-        print(queryset.count())
-        if queryset.count() == 0:
-            content = scrape_root_nodes(sign=sign)
-            data = {'sign':sign, 'content': content}
-            horoscope = HoroscopeSerializer(data=data)
-            if horoscope.is_valid():
-                horoscope = horoscope.save()
-                return Response(horoscope.data)
-
     data = HoroscopeSerializer(queryset, many=True).data
     
     return Response(data)
 
 
-def scrape_root_nodes(sign: str):
-    from bs4 import BeautifulSoup
-    import requests
-    
-    res = requests.get(f'https://horo.mail.ru/prediction/{sign.lower()}/today/')
-    soup = BeautifulSoup(res.text, 'html.parser')
-    content = soup.find('div', {'p-prediction__inner'}).find('div', {'class': 'article__item'}).text
-    return content
-    
     
     
     

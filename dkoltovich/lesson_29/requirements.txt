@@ -20,3 +20,4 @@ soupsieve==2.4
 sqlparse==0.4.3
 vine==5.0.0
 wcwidth==0.2.6
+django-celery-beat==2.5.0
