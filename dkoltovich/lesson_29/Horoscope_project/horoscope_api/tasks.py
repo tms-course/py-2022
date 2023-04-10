@@ -4,7 +4,7 @@ import requests
 from .serializers import HoroscopeSerializer
 from Horoscope_project import celery_app
 
-all_signs: set = {'Cancer' ,'Aries','Taurus', 'Gemini', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'}
+all_signs: set = {'Cancer', 'Aries', 'Taurus', 'Gemini', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'}
 
 
 @celery_app.task(bind=True)

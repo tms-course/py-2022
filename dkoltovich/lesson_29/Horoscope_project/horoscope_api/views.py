@@ -41,11 +41,11 @@ def filter_view(request):
     if date and queryset.count() < NUM_OF_SIGNS:
         tomorrow = str(dt.date.today() + dt.timedelta(days=1))
         yesterday = str(dt.date.today() - dt.timedelta(days=1))
-
-        if date in (str(dt.date.today()), str(tomorrow), str(yesterday)):
-            
+        today = str(dt.date.today())
+        
+        if date in (today, tomorrow, yesterday):
             signs = list(str(obj.sign) for obj in queryset)
-            if date == str(dt.date.today()):
+            if date == today:
                 date = 'today'
             elif date == tomorrow:
                 date = 'tomorrow'
