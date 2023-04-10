@@ -1,0 +1,6 @@
+.env*
+.venv
+.vagrant.d/
+todo_cache/
+
+!.env-example

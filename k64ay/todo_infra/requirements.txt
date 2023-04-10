@@ -1,0 +1,15 @@
+django
+djangorestframework
+django-filter
+markdown
+python-dotenv
+django-cors-headers
+djoser
+beautifulsoup4
+requests
+django-debug-toolbar
+gunicorn
+celery
+redis
+drf-yasg
+django_celery_beat
