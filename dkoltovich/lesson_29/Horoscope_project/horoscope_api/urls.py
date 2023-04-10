@@ -11,4 +11,5 @@ urlpatterns = [
     path('filter/', filter_view),
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
+    
 ]
