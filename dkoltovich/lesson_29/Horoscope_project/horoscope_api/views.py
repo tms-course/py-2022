@@ -11,6 +11,7 @@ from .tasks import scrape_signs_on_date
 from .serializers import HoroscopeSerializer
 
 class HoroscopeViewSet(viewsets.ModelViewSet):
+    queryset = Horoscope.objects.all()
     serializer_class = HoroscopeSerializer
     NUM_OF_SIGNS = 12
     
@@ -21,24 +22,10 @@ class HoroscopeViewSet(viewsets.ModelViewSet):
     search_fields = ['date', 'sign']
     ordering_fields = ['date', 'sign']
     ordering = ['-date']
-    
-    def get_queryset(self):
-        queryset = Horoscope.objects.all()
-        qp = self.request.query_params
-        
-        sign = qp.get('sign', None)
-        date = qp.get('date', None)
 
-        if sign:
-            queryset = queryset.filter(sign=sign)
-        if date:
-            queryset = queryset.filter(date=date)
-
-        return queryset
-    
     def list(self, request):
         date = request.GET.get('date', None)
-        qs = self.get_queryset()
+        qs = self.filter_queryset(self.queryset)
         if date and qs.count() < self.NUM_OF_SIGNS:
             tomorrow = str(dt.date.today() + dt.timedelta(days=1))
             yesterday = str(dt.date.today() - dt.timedelta(days=1))
@@ -58,4 +45,4 @@ class HoroscopeViewSet(viewsets.ModelViewSet):
                 return Response('Enable to get horoscope on this date', 403)
         
         return Response(self.serializer_class(qs, many=True).data, status=200)
-    
+ 
