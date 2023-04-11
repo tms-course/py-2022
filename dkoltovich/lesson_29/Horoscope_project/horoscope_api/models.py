@@ -18,6 +18,6 @@ class Horoscope(models.Model):
         AQUARIUS = 'Aquarius'
         PISCES = 'Pisces'
         
-    sign = models.CharField(choices=Sign.choices, max_length=64)
+    sign = models.CharField(choices=Sign.choices, max_length=11)
     date = models.DateField(blank=False, default=date.today())
     content = models.CharField(max_length=1024)
