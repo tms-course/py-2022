@@ -6,13 +6,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 import datetime as dt
 
 from .models import Horoscope
-from .tasks import scrape_signs_on_date, all_signs
+from .tasks import scrape_signs_on_date
 
 from .serializers import HoroscopeSerializer
 
 class HoroscopeViewSet(viewsets.ModelViewSet):
-    queryset = Horoscope.objects.all()
     serializer_class = HoroscopeSerializer
+    NUM_OF_SIGNS = 12
     
     filter_backends = [
        DjangoFilterBackend, filters.SearchFilter,
@@ -22,45 +22,40 @@ class HoroscopeViewSet(viewsets.ModelViewSet):
     ordering_fields = ['date', 'sign']
     ordering = ['-date']
     
-
-@decorators.api_view(['GET'])
-def filter_view(request):
-    NUM_OF_SIGNS = 12
-    queryset = Horoscope.objects.all()
-    qp = request.query_params
-    
-    sign = qp.get('sign', None)
-    date = qp.get('date', None)
-
-    
-    if sign:
-        queryset = queryset.filter(sign=sign)
-    if date:
-        queryset = queryset.filter(date=date)
-    
-    if date and queryset.count() < NUM_OF_SIGNS:
-        tomorrow = str(dt.date.today() + dt.timedelta(days=1))
-        yesterday = str(dt.date.today() - dt.timedelta(days=1))
-        today = str(dt.date.today())
+    def get_queryset(self):
+        queryset = Horoscope.objects.all()
+        qp = self.request.query_params
         
-        if date in (today, tomorrow, yesterday):
-            signs = list(str(obj.sign) for obj in queryset)
-            if date == today:
-                date = 'today'
-            elif date == tomorrow:
-                date = 'tomorrow'
+        sign = qp.get('sign', None)
+        date = qp.get('date', None)
+
+        if sign:
+            queryset = queryset.filter(sign=sign)
+        if date:
+            queryset = queryset.filter(date=date)
+
+        return queryset
+    
+    def list(self, request):
+        date = request.GET.get('date', None)
+        qs = self.get_queryset()
+        if date and qs.count() < self.NUM_OF_SIGNS:
+            tomorrow = str(dt.date.today() + dt.timedelta(days=1))
+            yesterday = str(dt.date.today() - dt.timedelta(days=1))
+            today = str(dt.date.today())
+            
+            if date in (today, tomorrow, yesterday):
+                signs = list(str(obj.sign) for obj in qs)
+                if date == today:
+                    date = 'today'
+                elif date == tomorrow:
+                    date = 'tomorrow'
+                else:
+                    date = 'yesterday'
+                scrape_signs_on_date.delay(signs=signs, date=date)
+                return Response('Scraping in process', 200)
             else:
-                date = 'yesterday'
-            scrape_signs_on_date.delay(signs=signs, date=date)
-            return Response('Scraping in process', 200)
-        else:
-            return Response('Enable to get horoscope on this date', 403)
+                return Response('Enable to get horoscope on this date', 403)
         
-    data = HoroscopeSerializer(queryset, many=True).data
-
-    return Response(data)
-
-    
-    
-
+        return Response(self.serializer_class(qs, many=True).data, status=200)
     
