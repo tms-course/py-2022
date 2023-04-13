@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<form action="" method="post" class="form-contact">
+    <p><label>Имя: </label><input type="text" name="first_name" value="{{user.first_name}}" required /></p>
+    <p><label>Фамилия: </label><input type="text" name="last_name" value="{{user.last_name}}" required /></p>
+    <p><label>Телефон: </label><input type="text" name="phone" value="{{user.phone}}" required /></p>
+    <p><label>Дата рождения: </label><input type="date" name="birthday" value="{{user.birthday}}" required /></p>
+    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+</form>
+{% endblock %}
