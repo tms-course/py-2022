@@ -33,7 +33,7 @@ def index():
     try:
         users = Users.query.all()
     except:
-        print('ошибка чтения')
+        return {}, 500
     return render_template('index.html', title="Главная", list=users)
 
 
@@ -51,7 +51,7 @@ def register():
             session.commit()
         except Exception as e:
             session.rollback()
-            print('Ошибка добавления данных')
+            return {}, 403
             pass
 
         return redirect(url_for('index'))
