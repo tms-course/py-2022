@@ -2,7 +2,7 @@ import socket
 
 print('Для выхода из чата наберите: `exit`, `quit` или `q`.')
 # Удаленный хост
-HOST = '127.0.0.1'
+HOST = 'ec2-3-125-45-99.eu-central-1.compute.amazonaws.com'
 # тот же порт, что и у сервера
 PORT = 8008
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
