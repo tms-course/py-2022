@@ -1,0 +1,52 @@
+version: '3.7'
+
+services:
+  django:
+    image: 'z77/django'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TELEGRAM_TOKEN='${TELEGRAM_TOKEN}'
+    restart: always
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8900:8000"
+    volumes:
+      - ./tgbot:/app/src
+    depends_on:
+      - postgres
+    networks:
+      - main_network
+    
+  telegram:
+    image: 'z77/django'
+    environment:
+      - TELEGRAM_TOKEN='${TELEGRAM_TOKEN}'
+    restart: always
+    command: python manage.py bot
+    volumes:
+      - ./tgbot:/app/src
+    depends_on:
+      - postgres
+    networks:
+      - main_network
+
+  postgres:
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tg
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - main_network
+
+volumes:
+  pgdata:
+
+networks:
+  main_network:

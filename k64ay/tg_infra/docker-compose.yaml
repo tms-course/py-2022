@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  django:
+    image: tms-test/django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8900:8000"
+    volumes:
+      - ./tgadmin:/app/src
+    depends_on:
+      - postgres
+    networks:
+      - main_network
+
+  telegram:
+    image: tms-test/django
+    restart: always
+    command: python3 manage.py bot
+    volumes:
+      - ./tgadmin:/app/src
+    depends_on:
+      - postgres
+    networks:
+      - main_network
+
+  postgres:
+    image: postgres:13.2-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tg
+    expose:
+      - "5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - main_network
+
+networks:
+  main_network:
+
+volumes:
+  pgdata:

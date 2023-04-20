@@ -25,9 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zf(6vqy&s=v*urzm2bett=yrj30a1)jut%g=b@gda92#$($@2z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -83,11 +83,11 @@ WSGI_APPLICATION = 'regee.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'tms',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '5433',
+        'NAME': 'tms_db',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'tms-test-db.cvzzasxtauvh.eu-central-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
@@ -127,7 +127,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 # It's used for l10n to display numbers
 USE_THOUSAND_SEPARATOR = True
