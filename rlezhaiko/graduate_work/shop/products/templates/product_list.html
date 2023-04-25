@@ -2,4 +2,18 @@
 
 {% block content %}
 <h1>Content</h1>
+
+{% load mptt_tags %}
+<ul>
+    {% recursetree categories %}
+        <li>
+            {{ node.name }}
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
 {% endblock %}

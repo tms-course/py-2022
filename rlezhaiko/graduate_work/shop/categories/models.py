@@ -8,7 +8,13 @@ class Category(MPTTModel):
 
 
     def __str__(self) -> str:
-        return self.name
+        full_path = [self.name]
+        parent = self.parent
+        while parent is not None:
+            full_path.append(parent.name)
+            parent = parent.parent
+        
+        return ' / '.join(full_path[::-1])
 
 
     class MPTTMeta:
