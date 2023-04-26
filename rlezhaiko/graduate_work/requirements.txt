@@ -2,4 +2,5 @@ asgiref==3.6.0
 Django==4.2
 django-js-asset==2.0.0
 django-mptt==0.14.0
+Pillow==9.5.0
 sqlparse==0.4.4
