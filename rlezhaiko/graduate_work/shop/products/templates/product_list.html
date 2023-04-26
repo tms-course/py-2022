@@ -18,12 +18,16 @@
 </ul>
 
 {% for product in products %}
-<img src="{{ product.main_image.url }}" alt="">
+<img src="{{ product.main_image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
 <p>{{ product.main_image.url }}</p>
 <p>{{ product.main_image }}</p>
 <p>{{ product.name }}</p>
 <p>{{ product.description }}</p>
 <p>{{ product.price }}</p>
+    {% for image in product.images.all %}
+    <img src="{{ image.image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
+    <p>{{ image.image.url }}</p>
+    {% endfor %}
 
 {% endfor %}
 
