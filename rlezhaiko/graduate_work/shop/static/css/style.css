@@ -1,0 +1,19 @@
+#card-icon {
+    font-size: 70px;
+    text-align: center;
+}
+
+#footer_header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#footer_link {
+    text-decoration: none; 
+    color: #ffffff;
+}
+
+#footer_link:hover {
+    text-decoration: none; 
+    color: #dde028; /* #1e9494 */
+}

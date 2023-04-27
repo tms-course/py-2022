@@ -1,3 +1,57 @@
-<footer>
-    <h1>Footer {{ name_footer }}</h1>
+<footer class="bg-dark py-3">
+    <div class="container pb-3">
+        <div class="row justify-content-center align-items-start text-center">
+            <div class="col-auto mx-3 text-white">
+                <ul class="list-unstyled mb-2">
+                    <span id="footer_header">Компания</span>
+                    <li>
+                        <a href="{% url 'about_us_page' %}" id="footer_link">О нас</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Транспортные услуги</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Миссия и ценности</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="col-auto mx-3 text-white">
+                <ul class="list-unstyled mb-2">
+                    <span id="footer_header">Покупателям</span>
+                    <li>
+                        <a href="#" id="footer_link">Доставка</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Оплата</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Контакты</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Отзывы</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-auto mx-3 text-white">
+                <ul class="list-unstyled mb-2">
+                    <span id="footer_header">Полезная информация</span>
+                    <li>
+                        <a href="#" id="footer_link">Ремонт техники</a>
+                    </li>
+                    <li>
+                        <a href="#" id="footer_link">Дополнительные услуги</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="col-auto">
+            <div class="small text-white">Copyright &copy; ROMAN LEZHAIKO TMS Z77 2022-2023</div>
+        </div>
+    </div>
+    
 </footer>

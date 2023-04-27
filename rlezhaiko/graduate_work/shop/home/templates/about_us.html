@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="m-3">
+        <h3>О нас</h3>
+        <p>
+            Мы с вами уже 18 лет и зарекомендовали себя как надежный онлайн-гипермаркет. 
+            Мы поддерживаем высокий уровень интернет-торговли. В нашем каталоге представлено более чем {{ count }} наименований товаров. 
+            Количество наших клиентов продолжает расти, и мы делаем все, чтобы оправдать ваше доверие. Спасибо, что выбрали нас!
+        </p>
+        <p>
+            {{ shop_name }} — покупки со скоростью интернета
+        </p>
+    </div>
+
+    <div class="card-group m-3">
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-search"></i>
+            <div class="card-body">
+                <h4 class="card-title">Выбирать — одно удовольствие</h4>
+                <p class="card-text">
+                    В нашем каталоге вы найдете подробные и достоверные описания и фотографии товаров. 
+                    Наши профессиональные консультанты всегда готовы помочь вам советом и предоставить дополнительную информацию.
+                </p>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-tags"></i>
+            <div class="card-body">
+                <h4 class="card-title">Всегда честные цены</h4>
+                <p class="card-text">
+                    Вы можете быть уверены: информация о цене и наличии товара всегда актуальна.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-group m-3">
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-headset"></i>
+            <div class="card-body">
+                <h4 class="card-title">Заказывать — просто</h4>
+                <p class="card-text">
+                    Мы принимаем онлайн-заказы круглосуточно через сайт, а с 8:00 до 22:00 можно обратиться к специалистам в call-центр. 
+                    Мы оформим заказ максимально быстро!
+                </p>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-cash-coin"></i>
+            <div class="card-body">
+                <h4 class="card-title">Удобно оплачивать</h4>
+                <p class="card-text">
+                    Вы можете рассчитаться за покупку наличными деньгами или банковской картой при доставке — при этом цена не изменится.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-group m-3">
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-car-front-fill"></i>
+            <div class="card-body">
+                <h4 class="card-title">Быстрая доставка</h4>
+                <p class="card-text">
+                    Наша служба доставки — это собственный парк автомобилей и ответственные, компетентные курьеры. 
+                    Мы доставляем товар по всей Беларуси в удобное для вас время. Доставка товаров от 120 р. по Минску — бесплатно.
+                </p>
+            </div>
+        </div>
+
+        <div class="card text-center">
+            <i id="card-icon" class="bi bi-reception-4"></i>
+            <div class="card-body">
+                <h4 class="card-title">Мы гарантируем качество</h4>
+                <p class="card-text">
+                    В нашем онлайн-гипермаркете вы купите только сертифицированный товар по выгодным ценам. 
+                    К каждой покупке прилагается кассовый чек — ваша защита как потребителя.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
