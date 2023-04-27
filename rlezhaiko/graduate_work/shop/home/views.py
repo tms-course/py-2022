@@ -25,3 +25,15 @@ def get_about_us_page(request):
         'shop_name': SHOP_NAME
     }
     return render(request, 'about_us.html', ctx)
+
+
+def get_transport_services_page(request):
+    return render(request, 'transport_services.html', {'shop_name': SHOP_NAME})
+
+
+def get_mission_and_values_page(request):
+    return render(request, 'mission_and_values.html', {'shop_name': SHOP_NAME})
+
+
+def get_delivery_page(request):
+    return render(request, 'delivery.html', {'shop_name': SHOP_NAME})
