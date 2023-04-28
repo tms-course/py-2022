@@ -15,8 +15,43 @@
                 Оставить отзыв
             </button>
         </div>  
-             
+        
+        
+        {% for review in reviews %}
+        <p>
+            {{ review.author }}
+            <br>
+            {{ review.customer_review }}
+            <br>
+            {{ review.admin_answer }}
+        </p>
+        {% endfor %}
+
     </div>           
-      
+
+    <div class="container d-flex align-items-end justify-content-center">
+        <nav aria-label="...">
+            {% if reviews.has_other_pages %}
+            <ul class="pagination pagination-md ">
+                {% if reviews.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ reviews.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Previous</span></li>
+                {% endif %}
+
+                <li class="page-item"><span class="page-link">Page {{ reviews.number }} of {{ reviews.paginator.num_pages }}</span></li>
+                
+                {% if reviews.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ reviews.next_page_number }}">Next</a></li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Next</span></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </nav>
+    </div>
+
 </div>
+
+
 {% endblock %}
