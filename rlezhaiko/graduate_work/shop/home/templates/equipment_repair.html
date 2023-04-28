@@ -1,0 +1,625 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="m-3">
+        <h3>Ремонт техники</h3>
+        <p>Наша компания предоставляет платные услуги по ремонту бытовой техники в г. Минске. Вы можете обращаться к нам, если поломка не относится к гарантийным случаям или срок гарантии на товар уже истёк.</p><br>
+        <p>Работы проводятся квалифицированными мастерами по установленным тарифам*. 
+            <br>
+            Оформить заказ на платный ремонт, а также узнать все подробности о данной услуге можно по телефонам: 
+            <br>
+            +375 (29) 333−33−33 (администратор);
+            <br>
+            +375 (44) 333−33−33.
+            <br>
+            При заказе просьба называть 2-часовой интервал, когда вы будете присутствовать в месте проведения работ.
+        </p><br>
+        <p>Оплата за расходные материалы рассчитывается отдельно.</p>
+    
+
+        <div id="accordion">
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Дефектация (все виды техники) ▼
+                        </button>
+                    </h5>
+                </div>
+        
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            Дефектация выездная (все виды техники) — 30 р.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Подбор запасной части ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— в течение 48 часов</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            Подбор запасной части для 1 изделия — 5 р. <br> 
+                            Услуга включает поиск по каталогам необходимой запчасти, установление ее парт номера, поиск аналогов в технической документации, 
+                            запрос производителям, поставщикам о наличии, стоимости и срокам поставки, информирование клиента.
+                        </p>    
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Холодильники и морозильники бытовые ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дефектация (все виды техники)</td>
+                                    <td>30 р.</td>
+                                    <td>Дефектация изделия, составление Акта Проверки Качества с указанием выявленного дефекта.</td>
+                                </tr>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>50 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с регулировкой, установкой, перенавеской без использования специнструмента и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>95 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой деталей без применения газопламенной пайки: ремонт терморегулятора, блока индикации, нагревателя, таймера, шнура сетевого, реле пускозащитного, шланга слива воды и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>200 р.</td>
+                                    <td>Дефектация изделия; работы, связанные с применением газопламенной пайки (за исключением замены шкафа изделия): замена фильтра-осушителя, устранение утечки, корректировка дозы хладагента, замена конденсатора, замена испарителя, замена компрессора и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Замена испарителя или шкафа, устранение утечки, промерзания</td>
+                                    <td>220 р.</td>
+                                    <td>Дефектация изделия; замена шкафа холодильника, морозильника; замена испарителя в запененной части, устранение утечки в запененной части, устранение промерзания в запененной части.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            Не бытовые холодильники и морозильники, холодильное оборудование ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дефектация (все виды техники)</td>
+                                    <td>90 р.</td>
+                                    <td>Дефектация изделия, составление Акта Проверки Качества с указанием выявленного дефекта.</td>
+                                </tr>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>145 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с регулировкой, установкой, перенавеской без использования специнструмента и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>240 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой деталей без применения газопламенной пайки: ремонт терморегулятора, блока индикации, нагревателя, таймера, шнура сетевого, реле пускозащитного, шланга слива воды и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>360 р.</td>
+                                    <td>Дефектация изделия; работы, связанные с применением газопламенной пайки, за исключением замены шкафа изделия: замена фильтра-осушителя, устранение утечки, корректировка дозы хладагента, замена конденсатора, замена испарителя, замена компрессора.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingFive">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            Посудомоечные, стиральные машины ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>30 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с регулировкой, установкой, перенавеской без использования специнструмента, чистка и удаление посторонних предметов без разборки изделия и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>75 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой деталей: сетевого шнура, ручек органов управления, ящика бункера, индикаторной лампы, кнопок на лицевой панели, дверцы люка, петли дверцы загрузочного люка, ручки люка, датчика уровня или трубки, сетевого фильтра, датчика температур и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>140 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой электронного модуля, приводного шкива, нагревательного элемента, сливного насоса, главного мотора, уплотнительной резины дверцы загрузочного люка, патрубка бака, лицевой панели, противовеса, хомута бака, фланца бака подшипников и т. п.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingSix">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            Водонагреватели электрические ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>42 р.</td>
+                                    <td>Дефектация изделия; ремонт, не требующий замены запасных частей (техническое обслуживание).</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>84 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой термостата, подводящего кабеля, сигнальных лампочек и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>132 р.</td>
+                                    <td>Выезд специалиста на дом к потребителю; дефектация изделия; устранение утечек воды в системе водонагревателя с заменой ТЭНа, уплотнителя или бака.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            
+            <div class="card">
+                <div class="card-header" id="headingSeven">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            Бытовые плиты, встраиваемая техника ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>54 р.</td>
+                                    <td>Дефектация изделия; замена декоративных панелей, крышки, регулировка, доукомплектация и т. п.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>60 р.</td>
+                                    <td>Дефектация изделия; замена одновременно двух и более различных деталей, замена стола и панели управления, регулировка.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>102 р.</td>
+                                    <td>Дефектация изделия; замена газовых кранов и газоподводящих трубок и т. п., регулировка.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingEight">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                            Мелкая бытовая техника, бытовая электроника ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordion">
+                    <div class="card-body">
+                        <p>
+                            Ремонт электрочайников, утюгов, СВЧ печей и т. д.
+                        </p>
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Простой ремонт</td>
+                                    <td>30 р.</td>
+                                    <td>Блочная замена электромеханических компонентов, прошивка изделия.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт средней сложности</td>
+                                    <td>50 р.</td>
+                                    <td>Замена шасси и иных компонентов, за исключением электромеханических и микросхем.</td>
+                                </tr>
+                                <tr>
+                                    <td>Сложный ремонт</td>
+                                    <td>70 р.</td>
+                                    <td>Замена микросхем, LCD панелей.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="card">
+                <div class="card-header" id="headingNine">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                            Мебель ▼
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordion">
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>География оказания услуги</td>
+                                    <td>— выезд мастера к клиенту в пределах г. Минска</td>
+                                </tr>
+                                <tr>
+                                    <td>График работы</td>
+                                    <td>— ежедневно с 10:00 до 20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Сроки выполнения</td>
+                                    <td>— по согласованию с клиентом</td>
+                                </tr>
+                                <tr>
+                                    <td>Способы оплаты</td>
+                                    <td>— наличный расчет на месте, по факту оказания работ</td>
+                                </tr>
+                                <tr>
+                                    <td>Работу выполняет</td>
+                                    <td>— ООО «{{ shop_name }}»</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <br>
+
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr class="table-primary">
+                                    <th scope="col" style="width: 25%">Вид ремонта</th>
+                                    <th scope="col" style="width: 15%">Цена</th>
+                                    <th scope="col">Описание услуги</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Дефектация</td>
+                                    <td>16 р.</td>
+                                    <td>Дефектация одного изделия, составление Акта Проверки Качества с указанием выявленного дефекта и итоговой стоимости ремонта (в случае отказа клиента от ремонта).</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт офисного кресла, стула</td>
+                                    <td>30 р.</td>
+                                    <td>Дефектация одного изделия; ремонт, связанный с регулировкой, установкой или заменой элементов.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт корпусной мебели</td>
+                                    <td>50 р.</td>
+                                    <td>Дефектация одного изделия; ремонт, связанный с заменой петель, фурнитуры, направляющих, механизмов, зеркал; изготовление элементов (стоимость материалов оплачивается отдельно).</td>
+                                </tr>
+                                <tr>
+                                    <td>Ремонт мягкой мебели</td>
+                                    <td>80 р.</td>
+                                    <td>Дефектация изделия; ремонт, связанный с заменой основания, механизмов, брусков, ножек, усилением жесткости и т. п.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <p>
+                *После приезда мастера и оценки им условий работы как сложных и нестандартных, возможно увеличение стоимости работ или отказ в их проведении. 
+                Указанные тарифы не включают стоимость расходных материалов, запчастей и оборудования.
+            </p><br>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

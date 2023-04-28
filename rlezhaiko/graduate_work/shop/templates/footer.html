@@ -1,4 +1,4 @@
-<footer class="bg-dark py-3">
+<footer class="bg-dark mt-auto py-3">
     <div class="container pb-3">
         <div class="row justify-content-center align-items-start text-center">
             <div class="col-auto mx-3 text-white">
@@ -23,13 +23,13 @@
                         <a href="{% url 'delivery_page' %}" id="footer_link">Доставка</a>
                     </li>
                     <li>
-                        <a href="#" id="footer_link">Оплата</a>
+                        <a href="{% url 'payment_page' %}" id="footer_link">Оплата</a>
                     </li>
                     <li>
-                        <a href="#" id="footer_link">Контакты</a>
+                        <a href="{% url 'contacts_page' %}" id="footer_link">Контакты</a>
                     </li>
                     <li>
-                        <a href="#" id="footer_link">Отзывы</a>
+                        <a href="{% url 'customer_reviews_page' %}" id="footer_link">Отзывы</a>
                     </li>
                 </ul>
             </div>
@@ -38,10 +38,10 @@
                 <ul class="list-unstyled mb-2">
                     <span id="footer_header">Полезная информация</span>
                     <li>
-                        <a href="#" id="footer_link">Ремонт техники</a>
+                        <a href="{% url 'equipment_repair_page' %}" id="footer_link">Ремонт техники</a>
                     </li>
                     <li>
-                        <a href="#" id="footer_link">Дополнительные услуги</a>
+                        <a href="{% url 'replacement_and_return_products_page' %}" id="footer_link">Замена и возврат товара</a>
                     </li>
                 </ul>
             </div>

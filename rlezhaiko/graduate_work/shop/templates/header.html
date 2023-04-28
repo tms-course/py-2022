@@ -1,3 +1,94 @@
-<header class="bg-dark py-3">
-    <h1>Header {{ name_header }}</h1>
+<header>
+    <nav class="navbar navbar-expand-lg bg-dark bg-body-tertiary justify-content-center" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">{{ shop_name }}</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Компания
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'about_us_page' %}">О нас</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'transport_services_page' %}">Транспортные услуги</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'mission_and_values_page' %}">Миссия и ценности</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Покупателям
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'delivery_page' %}">Доставка</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'payment_page' %}">Оплата</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'contacts_page' %}">Контакты</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'customer_reviews_page' %}">Отзывы</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Полезная информация
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'equipment_repair_page' %}">Ремонт техники</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'replacement_and_return_products_page' %}">Замена и возврат товара</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Каталог</a>
+                    </li>
+                </ul>
+
+                
+                <div class="container-fluid">
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search">
+                        <button class="btn btn-outline-warning" type="submit">Найти</button>
+                    </form>
+                </div>    
+                
+
+                <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">Log in</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">{{ request.user.username }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 </header>
