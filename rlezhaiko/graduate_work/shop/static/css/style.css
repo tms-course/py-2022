@@ -3,6 +3,37 @@
     text-align: center;
 }
 
+
+#card-button-link {
+    text-decoration: none; 
+    color: #000000;
+}
+
+
+#card-button-link:hover {
+    text-decoration: none; 
+    /*color: #1e9494;*/ /* #1e9494 */
+    background-color: #ffc201;
+    transform: scale(1.02);
+    border-radius: 10px;
+}
+
+
+.inner {
+    overflow: hidden;
+}
+
+
+.inner img {
+    transition: all 1.0s ease;
+}
+
+
+.inner:hover img {
+    transform: scale(1.5);
+}
+
+
 #footer_header {
     font-size: 18px;
     font-weight: bold;

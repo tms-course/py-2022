@@ -18,13 +18,31 @@
         
         
         {% for review in reviews %}
-        <p>
-            {{ review.author }}
-            <br>
-            {{ review.customer_review }}
-            <br>
-            {{ review.admin_answer }}
-        </p>
+        <div class="card my-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <!--<img src="avatars/3-avatar.png"
+                            class="rounded-circle mb-4 mb-lg-0 shadow-2" alt="woman avatar" width="90"
+                            height="90">-->
+                    {{ user.username }}
+                </h5>
+                
+                <p class="card-text">
+                    {{ review.customer_review }}
+                    {% if review.admin_answer|length %}
+                    <figcaption class="blockquote-footer m-3 font-italic">
+                        <em>
+                            {{ review.admin_answer }}
+                        </em>
+                    </figcaption>
+                    {% endif %}
+                </p>
+
+                <h6 class="card-title">
+                    {{ review.creation_date|date:"d-m-Y" }}
+                </h6>
+            </div>
+        </div>
         {% endfor %}
 
     </div>           

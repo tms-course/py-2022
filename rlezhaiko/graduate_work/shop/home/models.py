@@ -11,3 +11,9 @@ class CustomerReview(models.Model):
 
     def __str__(self) -> str:
         return self.customer_review
+    
+
+    def have_admin_answer(self):  
+        print(len(self.admin_answer))
+        print(type(self.admin_answer))      
+        return len(self.admin_answer)
