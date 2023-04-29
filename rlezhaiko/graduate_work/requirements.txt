@@ -3,4 +3,5 @@ Django==4.2
 django-js-asset==2.0.0
 django-mptt==0.14.0
 Pillow==9.5.0
+python-dotenv==1.0.0
 sqlparse==0.4.4

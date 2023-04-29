@@ -11,5 +11,6 @@ urlpatterns = [
     path('replacement_and_return_products', views.get_replacement_and_return_products, name='replacement_and_return_products_page'),
     path('payment/', views.get_payment_page, name='payment_page'),
     path('contacts/', views.get_contacts_page, name='contacts_page'),
-    path('customer_reviews/', views.get_customer_reviews_page, name='customer_reviews_page')
+    path('customer_reviews/', views.get_customer_reviews_page, name='customer_reviews_page'),
+    path('create_review/', views.create_review , name='review_create'),
 ]

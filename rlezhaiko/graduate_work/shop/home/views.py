@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from .models import CustomerReview
+from .forms import CustomerReviewCreationForm
 from categories.models import Category
 from products.models import Product
 from shop.settings import SHOP_NAME
@@ -80,7 +81,7 @@ def get_contacts_page(request):
 
 
 def get_customer_reviews_page(request):
-    reviews_list = CustomerReview.objects.all()
+    reviews_list = CustomerReview.objects.filter(status=CustomerReview.STATUS_PUBLISHED)
     page = request.GET.get('page', 1)
     paginator = Paginator(reviews_list, 5)
 
@@ -97,3 +98,21 @@ def get_customer_reviews_page(request):
            }
     
     return render(request, 'customer_reviews.html', ctx)
+
+
+def create_review(request):
+    if request.method == 'POST':
+       form = CustomerReviewCreationForm(request.POST)
+        
+       if form.is_valid():
+           review = form.save(commit=False)
+           review.author = request.user
+           review.save()
+           
+           return redirect('customer_reviews_page')
+    else:
+       form = CustomerReviewCreationForm()
+    
+    ctx = {'form': form}
+
+    return render(request, 'review_create.html', ctx)
