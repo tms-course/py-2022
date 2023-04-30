@@ -34,17 +34,17 @@
 }
 
 
-#footer_header {
+#footer-header {
     font-size: 18px;
     font-weight: bold;
 }
 
-#footer_link {
+#footer-link {
     text-decoration: none; 
     color: #ffffff;
 }
 
-#footer_link:hover {
+#footer-link:hover {
     text-decoration: none; 
     color: #dde028; /* #1e9494 */
 }
