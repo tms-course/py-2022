@@ -1,3 +1,13 @@
+#navbar-button {
+    background-color: #ffc201;
+}
+
+
+#card-about-us {
+    margin-bottom: 20px;
+}
+
+
 #card-icon {
     font-size: 70px;
     text-align: center;
@@ -46,5 +56,5 @@
 
 #footer-link:hover {
     text-decoration: none; 
-    color: #dde028; /* #1e9494 */
+    color: #ffc201; /* #1e9494 */
 }

@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg bg-dark bg-body-tertiary justify-content-center" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">{{ shop_name }}</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            <button id="navbar-button" class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -57,9 +57,147 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Каталог</a>
-                    </li>
+
+
+                    <!--<div class="nav-item dropdown">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            href="#" 
+                            id="MyAccountDDM" 
+                            data-flip="false"
+                            data-bs-toggle="dropdown" 
+                            data-bs-auto-close="outside"
+                            aria-expanded="false">
+                            Каталог
+                        </a>
+                        
+                        
+        
+                        <ul class="dropdown-menu" aria-labelledby="MyAccountDDM" id="AppDropDownId">
+                            <li>
+                                <a>BBB</a>
+                            </li>
+                       
+                            <li>
+                                <div class="dropdown">
+                                    <a type="button" class="dropdown-item dropdown-toggle p-0" data-bs-toggle="dropdown" aria-expanded="false">CCC</a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#">DDD</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">EEE</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                           
+                        </ul>
+                    </div>-->
+
+
+
+                    <ul class="navbar-nav">
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-mdb-toggle="dropdown" aria-expanded="false">
+                            Dropdown link
+                          </a>
+                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                              <a class="dropdown-item" href="#">Action</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#">Another action</a>
+                            </li>
+                            <li>
+                              <a class="dropdown-item" href="#">
+                                Submenu &raquo;
+                              </a>
+                              <ul class="dropdown-menu dropdown-submenu">
+                                <li>
+                                  <a class="dropdown-item" href="#">Submenu item 1</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="#">Submenu item 2</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
+                                  <ul class="dropdown-menu dropdown-submenu">
+                                    <li>
+                                      <a class="dropdown-item" href="#">Multi level 1</a>
+                                    </li>
+                                    <li>
+                                      <a class="dropdown-item" href="#">Multi level 2</a>
+                                    </li>
+                                  </ul>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="#">Submenu item 4</a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item" href="#">Submenu item 5</a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+
+
+
+                    <!--{% load mptt_tags %}
+                    <ul>
+                        {% recursetree categories %}
+                            <li>
+                                {{ node.name }}
+                                {% if not node.is_leaf_node %}
+                                    <ul class="children">
+                                        {{ children }}
+                                    </ul>
+                                {% endif %}
+                            </li>
+                        {% endrecursetree %}
+                    </ul>-->
+
+
+
+
+                    <div class="nav-item dropdown dropdown-menu-end">
+                        <a 
+                            class="nav-link dropdown-toggle" 
+                            href="#" 
+                            id="MyAccountDDM" 
+                            data-flip="false"
+                            data-bs-toggle="dropdown" 
+                            data-bs-auto-close="outside"
+                            aria-expanded="false">
+                            Каталог
+                        </a>        
+                        
+                        <ul class="dropdown-menu" aria-labelledby="MyAccountDDM" id="AppDropDownId">
+                            {% recursetree categories %}
+                            <li>
+                                <div class="dropdown">
+                                    <a type="button" class="dropdown-item dropdown-toggle p-0" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">{{ node.name }}</a>
+                                    
+                                    
+                                    {% if not node.is_leaf_node %}
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="" href="#">{{ children }}</a>
+                                        </li>
+                                    </ul>
+                                    {% endif %}
+                                </div>
+                            </li>
+                            {% endrecursetree %}
+                        </ul>
+                        
+
+                    </div>
+
                 </ul>
 
                 
