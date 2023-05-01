@@ -70,8 +70,6 @@
                             aria-expanded="false">
                             Каталог
                         </a>
-                        
-                        
         
                         <ul class="dropdown-menu" aria-labelledby="MyAccountDDM" id="AppDropDownId">
                             <li>
@@ -96,55 +94,70 @@
                     </div>-->
 
 
+                    {% load mptt_tags %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                           Каталог
+                        </a>
+                        <ul class="dropdown-menu">
+                            {% recursetree categories %}
+                            <li class="nav-item dropend">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    {{ node.name }}
+                                </a>
+                                {% if not node.is_leaf_node %}
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">{{ children }}</a></li>
+                                </ul>
+                                {% endif %}
+                            </li>
+                            {% endrecursetree %}
+                        </ul>
+                    </li>
+                      
 
-                    <ul class="navbar-nav">
-                        <!-- Dropdown -->
-                        <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                            data-mdb-toggle="dropdown" aria-expanded="false">
-                            Dropdown link
-                          </a>
-                          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <li>
-                              <a class="dropdown-item" href="#">Action</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">Another action</a>
-                            </li>
-                            <li>
-                              <a class="dropdown-item" href="#">
-                                Submenu &raquo;
-                              </a>
-                              <ul class="dropdown-menu dropdown-submenu">
-                                <li>
-                                  <a class="dropdown-item" href="#">Submenu item 1</a>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item" href="#">Submenu item 2</a>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item" href="#">Submenu item 3 &raquo; </a>
-                                  <ul class="dropdown-menu dropdown-submenu">
-                                    <li>
-                                      <a class="dropdown-item" href="#">Multi level 1</a>
+                    
+                    <!--<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><div class="dropdown-divider"></div></li>
+                            <li class="nav-item dropend">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li><div class="dropdown-divider"></div></li>
+                                    <li class="nav-item dropend">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Dropdown
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><div class="dropdown-divider"></div></li>
+                                            <li class="nav-item dropend">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Dropdown
+                                                </a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                    <li><div class="dropdown-divider"></div></li>
+                                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#">Multi level 2</a>
-                                    </li>
-                                  </ul>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item" href="#">Submenu item 4</a>
-                                </li>
-                                <li>
-                                  <a class="dropdown-item" href="#">Submenu item 5</a>
-                                </li>
-                              </ul>
+                                </ul>
                             </li>
-                          </ul>
-                        </li>
-                      </ul>
-
+                        </ul>
+                    </li>-->
 
 
                     <!--{% load mptt_tags %}
@@ -164,7 +177,7 @@
 
 
 
-                    <div class="nav-item dropdown dropdown-menu-end">
+                    <!--<div class="nav-item dropdown">
                         <a 
                             class="nav-link dropdown-toggle" 
                             href="#" 
@@ -194,9 +207,8 @@
                             </li>
                             {% endrecursetree %}
                         </ul>
-                        
 
-                    </div>
+                    </div>-->
 
                 </ul>
 

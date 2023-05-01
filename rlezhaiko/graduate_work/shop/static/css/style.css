@@ -3,6 +3,33 @@
 }
 
 
+.dropdown .dropdown-menu {
+    display: none;
+}
+
+
+.dropend .dropdown-toggle {
+    margin-left: .5em;
+}
+
+
+.dropdown:hover > .dropdown-menu, .dropend:hover > .dropdown-menu {
+    display: block;
+    margin-top: .125em;
+    margin-left: .125em;
+    margin-right: .125em;
+}
+
+
+@media screen and (min-width: 1000px) {
+    .dropend > .dropdown-menu {
+        position: absolute;
+        top: 0;
+        left: 100%;
+    }
+}
+
+
 #card-about-us {
     margin-bottom: 20px;
 }
