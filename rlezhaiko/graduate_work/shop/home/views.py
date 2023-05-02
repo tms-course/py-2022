@@ -25,8 +25,10 @@ def get_home_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_about_us_page(request):
+    category = Category.objects.all()
     count = Product.objects.count()
     ctx = {'title': 'О нас',
+           'categories': list(category),
            'count': count,
            'shop_name': SHOP_NAME,
            }
@@ -35,7 +37,9 @@ def get_about_us_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_transport_services_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Транспортные услуги',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'transport_services.html', ctx)
@@ -43,7 +47,9 @@ def get_transport_services_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_mission_and_values_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Миссия и ценности',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'mission_and_values.html', ctx)
@@ -51,7 +57,9 @@ def get_mission_and_values_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_delivery_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Доставка',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'delivery.html', ctx)
@@ -59,7 +67,9 @@ def get_delivery_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_equipment_repair_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Ремонт техники',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'equipment_repair.html', ctx)
@@ -67,7 +77,9 @@ def get_equipment_repair_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_replacement_and_return_products(request):
+    category = Category.objects.all()
     ctx = {'title': 'Замена и возврат товара',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'replacement_and_return_products.html', ctx)
@@ -75,7 +87,9 @@ def get_replacement_and_return_products(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_payment_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Оплата',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'payment.html', ctx)
@@ -83,7 +97,9 @@ def get_payment_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def get_contacts_page(request):
+    category = Category.objects.all()
     ctx = {'title': 'Контакты',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            }
     return render(request, 'contacts.html', ctx)
@@ -91,6 +107,7 @@ def get_contacts_page(request):
 
 @cache_page(60 * 20)
 def get_customer_reviews_page(request):
+    category = Category.objects.all()
     reviews_list = CustomerReview.objects.filter(status=CustomerReview.STATUS_PUBLISHED)
     page = request.GET.get('page', 1)
     paginator = Paginator(reviews_list, 5)
@@ -103,6 +120,7 @@ def get_customer_reviews_page(request):
        reviews = paginator.page(paginator.num_pages)
 
     ctx = {'title': 'Отзывы',
+           'categories': list(category),
            'shop_name': SHOP_NAME,
            'reviews': reviews,
            }
@@ -112,6 +130,7 @@ def get_customer_reviews_page(request):
 
 @cache_page(60 * 60 * 24 * 10)
 def create_review(request):
+    category = Category.objects.all()
     if request.method == 'POST':
        form = CustomerReviewCreationForm(request.POST)
         
@@ -124,6 +143,9 @@ def create_review(request):
     else:
        form = CustomerReviewCreationForm()
     
-    ctx = {'form': form}
+    ctx = {
+          'form': form,
+          'categories': list(category),
+        }
 
     return render(request, 'review_create.html', ctx)

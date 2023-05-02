@@ -107,13 +107,32 @@
                                 </a>
                                 {% if not node.is_leaf_node %}
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">{{ children }}</a></li>
+                                    <a href="#">{{ children }}</a>
                                 </ul>
                                 {% endif %}
                             </li>
                             {% endrecursetree %}
                         </ul>
                     </li>
+
+
+                    <!--<div class="container">
+                        <ul id="menu">
+                            <li class="parent"><a href="#">Каталог</a>
+                                <ul class="child">
+                                    {% recursetree categories %}
+                                    <li class="parent"><a href="#">{{ node.name }}<span class="expand">»</span></a>
+                                        {% if not node.is_leaf_node %}
+                                        <ul class="child">
+                                            <a href="#">{{ children }}</a>
+                                        </ul>
+                                        {% endif %}
+                                    </li>
+                                    {% endrecursetree %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>-->
                       
 
                     
