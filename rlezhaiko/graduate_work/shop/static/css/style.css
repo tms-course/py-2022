@@ -3,7 +3,7 @@
 }
 
 
-.dropdown .dropdown-menu {
+/*.dropdown .dropdown-menu {
     display: none;
 }
 
@@ -26,6 +26,22 @@
         top: 0;
         left: 100%;
     }
+}*/
+
+
+#card-product {
+    margin-bottom: 20px;
+}
+
+
+#card-price {
+    margin-bottom: 20px;
+}
+
+
+#card-link {
+    text-decoration: none;
+    color: #212529;
 }
 
 
@@ -58,7 +74,7 @@
 
 
 
-.inner {
+/* .inner {
     overflow: hidden;
 }
 
@@ -70,7 +86,7 @@
 
 .inner:hover img {
     transform: scale(1.5);
-}
+} */
 
 
 

@@ -4,25 +4,6 @@
 
 {% load mptt_tags %}
 
-<!--<div class="container">
-    <ul id="menu">
-        <li class="parent"><a href="#">Каталог</a>
-            <ul class="child">
-                {% recursetree categories %}
-                <li class="parent"><a href="#">{{ node.name }}<span class="expand">»</span></a>
-                    {% if not node.is_leaf_node %}
-                    <ul class="child">
-                        <a href="#">{{ children }}</a>
-                    </ul>
-                    {% endif %}
-                </li>
-                {% endrecursetree %}
-            </ul>
-        </li>
-    </ul>
-</div>-->
-
-
 <div class="container">
     <div class="accordion m-3" id="accordionPanelsStayOpenExample">
         <div class="accordion-item">
@@ -62,7 +43,6 @@
         </div>
     </div>
 </div>
-<br>
 
 
 
@@ -126,24 +106,5 @@
     </div>
 </div>
 
-
-
-
-
-{% for product in products %}
-<img src="{{ product.main_image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
-<p>{{ product.main_image.url }}</p>
-<p>{{ product.main_image }}</p>
-<p>{{ product.name }}</p>
-<p>{{ product.description }}</p>
-<p>{{ product.price }}</p>
-    {% for image in product.images.all %}
-    <img src="{{ image.image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
-    <p>{{ image.image.url }}</p>
-    {% endfor %}
-
-{% endfor %}
-
-<p>Some line of text</p>
 
 {% endblock %}
