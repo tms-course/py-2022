@@ -11,7 +11,9 @@ class Product(models.Model):
     description = models.TextField()
     attributes = models.JSONField()
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
-    main_image = models.ImageField(upload_to='static/images')
+    main_image = models.ImageField(upload_to='static/images', blank=False)
+    image_width = models.PositiveIntegerField(blank=False)
+    image_height = models.PositiveIntegerField(blank=False)
     slug = models.SlugField(max_length=128, blank=True, null=True, unique=True)
 
 
@@ -21,15 +23,17 @@ class Product(models.Model):
 
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='static/images')
+    image = models.ImageField(upload_to='static/images', blank=False)
+    image_width = models.PositiveIntegerField(blank=False)
+    image_height = models.PositiveIntegerField(blank=False)
     
 
-    def save(self):
-        super().save()  # saving image first
+    # def save(self):
+    #     super().save()  # saving image first
 
-        img = Image.open(self.image.path) # Open image using self
+    #     img = Image.open(self.image.path) # Open image using self
 
-        if img.height > 600 or img.width > 600:
-            new_img = (600, 600)
-            img.thumbnail(new_img)
-            img.save(self.image.path)  # saving image at the same path
+    #     if img.height > 600 or img.width > 600:
+    #         new_img = (600, 600)
+    #         img.thumbnail(new_img)
+    #         img.save(self.image.path)  # saving image at the same path

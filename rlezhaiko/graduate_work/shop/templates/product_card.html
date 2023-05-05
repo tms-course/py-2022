@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row gy-3 m-3">
+
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3 m-1 border border-warning">
+                1 of 3 
+                <form action="">
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Default checkbox
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                            <label class="form-check-label" for="defaultCheck2">
+                                Default checkbox
+                            </label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            2 of 3  <br> 
+            <div class="row">
+                {% for product in products %}
+                <div id="card-product" class="col-sm-6 col-md-4 col-lg-3">
+                    <a id="card-link" href="https://google.com">
+                        <div  class="card text-center h-100">
+                            <div class="mt-2">
+                                <img src="{{ product.main_image.url }}" class="img-responsive" alt="main_image" width="70" height="200">    
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <ul class="list-inline" style="color: #ffc201;">
+                                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                                    <li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
+                                </ul>
+                                <h5 id="card-price" class="card-title">{{ product.price }} р.</h5>
+                                <a href="#" class="btn btn-warning">Добавить в корзину</a>
+                            </div>
+                        </div>
+                    </a>
+                </div>  
+                {% endfor %}                  
+            </div>                
+        </div>
+    </div>
+</div>

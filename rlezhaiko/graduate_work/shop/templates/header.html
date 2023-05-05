@@ -65,8 +65,8 @@
 
                 
                 <div class="container-fluid">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Поиск товаров" aria-label="Search">
+                    <form class="d-flex" method="get" action="{% url 'product_list' %}">
+                        <input class="form-control me-2" type="search" id="search" name="search" placeholder="Поиск товаров" aria-label="Search">
                         <button class="btn btn-outline-warning" type="submit">Найти</button>
                     </form>
                 </div>    

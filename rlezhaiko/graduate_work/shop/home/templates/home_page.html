@@ -2,148 +2,24 @@
 
 {% block content %}
 
-{% load mptt_tags %}
+    {% include "catalog.html" %}
 
-<!--<div class="container">
-    <ul id="menu">
-        <li class="parent"><a href="#">Каталог</a>
-            <ul class="child">
-                {% recursetree categories %}
-                <li class="parent"><a href="#">{{ node.name }}<span class="expand">»</span></a>
-                    {% if not node.is_leaf_node %}
-                    <ul class="child">
-                        <a href="#">{{ children }}</a>
-                    </ul>
-                    {% endif %}
-                </li>
-                {% endrecursetree %}
-            </ul>
-        </li>
-    </ul>
-</div>-->
+    {% include "product_card.html" %}
 
+    {% for product in products %}
+    <img src="{{ product.main_image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
+    <p>{{ product.main_image.url }}</p>
+    <p>{{ product.main_image }}</p>
+    <p>{{ product.name }}</p>
+    <p>{{ product.description }}</p>
+    <p>{{ product.price }}</p>
+        {% for image in product.images.all %}
+        <img src="{{ image.image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
+        <p>{{ image.image.url }}</p>
+        {% endfor %}
 
-<div class="container">
-    <div class="accordion m-3" id="accordionPanelsStayOpenExample">
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                <button class="accordion-button bg-warning text-dark collapsed " type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                    Каталог
-                </button>
-            </h2>
-            
-            <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                <div class="accordion-body">
-
-                    <div class="accordion" id="accordionPanelsStayOpenExample">
-                        {% recursetree categories %}
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="panelsStayOpen-heading{{node.id}}">
-                                {% if not node.is_leaf_node %}
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse{{node.id}}" aria-expanded="false" aria-controls="panelsStayOpen-collapse{{node.id}}">
-                                    <a href="{% url 'category_details_slug' node.slug %}"><span>{{ node.name }}</span></a>
-                                </button>
-                                {% else %}
-                                    <a href="{% url 'category_details_slug' node.slug %}"><span>{{ node.name }}</span></a> 
-                                {% endif %}
-                            </h2>
-                            <div id="panelsStayOpen-collapse{{node.id}}" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading{{node.id}}">
-                                
-                                <div class="accordion-body">
-                                    {{ children }}
-                                </div>
-                            </div>
-                        </div>
-                        {% endrecursetree %}
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br>
-
-
-
-<div class="container">
-    <div class="row gy-3 m-3">
-
-        <div class="row">
-            <div class="col-sm-6 col-md-4 col-lg-3 m-1 border border-warning">
-                1 of 3 
-                <form action="">
-                    <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1">
-                                Default checkbox
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-                            <label class="form-check-label" for="defaultCheck2">
-                                Default checkbox
-                            </label>
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="">
-                2 of 3
-                <div class="row">
-                    
-                    {% for product in products %}
-                    <div id="card-product" class="col-sm-6 col-md-4 col-lg-3">
-                        <a id="card-link" href="https://google.com">
-                            <div  class="card text-center h-100">
-                                <div class="mt-2">
-                                    <img src="{{ product.main_image.url }}" class="img-responsive" alt="main_image" width="70" height="200">    
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ product.name }}</h5>
-                                    <ul class="list-inline" style="color: #ffc201;">
-                                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                                        <li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
-                                    </ul>
-                                    <h5 id="card-price" class="card-title">{{ product.price }} р.</h5>
-                                    <a href="#" class="btn btn-warning">Добавить в корзину</a>
-                                </div>
-                            </div>
-                        </a>
-                    </div>  
-                    {% endfor %}                  
-
-                </div>                
-            </div>
-        </div>
-        
-
-    </div>
-</div>
-
-
-
-
-
-{% for product in products %}
-<img src="{{ product.main_image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
-<p>{{ product.main_image.url }}</p>
-<p>{{ product.main_image }}</p>
-<p>{{ product.name }}</p>
-<p>{{ product.description }}</p>
-<p>{{ product.price }}</p>
-    {% for image in product.images.all %}
-    <img src="{{ image.image.url }}" alt="" style="max-width: 128px; max-height: 128px;">
-    <p>{{ image.image.url }}</p>
     {% endfor %}
 
-{% endfor %}
-
-<p>Some line of text</p>
+    <p>Some line of text</p>
 
 {% endblock %}

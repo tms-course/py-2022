@@ -2,95 +2,39 @@
     background-color: #ffc201;
 }
 
-
-/*.dropdown .dropdown-menu {
-    display: none;
-}
-
-
-.dropend .dropdown-toggle {
-    margin-left: .5em;
-}
-
-
-.dropdown:hover > .dropdown-menu, .dropend:hover > .dropdown-menu {
-    display: block;
-    margin-top: .125em;
-    margin-right: .125em;
-}
-
-
-@media screen and (min-width: 1000px) {
-    .dropend > .dropdown-menu {
-        position: absolute;
-        top: 0;
-        left: 100%;
-    }
-}*/
-
-
 #card-product {
     margin-bottom: 20px;
 }
 
-
 #card-price {
     margin-bottom: 20px;
 }
-
 
 #card-link {
     text-decoration: none;
     color: #212529;
 }
 
-
 #card-about-us {
     margin-bottom: 20px;
 }
-
 
 #card-icon {
     font-size: 70px;
     text-align: center;
 }
 
-
 #card-button-link {
     text-decoration: none; 
     color: #000000;
 }
 
-
 #card-button-link:hover {
     text-decoration: none; 
-    /*color: #1e9494;*/ /* #1e9494 */
     background-color: #ffc201;
     transform: scale(1.02);
     border-radius: 10px;
 }
-
-
-
-
-
-/* .inner {
-    overflow: hidden;
-}
-
-
-.inner img {
-    transition: all 1.0s ease;
-}
-
-
-.inner:hover img {
-    transform: scale(1.5);
-} */
-
-
-
-
 
 #footer-header {
     font-size: 18px;
@@ -104,78 +48,5 @@
 
 #footer-link:hover {
     text-decoration: none; 
-    color: #ffc201; /* #1e9494 */
+    color: #ffc201;
 }
-
-
-
-
-
-
-
-
-
-
-/*
-.parent {
-	display: block;
-	position: relative;
-	float: left;
-	line-height: 30px;
-	background-color: #4FA0D8;
-	border-right: #CCC 1px solid;
-}
-
-.parent a {
-	margin: 10px;
-	color: #FFFFFF;
-	text-decoration: none;
-}
-
-.parent:hover>ul {
-	display: block;
-	position: absolute;
-}
-
-.child {
-	display: none;
-}
-
-.child li {
-	background-color: #E4EFF7;
-	line-height: 30px;
-	border-bottom: #CCC 1px solid;
-	border-right: #CCC 1px solid;
-	width: 100%;
-}
-
-.child li a {
-	color: #000000;
-}
-
-ul {
-	list-style: none;
-	margin: 0;
-	padding: 0px;
-	min-width: 10em;
-}
-
-ul ul ul {
-	left: 100%;
-	top: 0;
-	margin-left: 1px;
-}
-
-li:hover {
-	background-color: #95B4CA;
-}
-
-.parent li:hover {
-	background-color: #F0F0F0;
-}
-
-.expand {
-	font-size: 12px;
-	float: right;
-	margin-right: 5px;
-}*/
