@@ -26,7 +26,7 @@
             <div class="row">
                 {% for product in products %}
                 <div id="card-product" class="col-sm-6 col-md-4 col-lg-3">
-                    <a id="card-link" href="https://google.com">
+                    <a id="card-link" href="{% url 'product_details_slug' product.slug %}">
                         <div  class="card text-center h-100">
                             <div class="mt-2">
                                 <img src="{{ product.main_image.url }}" class="img-responsive" alt="main_image" width="70" height="200">    
