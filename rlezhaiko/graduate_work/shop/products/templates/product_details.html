@@ -2,6 +2,17 @@
 
 {% block content %}
 
+    {% for message in messages %}
+    <div class="container-fluid p-0">
+        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="True">&times;</span>
+            </button> -->
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+
     {% include "catalog.html" %}
 
     <div class="container mt-4 mb-3">
@@ -44,6 +55,133 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>    
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col m-2">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="characteristics-tab" data-bs-toggle="tab" data-bs-target="#characteristics" type="button" role="tab" aria-controls="characteristics" aria-selected="true">Характеристики</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Отзывы</button>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="characteristics" role="tabpanel" aria-labelledby="characteristics-tab">
+                        {% for key, value in product.attributes.items %}
+                        <h5 class="text-center mt-4">{{ key }}</h5>
+                        <table class="table table-striped table-bordered text-center">
+                            <tbody>
+                                {% for key_2, value_2 in value.items %}
+                                <tr>
+                                    <td style="width: 50%">{{ key_2 }}</td>
+                                    <td>{{ value_2 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                        <p>
+                            <div class="text-center">
+                                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    Оставить отзыв
+                                </button>    
+                            </div>   
+                        </p>
+
+                        <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
+                            
+                                    {% for hidden_field in form.hidden_fields %}
+                                        {{ hidden_field.errors }}
+                                        {{ hidden_field }}
+                                    {% endfor %}
+                            
+                                    {% for field in form.visible_fields %}
+                                    <div class="mb-3">
+                                        {{ field.label_tag }}            
+                                        {{ field }}
+                                        <span style="color: red">{{ field.errors }}</span>
+                                        {{ field.help_text }}
+                                    </div>
+                                    {% endfor %}
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Отправить</button>
+                                    </div>
+                                </form>
+
+                                <br>
+                                <p>
+                                    Обращаем ваше внимание, что мы оставляем за собой право не публиковать отзывы:
+                                    <br>
+                                    — относящиеся к теме, по поводу которой уже оставлен отзыв или обращение в любой письменной форме от того же лица;
+                                    <br>
+                                    — без указания телефона, оставленного при заказе (в случаях, когда необходимо подтвердить подлинность отзыва);
+                                    <br>
+                                    — не соответствующие действительности или содержащие данные, подлинность которых невозможно установить;
+                                    <br>
+                                    — оставленные позже, чем через 30 дней после описываемых событий;
+                                    <br>
+                                    — неинформативные;
+                                    <br>
+                                    — критикующие личность, а не действия сотрудников;
+                                    <br>
+                                    — критикующие лиц, не являющихся сотрудниками нашей организации, и сами сторонние организации;
+                                    <br>
+                                    — написанные заглавными буквами или транслитом, со множеством ошибок;
+                                    <br>
+                                    — содержащие оскорбительные, нецензурные и бранные выражения;
+                                    <br>
+                                    — содержащие названия других магазинов и ссылки на другие интернет-ресурсы;
+                                    <br>
+                                    — содержащие в тексте отзыва контактные данные, точные адреса или полные ФИО частных лиц.
+                                    <br><br>
+                                    Любая поступающая информация обрабатывается модератором и используется для улучшения качества наших услуг. Модератор может удалить из текста публикуемого отзыва контактные данные, ФИО и ссылки, исправить форматирование и транслит без предварительного согласования с автором.
+                                    <br><br>
+                                    Срок проверки и публикации отзыва может занять до 7 дней.
+                                </p>
+                            </div>
+                        </div>
+                        {% for review in reviews %}
+                        <div class="card my-4">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <!--<img src="avatars/3-avatar.png"
+                                            class="rounded-circle mb-4 mb-lg-0 shadow-2" alt="woman avatar" width="90"
+                                            height="90">-->
+                                    {{ user.username }}
+                                </h5>
+                                
+                                <p class="card-text">
+                                    {{ review.product_review }}
+                                    {% if review.admin_answer|length %}
+                                    <figcaption class="blockquote-footer m-3 font-italic">
+                                        <em>
+                                            {{ review.admin_answer }}
+                                        </em>
+                                    </figcaption>
+                                    {% endif %}
+                                </p>
+
+                                <h6 class="card-title text-muted">
+                                    {{ review.creation_date|date:"d-m-Y" }}
+                                </h6>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

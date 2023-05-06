@@ -8,7 +8,6 @@ from .models import CustomerReview
 
 @receiver(post_save, sender=CustomerReview)
 def gen_slug_field(sender, instance, **kwargs):
-    print(sender.__dict__)
     send_mail(
         'Review',
         f'You have 1 new review.\nhttp://127.0.0.1:8000/admin/home/customerreview/{instance.id}/change/',

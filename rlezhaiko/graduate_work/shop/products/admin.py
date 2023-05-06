@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Product, ProductImage
+from .models import Product, ProductImage, ProductReview
 
 
 @admin.register(ProductImage)
@@ -35,5 +35,8 @@ class AdminProduct(admin.ModelAdmin):
         return mark_safe(f"""<img src="{obj.main_image.url}" height="50" />""")
 
 
-# admin.site.register(Product)
-# admin.site.register(ProductImage)
+@admin.register(ProductReview)
+class AdminProductReview(admin.ModelAdmin):
+    list_display = ('id', 'author', 'product', 'product_review', 'creation_date', 'status',)
+    list_filter = ('status',)
+    ordering = ('-creation_date',)

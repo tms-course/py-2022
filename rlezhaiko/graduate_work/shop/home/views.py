@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.decorators.cache import cache_page
+from django.contrib import messages
 
 from .models import CustomerReview
 from .forms import CustomerReviewCreationForm
@@ -119,7 +120,8 @@ def create_review(request):
            review = form.save(commit=False)
            review.author = request.user
            review.save()
-           
+           messages.success(request, "Ваш отзыв отправлен." )
+
            return redirect('customer_reviews_page')
     else:
        form = CustomerReviewCreationForm()
