@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'categories',
     'products',
     'mptt',
+    'cart',
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,6 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',
 }
+
+
+CART_SESSION_ID = 'cart'

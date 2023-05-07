@@ -41,10 +41,17 @@
                                     <li class="list-inline-item"><i class="fa fa-star-half-o"></i></li>
                                 </ul>
                                 <h5 id="card-price" class="card-title">{{ product.price }} р.</h5>
+                                
                                 <a href="#" class="btn btn-warning">Добавить в корзину</a>
+                                <p>{{ product.id }}</p>
                             </div>
                         </div>
                     </a>
+                    <form action="{% url 'cart_add' product.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" value="1" name="quantity" id="id_quantity">
+                        <input type="submit" value="Add to cart">
+                    </form>
                 </div>  
                 {% endfor %}                  
             </div>                

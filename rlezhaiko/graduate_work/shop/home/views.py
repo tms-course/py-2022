@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from .models import CustomerReview
 from .forms import CustomerReviewCreationForm
+from cart.forms import CartAddProductForm
 from categories.models import Category
 from products.models import Product
 from shop.settings import SHOP_NAME
@@ -13,12 +14,17 @@ from shop.settings import SHOP_NAME
 def get_home_page(request):
     category = Category.objects.all()
     products = Product.objects.all()
+
+    cart_product_form = CartAddProductForm()
+    print(request.session.__dict__)
+
     ctx = {'title': 'Главная',
            'shop_name': SHOP_NAME,
            'name_header': 'name header',
            'name_footer': 'name footer',
            'categories': list(category),
            'products': list(products),
+           'cart_product_form': cart_product_form,
            }
 
     return render(request, 'home_page.html', ctx)
