@@ -73,6 +73,9 @@
                 
 
                 <ul class="nav navbar-nav ms-auto w-100 justify-content-end">
+                    <a href="{% url 'cart_detail' %}">
+                        <i class="bi bi-cart-check-fill" style="font-size: 30px; color: #ffc201;"></i>
+                    </a>
                     {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">Logout</a>

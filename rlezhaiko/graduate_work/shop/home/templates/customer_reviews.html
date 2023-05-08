@@ -2,17 +2,6 @@
 
 {% block content %}
 
-{% for message in messages %}
-    <div class="container-fluid p-0">
-        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="True">&times;</span>
-            </button> -->
-            {{ message }}
-        </div>
-    </div>
-{% endfor %}
-
 <div class="container">
     <div class="m-3">
         <h3>Отзывы</h3>

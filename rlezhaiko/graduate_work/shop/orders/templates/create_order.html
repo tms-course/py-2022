@@ -2,23 +2,62 @@
 
 {% block content %}
 
-    <h1>Checkout</h1>
-    <div class="order-info">
-        <h3>Your order</h3>
-        <ul>
-            {% for item in cart %}
-                <li>
-                    {{ item.quantity }}x {{ item.product.name }}
-                    <span>${{ item.total_price }}</span>
-                </li>
+<div class="container">
+    <div class="row m-3">
+        <h3>Ваш заказ:</h3>
+
+        <table class="table table-striped table-bordered text-center align-middle">
+            <thead>
+                <tr class="table bg-warning">
+                    <th scope="col">Изображение</th>
+                    <th scope="col">Товар</th>
+                    <th scope="col" style="width: 5%">Количество</th>
+                    <th scope="col">Цена за единицу</th>
+                    <th scope="col">Общая цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart %}
+                    {% with product=item.product %}
+                    <tr>
+                        <td><img src="{{ product.main_image.url }}"></td>
+                        <td>{{ product.name }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.price }} р.</td>
+                        <td>{{ item.total_price }} р.</td>
+                    </tr>
+                    {% endwith %}
+                {% endfor %}
+                <tr style="font-weight:bold;">
+                    <td colspan="4" class="text-end">Всего:</td>
+                    <td>{{ cart.get_total_price }} р.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            {% for hidden_field in form.hidden_fields %}
+                {{ hidden_field.errors }}
+                {{ hidden_field }}
             {% endfor %}
-        </ul>
-        <p>Total: ${{ cart.get_total_price }}</p>
+
+            {% for field in form.visible_fields %}
+            <div class="mb-3">
+                {{ field.label_tag }}            
+                {{ field }}
+                <span style="color: red">{{ field.errors }}</span>
+                {{ field.help_text }}
+            </div>
+            {% endfor %}
+            <div class="text-center">
+                <button type="submit" class="btn btn-warning">Заказать</button>
+            </div>
+            
+        </form>        
     </div>
-    <form action="." method="post" class="order-form">
-        {{ form.as_p }}
-        <p><input type="submit" value="Place order"></p>
-        {% csrf_token %}
-    </form>
+</div>
 
 {% endblock %}

@@ -14,9 +14,7 @@ from shop.settings import SHOP_NAME
 def get_home_page(request):
     category = Category.objects.all()
     products = Product.objects.all()
-
     cart_product_form = CartAddProductForm()
-    print(request.session.__dict__)
 
     ctx = {'title': 'Главная',
            'shop_name': SHOP_NAME,

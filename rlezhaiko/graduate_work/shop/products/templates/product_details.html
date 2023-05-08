@@ -2,17 +2,6 @@
 
 {% block content %}
 
-    {% for message in messages %}
-    <div class="container-fluid p-0">
-        <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
-            <!-- <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="True">&times;</span>
-            </button> -->
-            {{ message }}
-        </div>
-    </div>
-    {% endfor %}
-
     {% include "catalog.html" %}
 
     <div class="container mt-4 mb-3">
@@ -51,7 +40,12 @@
                                     you could pair it with a stylish pair of jeans or trousers complete the look.
                                 </p>
                                 <div class="cart mt-4 align-items-center">
-                                    <button class="btn btn-warning text-uppercase mr-2 px-4">Add to cart</button>
+                                    <form action="{% url 'cart_add' product.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" value="1" name="quantity" id="id_quantity">
+                                        <input type="submit" class="btn btn-warning" value="Добавить в корзину">
+                                    </form>
+                                    <!-- <button class="btn btn-warning text-uppercase mr-2 px-4">Add to cart</button> -->
                                 </div>
                             </div>
                         </div>

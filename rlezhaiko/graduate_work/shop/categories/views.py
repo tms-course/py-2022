@@ -1,7 +1,6 @@
 from django.shortcuts import render
 
 from categories.models import Category
-from products.models import Product
 from shop.settings import SHOP_NAME
 
 
