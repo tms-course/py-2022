@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .models import OrderItem
 from .forms import OrderCreateForm
 from cart.cart import Cart
+from shop.settings import SHOP_NAME
 
 
 def create_order(request):
@@ -14,11 +15,10 @@ def create_order(request):
             for item in cart:
                 OrderItem.objects.create(order=order, product=item['product'], price=item['price'], quantity=item['quantity'])
             
-            # очистка корзины
             cart.clear()
             
-            return render(request, 'created_order.html', {'order': order})
+            return render(request, 'created_order.html', {'order': order, 'shop_name': SHOP_NAME,})
     else:
-        form = OrderCreateForm
+        form = OrderCreateForm()
     
-    return render(request, 'create_order.html', {'cart': cart, 'form': form})
+    return render(request, 'create_order.html', {'cart': cart, 'form': form, 'shop_name': SHOP_NAME,})

@@ -2,8 +2,14 @@
 
 {% block content %}
 
-    <h1>Thank you</h1>
-    <p>Your order has been successfully completed. Your order number is
-    <strong>{{ order.id }}</strong>.</p>
+<div class="container">
+    <div class="row m-3">
+        <h3>Спасибо за заказ</h3>
+        <p>
+            Ваш заказ был успешно оформлен. Номер Вашего заказа <strong>{{ order.id }}</strong><br>
+            В случае уточнений по заказу наш менеджер свяжется с вами.
+        </p>   
+    </div>
+</div>
 
 {% endblock %}

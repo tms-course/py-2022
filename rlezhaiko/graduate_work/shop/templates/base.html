@@ -20,20 +20,6 @@
 
     {% include "header.html" %}  
 
-    <!-- <div class="cart">
-        {% with total_items=cart|length %}
-            {% if cart|length > 0 %}
-                Корзина:
-                <a href="{% url 'cart_detail' %}">
-                    {{ total_items }},
-                    {{ cart.get_total_price }} р.
-                </a>
-            {% else %}
-                Your cart is empty.
-            {% endif %}
-        {% endwith %}
-    </div> -->
-
     {% if messages %}
         {% for msg in messages %}
             <div id="alert" class="alert alert-info alert-dismissable">
