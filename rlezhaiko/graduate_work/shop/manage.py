@@ -9,8 +9,9 @@ def main():
     """Run administrative tasks."""
     graduate_work_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     load_dotenv(os.path.join(graduate_work_dir, '.env'))
+    # print(graduate_work_dir)
 
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'shop.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.base')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

@@ -5,7 +5,7 @@ from django.contrib import messages
 from categories.models import Category
 from .models import Product, ProductReview
 from .forms import ProductReviewCreationForm
-from shop.settings import SHOP_NAME
+from settings.base import SHOP_NAME
 
 
 def list_product(request):

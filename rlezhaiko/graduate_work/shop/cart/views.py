@@ -5,7 +5,7 @@ from django.contrib import messages
 from products.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
-from shop.settings import SHOP_NAME
+from settings.base import SHOP_NAME
 
 
 @require_POST

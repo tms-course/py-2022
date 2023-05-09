@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from categories.models import Category
-from shop.settings import SHOP_NAME
+from settings.base import SHOP_NAME
 
 
 def get_category_page(request):

@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row m-3">
+        <h3>Ваш заказ:</h3>
+
+        <table style="text-align: center; border: 1px solid black; border-collapse: collapse;">
+            <thead>
+                <tr class="table bg-warning">
+                    <th style="border: 1px solid black; border-collapse: collapse;">Товар</th>
+                    <th style="border: 1px solid black; border-collapse: collapse;">Количество</th>
+                    <th style="border: 1px solid black; border-collapse: collapse;">Цена за единицу</th>
+                    <th style="border: 1px solid black; border-collapse: collapse;">Общая цена</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td style="border: 1px solid black; border-collapse: collapse;">{{ product.product.name }}</td>
+                        <td style="border: 1px solid black; border-collapse: collapse;">{{ product.quantity }}</td>
+                        <td style="border: 1px solid black; border-collapse: collapse;">{{ product.price }} р.</td>
+                        <td style="border: 1px solid black; border-collapse: collapse;">{{ product.get_cost }} р.</td>
+                    </tr>
+                {% endfor %}
+                <tr style="font-weight: bold;">
+                    <td colspan="3" style="border: 1px solid black; border-collapse: collapse;">Всего:</td>
+                    <td style="border: 1px solid black; border-collapse: collapse;">{{ total_cost }} р.</td>
+                </tr>
+            </tbody>
+        </table>     
+    </div>
+</div>

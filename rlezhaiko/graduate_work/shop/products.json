@@ -1,0 +1,89 @@
+[
+{
+    "model": "products.product",
+    "pk": 1,
+    "fields": {
+        "name": "Холодильник с морозильником LG DoorCooling GW-B509CLZM",
+        "category": 4,
+        "keywords": "Холодильник, LG",
+        "description": "some text",
+        "attributes": {
+            "Основные характеристики": {
+                "Тип": "холодильник с морозильником",
+                "Конструкция": "двухдверный",
+                "Камеры": "морозильная, холодильная"
+            },
+            "Конструкция и вместимость": {
+                "Количество камер": "2",
+                "Общий полезный объем": "384 л",
+                "Полезный объем холодильника": "277 л",
+                "Полезный объем морозильника": "107 л",
+                "Ручки": "встроенные"
+            }
+        },
+        "price": "2199.00",
+        "main_image": "static/images/doorcoolinggwb509clzm_lg_631a281f7c952.webp",
+        "image_width": 44,
+        "image_height": 150,
+        "slug": "kholodilnik-s-morozilnikom-lg-doorcooling-gw-b509clzm"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 2,
+    "fields": {
+        "name": "Холодильник с морозильником LG Door GW-B777CLZM",
+        "category": 4,
+        "keywords": "Холодильник, LG",
+        "description": "some text",
+        "attributes": {
+            "Основные характеристики": {
+                "Тип": "холодильник с морозильником",
+                "Конструкция": "двухдверный",
+                "Камеры": "морозильная, холодильная"
+            },
+            "Конструкция и вместимость": {
+                "Количество камер": "2",
+                "Общий полезный объем": "384 л",
+                "Полезный объем холодильника": "277 л",
+                "Полезный объем морозильника": "107 л",
+                "Ручки": "встроенные"
+            }
+        },
+        "price": "2599.00",
+        "main_image": "static/images/doorcoolinggwb509clzm_lg_631a281f7c952.webp",
+        "image_width": 44,
+        "image_height": 150,
+        "slug": "kholodilnik-s-morozilnikom-lg-doorcooling-gw-b509clzm"
+    }
+},
+{
+    "model": "products.product",
+    "pk": 3,
+    "fields": {
+        "name": "Холодильник с морозильником Samsung Door GW-B777CLZM",
+        "category": 5,
+        "keywords": "Холодильник, Samsung",
+        "description": "some text",
+        "attributes": {
+            "Основные характеристики": {
+                "Тип": "холодильник с морозильником",
+                "Конструкция": "двухдверный",
+                "Камеры": "морозильная, холодильная"
+            },
+            "Конструкция и вместимость": {
+                "Количество камер": "2",
+                "Общий полезный объем": "384 л",
+                "Полезный объем холодильника": "277 л",
+                "Полезный объем морозильника": "107 л",
+                "Ручки": "встроенные"
+            }
+        },
+        "price": "2399.00",
+        "main_image": "static/images/doorcoolinggwb509clzm_lg_631a281f7c952.webp",
+        "image_width": 44,
+        "image_height": 150,
+        "slug": "kholodilnik-s-morozilnikom-lg-doorcooling-gw-b509clzm"
+    }
+}
+]

@@ -1,0 +1,67 @@
+[
+{
+    "model": "categories.category",
+    "pk": 1,
+    "fields": {
+        "name": "Бытовая техника",
+        "parent": null,
+        "slug": "bytovaia-tekhnika",
+        "lft": 1,
+        "rght": 10,
+        "tree_id": 1,
+        "level": 0
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 2,
+    "fields": {
+        "name": "Крупная техника для кухни",
+        "parent": 1,
+        "slug": "krupnaia-tekhnika-dlia-kukhni",
+        "lft": 2,
+        "rght": 9,
+        "tree_id": 1,
+        "level": 1
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 3,
+    "fields": {
+        "name": "Холодильники",
+        "parent": 2,
+        "slug": "kholodilniki",
+        "lft": 3,
+        "rght": 8,
+        "tree_id": 1,
+        "level": 2
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 4,
+    "fields": {
+        "name": "LG",
+        "parent": 3,
+        "slug": "lg",
+        "lft": 4,
+        "rght": 5,
+        "tree_id": 1,
+        "level": 3
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 5,
+    "fields": {
+        "name": "Samsung",
+        "parent": 3,
+        "slug": "samsung",
+        "lft": 6,
+        "rght": 7,
+        "tree_id": 1,
+        "level": 3
+    }
+}
+]

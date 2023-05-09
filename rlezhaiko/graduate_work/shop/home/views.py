@@ -8,7 +8,7 @@ from .forms import CustomerReviewCreationForm
 from cart.forms import CartAddProductForm
 from categories.models import Category
 from products.models import Product
-from shop.settings import SHOP_NAME
+from settings.base import SHOP_NAME
 
 
 def get_home_page(request):
@@ -94,7 +94,7 @@ def get_contacts_page(request):
     return render(request, 'contacts.html', ctx)
 
 
-@cache_page(60 * 20)
+@cache_page(60 * 5)
 def get_customer_reviews_page(request):
     reviews_list = CustomerReview.objects.filter(status=CustomerReview.STATUS_PUBLISHED)
     page = request.GET.get('page', 1)
@@ -111,6 +111,8 @@ def get_customer_reviews_page(request):
            'shop_name': SHOP_NAME,
            'reviews': reviews,
            }
+    
+    messages.success(request, "Ваш отзыв отправлен." )
     
     return render(request, 'customer_reviews.html', ctx)
 
