@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "abs-base-usr"
+version = "0.1.0"
+description = ""
+authors = ["Aliaksandr Karpovich <k64ay@outlook.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "abs_base_usr"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.2.1"
+pillow = "^9.5.0"
+six = "^1.16.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
