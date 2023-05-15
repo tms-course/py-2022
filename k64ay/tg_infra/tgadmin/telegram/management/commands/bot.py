@@ -1,9 +1,12 @@
 import os
 import json
 
+from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from django.conf import settings
 from telebot import TeleBot, types
+
+from telegram.models import Profile
 
 
 bot = TeleBot(settings.TELEGRAM_TOKEN, threaded=False)
@@ -20,14 +23,32 @@ class Command(BaseCommand):
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, "Привет ✌️ ")
+    user_data = message.from_user
+    print(message)
+
+    try:
+        Profile.objects.get(telegram_user_id=user_data.id)
+    except Profile.DoesNotExist:
+        user = User.objects.create(
+            username=user_data.username or user_data.id,
+            first_name=user_data.first_name,
+            last_name=user_data.last_name)
+        Profile.objects.create(user_id=user.id, 
+                               telegram_user_id=user_data.id)
+    
+    bot.send_message(message.chat.id, message)
 
 @bot.message_handler(commands=['button'])
 def button_message(message):
-    markup=types.ReplyKeyboardMarkup(resize_keyboard=True)
-    item1=types.KeyboardButton("Кнопка")
-    markup.add(item1)
-    bot.send_message(message.chat.id, 'Выберите что вам надо',reply_markup=markup)
+    user_data = message.from_user
+
+    telegram_ids = Profile.objects\
+        .filter(user__is_staff=True)\
+        .exclude(telegram_user_id=message.from_user.id)\
+        .values_list('telegram_user_id', flat=True)
+    
+    for tid in telegram_ids:
+        bot.send_message(tid, f'{user_data.first_name} {user_data.last_name} did something.')
     
 @bot.message_handler(commands=['buy'])
 def buy_process(message):

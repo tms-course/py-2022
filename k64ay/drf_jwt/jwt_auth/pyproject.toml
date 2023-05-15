@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "jwt-auth"
+version = "0.1.0"
+description = ""
+authors = ["Aliaksandr Karpovich <k64ay@outlook.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "jwt_auth"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^4.2.1"
+djangorestframework = "^3.14.0"
+djoser = "^2.2.0"
+djangorestframework-simplejwt = "^5.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
